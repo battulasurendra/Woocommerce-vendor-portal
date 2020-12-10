@@ -3,30 +3,30 @@ if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly
 }
 /**
- * Class Woo_Wholesale_User_Roles
+ * Class Woo_Vendor_User_Roles
  */
-if (!class_exists('WWP_Wholesale_User_Roles')) {
+if (!class_exists('WVP_Vendor_User_Roles')) {
 
-	class WWP_Wholesale_User_Roles {
+	class WVP_Vendor_User_Roles {
 
 		public function __construct () {
-			add_role('default_wholesaler', esc_html__('Wholesaler - Wholesaler Role', 'woocommerce-vendor-portal'), array( 'read' => true, 'level_0' => true ));
+			add_role('default_contractor', esc_html__('Contractor - Contractor Role', 'woocommerce-vendor-portal'), array( 'read' => true, 'level_0' => true ));
 			add_action('init', array($this, 'register_taxonomy_for_users'));
-			add_action('created_wholesale_user_roles', array($this, 'set_term_to_user_role'), 10, 2);
-			add_action('delete_wholesale_user_roles', array($this, 'remove_term_and_user_role'), 10, 3);
-			add_action('edit_wholesale_user_roles', array($this, 'edit_term_and_user_role'), 10, 2);
+			add_action('created_vendor_user_roles', array($this, 'set_term_to_user_role'), 10, 2);
+			add_action('delete_vendor_user_roles', array($this, 'remove_term_and_user_role'), 10, 3);
+			add_action('edit_vendor_user_roles', array($this, 'edit_term_and_user_role'), 10, 2);
 			add_action('wp_head', array($this, 'print_css_styles'));
-			add_action('wholesale_user_roles_add_form_fields', array($this, 'wwp_add_new_field'), 10);
-			add_action('wholesale_user_roles_edit_form_fields', array($this, 'wwp_edit_new_field'), 10, 1);
-			add_action('edited_wholesale_user_roles', array($this, 'wwp_save_new_field'), 10, 2 );
-			add_action('create_wholesale_user_roles', array($this, 'wwp_save_new_field'), 10, 2 );
+			add_action('vendor_user_roles_add_form_fields', array($this, 'wvp_add_new_field'), 10);
+			add_action('vendor_user_roles_edit_form_fields', array($this, 'wvp_edit_new_field'), 10, 1);
+			add_action('edited_vendor_user_roles', array($this, 'wvp_save_new_field'), 10, 2 );
+			add_action('create_vendor_user_roles', array($this, 'wvp_save_new_field'), 10, 2 );
 		}
 		public function print_css_styles() { ?>
 			<style type="text/css">
-				p.user_not_wholesale {
+				p.user_not_vendor {
 					text-align: center;
 				}
-				p.user_not_wholesale a {
+				p.user_not_vendor a {
 					text-decoration: none;
 					border: 2px solid #333;
 					color: #333;
@@ -64,10 +64,10 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 				'update_count_callback' => '_update_post_term_count',
 				'query_var'             => true,
 			);
-			register_taxonomy( 'wholesale_user_roles', array( 'wwp_requests' ), $args );
-			$term = term_exists( 'default_wholesaler', 'wholesale_user_roles' );
+			register_taxonomy( 'vendor_user_roles', array( 'wvp_requests' ), $args );
+			$term = term_exists( 'default_contractor', 'vendor_user_roles' );
 			if ( null === $term) {
-				wp_insert_term( 'Wholesaler', 'wholesale_user_roles', array( 'slug' => 'default_wholesaler' ) );
+				wp_insert_term( 'Contractor', 'vendor_user_roles', array( 'slug' => 'default_contractor' ) );
 			}
 			
 			// user capabilities add
@@ -82,14 +82,14 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 
 			$capabilities = array(
 				'manage_vendor',
-				'manage_wholesale_settings',
-				'manage_wholesale_user_role',
-				'manage_wholesale_notifications',
-				'manage_wholesale_bulk_ricing',
-				'manage_wholesale_registration_page',
-				'manage_wholesale_user_requests'
+				'manage_vendor_settings',
+				'manage_vendor_user_role',
+				'manage_vendor_notifications',
+				'manage_vendor_bulk_ricing',
+				'manage_vendor_registration_page',
+				'manage_vendor_user_requests'
 			);
-			$capabilities = apply_filters( 'wholesale_user_capabilities', $capabilities);
+			$capabilities = apply_filters( 'vendor_user_capabilities', $capabilities);
 			foreach ( $capabilities as $cap ) {
 				//$wp_roles->remove_cap( 'shop_manager', $cap );
 				//$wp_roles->remove_cap( 'administrator', $cap );
@@ -98,22 +98,22 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 			}
 		}
 		public function set_term_to_user_role ( $term_id, $tt_id ) {
-			$term=get_term($term_id, 'wholesale_user_roles');
+			$term=get_term($term_id, 'vendor_user_roles');
 			if ( !wp_roles()->is_role($term->slug) ) {
-				add_role( $term->slug, $term->name . esc_html__(' - Wholesaler role', 'woocommerce-vendor-portal'), array( 'read' => true, 'level_0' => true ) );
+				add_role( $term->slug, $term->name . esc_html__(' - Contractor role', 'woocommerce-vendor-portal'), array( 'read' => true, 'level_0' => true ) );
 			}
 		}
 		public function remove_term_and_user_role ( $term, $tt_id, $deleted_term ) {
-			$termObj = get_term( $deleted_term, 'wholesale_user_roles' );
+			$termObj = get_term( $deleted_term, 'vendor_user_roles' );
 			if ( wp_roles()->is_role( $termObj->slug ) ) {
 				remove_role( $termObj->slug );
 			}
 		}
 		public function edit_term_and_user_role ( $term_id, $tt_id ) {
-			if ( isset($_POST['wwp_vendor_register_nonce']) || wp_verify_nonce( wc_clean($_POST['wwp_vendor_register_nonce']), 'wwp_vendor_register_nonce') ) {
+			if ( isset($_POST['wvp_vendor_register_nonce']) || wp_verify_nonce( wc_clean($_POST['wvp_vendor_register_nonce']), 'wvp_vendor_register_nonce') ) {
 				echo esc_html__('Role updated', 'woocommerce-vendor-portal');
 			}
-			$termObj = get_term( $term_id, 'wholesale_user_roles' );
+			$termObj = get_term( $term_id, 'vendor_user_roles' );
 			$new_name = isset( $_POST['name'] ) ? wc_clean( $_POST['name'] ) : '';
 			$new_slug = isset( $_POST['slug'] ) ? wc_clean( $_POST['slug'] ) : '';
 			if ( $new_slug!=$termObj->slug ) {
@@ -124,7 +124,7 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 					remove_role($termObj->slug);
 				}
 				if ( !wp_roles()->is_role( $new_slug ) ) {
-					add_role( $new_slug, $new_name . esc_html__(' - Wholesaler role', 'woocommerce-vendor-portal'), array( 'read' => true, 'level_0' => true ) );
+					add_role( $new_slug, $new_name . esc_html__(' - Contractor role', 'woocommerce-vendor-portal'), array( 'read' => true, 'level_0' => true ) );
 				}
 				$args = array(
 					'role'    => $termObj->slug,
@@ -144,29 +144,29 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 				}
 			}
 		}
-		public function wwp_add_new_field() {
-			wp_nonce_field('wwp_tax_exempt_nonce', 'wwp_tax_exempt_nonce');
+		public function wvp_add_new_field() {
+			wp_nonce_field('wvp_tax_exempt_nonce', 'wvp_tax_exempt_nonce');
 			// version 1.3.0
-			$settings=get_option('wwp_vendor_portal_options');
-			$variable_subscription_id = !empty($settings['wholesale_subscription']) ? $settings['wholesale_subscription'] : '';
+			$settings=get_option('wvp_vendor_portal_options');
+			$variable_subscription_id = !empty($settings['vendor_subscription']) ? $settings['vendor_subscription'] : '';
 			// ends version 1.3.0
 			?>
 			<div class="form-field term-tax-wrap">
-				<label for="wwp_tax_exmept_wholesaler"><?php esc_html_e('Tax Exempt', 'woocommerce-vendor-portal'); ?></label>
-				<input type="checkbox" name="wwp_tax_exmept_wholesaler" id="wwp_tax_exmept_wholesaler" value="yes">
+				<label for="wvp_tax_exmept_contractor"><?php esc_html_e('Tax Exempt', 'woocommerce-vendor-portal'); ?></label>
+				<input type="checkbox" name="wvp_tax_exmept_contractor" id="wvp_tax_exmept_contractor" value="yes">
 				<span><?php esc_html_e('Tax exempt for vendor user role.', 'woocommerce-vendor-portal'); ?></span>
 			</div>
 			<!-- // version 1.3.0 -->
 			<div class="form-field term-coupons-wrap">
-				<label for="wwp_wholesale_disable_coupons"><?php esc_html_e('Disable Coupons', 'woocommerce-vendor-portal'); ?></label>
-				<input type="checkbox" name="wwp_wholesale_disable_coupons" id="wwp_wholesale_disable_coupons" value="yes">
+				<label for="wvp_vendor_disable_coupons"><?php esc_html_e('Disable Coupons', 'woocommerce-vendor-portal'); ?></label>
+				<input type="checkbox" name="wvp_vendor_disable_coupons" id="wvp_vendor_disable_coupons" value="yes">
 				<span><?php esc_html_e('Disable Coupons for vendor user role.', 'woocommerce-vendor-portal'); ?></span>
 			</div>
 			<!-- // ends version 1.3.0 -->
 			<div class="form-field term-gateways-wrap">
-				<label for="wwp_restricted_pmethods_wholesaler"><?php esc_html_e('Disable Payment Methods', 'woocommerce-vendor-portal'); ?></label>
+				<label for="wvp_restricted_pmethods_contractor"><?php esc_html_e('Disable Payment Methods', 'woocommerce-vendor-portal'); ?></label>
 				<?php $available_gateways = WC()->payment_gateways->get_available_payment_gateways(); ?>
-					<select name="wwp_restricted_pmethods_wholesaler[]" id="wwp_restricted_pmethods_wholesaler" class="regular-text wc-enhanced-select" multiple>
+					<select name="wvp_restricted_pmethods_contractor[]" id="wvp_restricted_pmethods_contractor" class="regular-text wc-enhanced-select" multiple>
 					<?php 
 					if ( !empty($available_gateways) ) {
 						foreach ( $available_gateways as $key => $method ) {
@@ -178,9 +178,9 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 					<p><?php esc_html_e('Select payment methods to restrict for vendor users.', 'woocommerce-vendor-portal'); ?></p>
 			</div>
 			<div class="form-field term-shipping-wrap">
-				<label for="wwp_restricted_smethods_wholesaler"><?php esc_html_e('Disable Shipping Methods', 'woocommerce-vendor-portal'); ?></label>
+				<label for="wvp_restricted_smethods_contractor"><?php esc_html_e('Disable Shipping Methods', 'woocommerce-vendor-portal'); ?></label>
 				<?php $shipping_methods = WC()->shipping->get_shipping_methods(); ?>
-					<select name="wwp_restricted_smethods_wholesaler[]" id="wwp_restricted_smethods_wholesaler" class="regular-text wc-enhanced-select" multiple>
+					<select name="wvp_restricted_smethods_contractor[]" id="wvp_restricted_smethods_contractor" class="regular-text wc-enhanced-select" multiple>
 					<?php 
 					if ( !empty($shipping_methods) ) {
 						foreach ( $shipping_methods as $key => $method ) {
@@ -197,11 +197,11 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 			if ( !empty($variable_subscription_id) && 'publish' == get_post_status($variable_subscription_id) ) {
 				$product = wc_get_product($variable_subscription_id);
 				$variations = $product->get_available_variations();
-				$variations = $this->wwp_exclude_variations($variations);
+				$variations = $this->wvp_exclude_variations($variations);
 				?>
 				<div class="form-field term-subscription-wrap">
-					<label for="wwp_wholesaler_subscription"><?php esc_html_e('Select Subscription Variation', 'woocommerce-vendor-portal'); ?></label>
-					<select name="wwp_wholesaler_subscription" id="wwp_wholesaler_subscription">
+					<label for="wvp_contractor_subscription"><?php esc_html_e('Select Subscription Variation', 'woocommerce-vendor-portal'); ?></label>
+					<select name="wvp_contractor_subscription" id="wvp_contractor_subscription">
 						<option value=""><?php esc_html_e('Select Subscription Variation', 'woocommerce-vendor-portal'); ?></option>
 							<?php foreach ( $variations as $key => $variation ) { ?> 
 								<option value="<?php echo esc_attr($variation['variation_id']); ?>"><?php echo esc_attr(implode(',', $variation['attributes'])); ?></option>
@@ -220,7 +220,7 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 		}
 		
 		// version 1.3.0
-		public function wwp_exclude_variations( $variations, $mine = '' ) {
+		public function wvp_exclude_variations( $variations, $mine = '' ) {
 			if ( !empty($variations) ) {
 				$args = array(
 					'hide_empty' => false,
@@ -228,16 +228,16 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 					'posts_per_page' => -1,
 					'meta_query' => array(
 						array(
-						   'key'       => 'wwp_wholesaler_subscription',
+						   'key'       => 'wvp_contractor_subscription',
 						   'compare'   => 'EXISTS'
 						)
 					),
-					'taxonomy'  => 'wholesale_user_roles'
+					'taxonomy'  => 'vendor_user_roles'
 				);
 				$terms = get_terms( $args );
 				if ( !empty($terms) ) {
 					foreach ( $terms as $term_id ) {
-						$variation_id = get_term_meta($term_id, 'wwp_wholesaler_subscription', true);
+						$variation_id = get_term_meta($term_id, 'wvp_contractor_subscription', true);
 						if ( $mine == $variation_id ) {
 							continue;
 						}
@@ -251,51 +251,51 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 			return $variations;
 		}
 		// ends version 1.3.0
-		public function wwp_edit_new_field( $term ) {
+		public function wvp_edit_new_field( $term ) {
 			$term_id = $term->term_id;
-			$tax=get_term_meta($term_id, 'wwp_tax_exmept_wholesaler', true);
+			$tax=get_term_meta($term_id, 'wvp_tax_exmept_contractor', true);
 			// version 1.3.0
-			$coupons=get_term_meta($term_id, 'wwp_wholesale_disable_coupons', true);
-			$settings=get_option('wwp_vendor_portal_options');
-			$variable_subscription_id = !empty($settings['wholesale_subscription']) ? $settings['wholesale_subscription'] : '';
-			$selected_variation = get_term_meta($term_id, 'wwp_wholesaler_subscription', true);
+			$coupons=get_term_meta($term_id, 'wvp_vendor_disable_coupons', true);
+			$settings=get_option('wvp_vendor_portal_options');
+			$variable_subscription_id = !empty($settings['vendor_subscription']) ? $settings['vendor_subscription'] : '';
+			$selected_variation = get_term_meta($term_id, 'wvp_contractor_subscription', true);
 			// ends version 1.3.0
-			wp_nonce_field('wwp_tax_exempt_nonce', 'wwp_tax_exempt_nonce');
+			wp_nonce_field('wvp_tax_exempt_nonce', 'wvp_tax_exempt_nonce');
 			?>
 			<tr class="form-field term-tax-wrap">
 				<th>
-					<label for="wwp_tax_exmept_wholesaler">
+					<label for="wvp_tax_exmept_contractor">
 						<?php esc_html_e('Tax Exempt', 'woocommerce-vendor-portal'); ?>
 					</label>
 				</th>
 				<td scope="row">
-					<input type="checkbox" name="wwp_tax_exmept_wholesaler" value="yes" <?php checked('yes', $tax); ?>>
+					<input type="checkbox" name="wvp_tax_exmept_contractor" value="yes" <?php checked('yes', $tax); ?>>
 					<span><?php esc_html_e('Tax exempt for vendor user role.', 'woocommerce-vendor-portal'); ?></span>
 				</td>
 			</tr>
 			<!-- // version 1.3.0 -->
 			<tr class="form-field term-coupons-wrap">
 				<th>
-					<label for="wwp_wholesale_disable_coupons">
+					<label for="wvp_vendor_disable_coupons">
 						<?php esc_html_e('Disable Coupons', 'woocommerce-vendor-portal'); ?>
 					</label>
 				</th>
 				<td scope="row">
-					<input type="checkbox" name="wwp_wholesale_disable_coupons" value="yes" <?php checked('yes', $coupons); ?>>
+					<input type="checkbox" name="wvp_vendor_disable_coupons" value="yes" <?php checked('yes', $coupons); ?>>
 					<span><?php esc_html_e('Disable Coupons for vendor user role.', 'woocommerce-vendor-portal'); ?></span>
 				</td>
 			</tr>
 			<!-- // ends version 1.3.0 -->
 			<tr class="form-field term-gateways-wrap">
-				<th><label for="wwp_restricted_pmethods_wholesaler">
+				<th><label for="wvp_restricted_pmethods_contractor">
 					<?php esc_html_e('Disable Payment Methods', 'woocommerce-vendor-portal'); ?></label>
 				</th>
 				<td>
 					<?php 
-						$value=get_term_meta($term_id, 'wwp_restricted_pmethods_wholesaler', true); 
+						$value=get_term_meta($term_id, 'wvp_restricted_pmethods_contractor', true); 
 						$available_gateways = WC()->payment_gateways->get_available_payment_gateways(); 
 					?>
-					<select name="wwp_restricted_pmethods_wholesaler[]" id="wwp_restricted_pmethods_wholesaler" class="regular-text wc-enhanced-select" multiple>
+					<select name="wvp_restricted_pmethods_contractor[]" id="wvp_restricted_pmethods_contractor" class="regular-text wc-enhanced-select" multiple>
 					<?php 
 					if ( !empty($available_gateways) ) {
 						foreach ( $available_gateways as $key => $method ) {
@@ -312,15 +312,15 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 				</td>
 			</tr>
 			<tr class="form-field term-shipping-wrap">
-				<th><label for="wwp_restricted_smethods_wholesaler">
+				<th><label for="wvp_restricted_smethods_contractor">
 					<?php esc_html_e('Disable Shipping Methods', 'woocommerce-vendor-portal'); ?></label>
 				</th>
 				<td>
 					<?php 
-						$value=get_term_meta($term_id, 'wwp_restricted_smethods_wholesaler', true); 
+						$value=get_term_meta($term_id, 'wvp_restricted_smethods_contractor', true); 
 						$shipping_methods = WC()->shipping->get_shipping_methods(); 
 					?>
-					<select name="wwp_restricted_smethods_wholesaler[]" id="wwp_restricted_smethods_wholesaler" class="regular-text wc-enhanced-select" multiple>
+					<select name="wvp_restricted_smethods_contractor[]" id="wvp_restricted_smethods_contractor" class="regular-text wc-enhanced-select" multiple>
 					<?php 
 					if ( !empty($shipping_methods) ) {
 						foreach ( $shipping_methods as $key => $method ) {
@@ -342,12 +342,12 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 			if ( !empty($variable_subscription_id) && 'publish' == get_post_status($variable_subscription_id) ) {
 				$product = wc_get_product($variable_subscription_id);
 				$variations = $product->get_available_variations();
-				$variations = $this->wwp_exclude_variations($variations, $selected_variation);
+				$variations = $this->wvp_exclude_variations($variations, $selected_variation);
 				?>
 				<tr class="form-field term-subscription-wrap">
-					<th><label for="wwp_wholesaler_subscription"><?php esc_html_e('Select Subscription Variation', 'woocommerce-vendor-portal'); ?></label></th>
+					<th><label for="wvp_contractor_subscription"><?php esc_html_e('Select Subscription Variation', 'woocommerce-vendor-portal'); ?></label></th>
 					<td>
-						<select name="wwp_wholesaler_subscription" id="wwp_wholesaler_subscription">
+						<select name="wvp_contractor_subscription" id="wvp_contractor_subscription">
 							<option value=""><?php esc_html_e('Select Subscription Variation', 'woocommerce-vendor-portal'); ?></option>
 							<?php foreach ( $variations as $key => $variation ) { ?> 
 								<option value="<?php echo esc_attr($variation['variation_id']); ?>" <?php echo selected($selected_variation, $variation['variation_id'], false); ?>><?php echo esc_attr(implode(',', $variation['attributes'])); ?></option>
@@ -361,38 +361,38 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 			// ends version 1.3.0
 		}
 		
-		public function wwp_save_new_field( $term_id, $term ) {
-			if ( !isset($_POST['wwp_tax_exempt_nonce']) || !wp_verify_nonce( wc_clean($_POST['wwp_tax_exempt_nonce']), 'wwp_tax_exempt_nonce') ) {
+		public function wvp_save_new_field( $term_id, $term ) {
+			if ( !isset($_POST['wvp_tax_exempt_nonce']) || !wp_verify_nonce( wc_clean($_POST['wvp_tax_exempt_nonce']), 'wvp_tax_exempt_nonce') ) {
 				return;
 			}
-			if ( isset( $_POST['wwp_tax_exmept_wholesaler'] ) ) {
-				update_term_meta($term_id, 'wwp_tax_exmept_wholesaler', 'yes');
+			if ( isset( $_POST['wvp_tax_exmept_contractor'] ) ) {
+				update_term_meta($term_id, 'wvp_tax_exmept_contractor', 'yes');
 			} else {
-				update_term_meta($term_id, 'wwp_tax_exmept_wholesaler', 'no');
+				update_term_meta($term_id, 'wvp_tax_exmept_contractor', 'no');
 			}
 			// version 1.3.0 
-			if ( isset( $_POST['wwp_wholesale_disable_coupons'] ) ) {
-				update_term_meta($term_id, 'wwp_wholesale_disable_coupons', 'yes');
+			if ( isset( $_POST['wvp_vendor_disable_coupons'] ) ) {
+				update_term_meta($term_id, 'wvp_vendor_disable_coupons', 'yes');
 			} else {
-				update_term_meta($term_id, 'wwp_wholesale_disable_coupons', 'no');
+				update_term_meta($term_id, 'wvp_vendor_disable_coupons', 'no');
 			}
-			if ( isset( $_POST['wwp_wholesaler_subscription'] ) ) {
-				update_term_meta($term_id, 'wwp_wholesaler_subscription', wc_clean($_POST['wwp_wholesaler_subscription']) );
+			if ( isset( $_POST['wvp_contractor_subscription'] ) ) {
+				update_term_meta($term_id, 'wvp_contractor_subscription', wc_clean($_POST['wvp_contractor_subscription']) );
 			} else {
-				update_term_meta($term_id, 'wwp_wholesaler_subscription', '');
+				update_term_meta($term_id, 'wvp_contractor_subscription', '');
 			}
 			// ends version 1.3.0 
-			if ( isset( $_POST['wwp_restricted_pmethods_wholesaler'] ) ) {
-				update_term_meta($term_id, 'wwp_restricted_pmethods_wholesaler', wc_clean($_POST['wwp_restricted_pmethods_wholesaler']) );
+			if ( isset( $_POST['wvp_restricted_pmethods_contractor'] ) ) {
+				update_term_meta($term_id, 'wvp_restricted_pmethods_contractor', wc_clean($_POST['wvp_restricted_pmethods_contractor']) );
 			} else {
-				update_term_meta($term_id, 'wwp_restricted_pmethods_wholesaler', '');
+				update_term_meta($term_id, 'wvp_restricted_pmethods_contractor', '');
 			}
-			if ( isset( $_POST['wwp_restricted_smethods_wholesaler'] ) ) {
-				update_term_meta($term_id, 'wwp_restricted_smethods_wholesaler', wc_clean($_POST['wwp_restricted_smethods_wholesaler']) );
+			if ( isset( $_POST['wvp_restricted_smethods_contractor'] ) ) {
+				update_term_meta($term_id, 'wvp_restricted_smethods_contractor', wc_clean($_POST['wvp_restricted_smethods_contractor']) );
 			} else {
-				update_term_meta($term_id, 'wwp_restricted_smethods_wholesaler', '');
+				update_term_meta($term_id, 'wvp_restricted_smethods_contractor', '');
 			}
 		}
 	}
-	new WWP_Wholesale_User_Roles();
+	new WVP_Vendor_User_Roles();
 }

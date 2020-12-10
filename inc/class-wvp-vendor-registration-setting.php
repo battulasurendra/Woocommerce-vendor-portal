@@ -3,81 +3,81 @@ if (! defined('ABSPATH') ) {
 	exit; // Exit if accessed directly
 }
 /**
- * Class Woo_Wholesale_Registration_Page_Setting
+ * Class Woo_Vendor_Registration_Page_Setting
  */
-if ( !class_exists('Wwp_Wholesale_Registration_Page_Setting') ) {
+if ( !class_exists('Wvp_Vendor_Registration_Page_Setting') ) {
 
-	class Wwp_Wholesale_Registration_Page_Setting {
+	class Wvp_Vendor_Registration_Page_Setting {
 		
 		public function __construct() {
-			add_action('admin_menu', array($this, 'wwp_registration_page_setting' ));
+			add_action('admin_menu', array($this, 'wvp_registration_page_setting' ));
 			// enable to display tax id in billing address
-			add_action( 'woocommerce_admin_order_data_after_billing_address', array($this, 'wwp_tax_display_admin_order_meta'), 10, 1 );
+			add_action( 'woocommerce_admin_order_data_after_billing_address', array($this, 'wvp_tax_display_admin_order_meta'), 10, 1 );
 			add_action('admin_init', array($this, 'enqueue_front_scripts'));
 			
-			add_action( 'wp_ajax_wwp_save_form', array($this, 'ajax_call_wwp_save_form') );
-			add_action( 'wp_ajax_nopriv_wwp_save_form', array($this, 'ajax_call_wwp_save_form') );
+			add_action( 'wp_ajax_wvp_save_form', array($this, 'ajax_call_wvp_save_form') );
+			add_action( 'wp_ajax_nopriv_wvp_save_form', array($this, 'ajax_call_wvp_save_form') );
 		}
 		
-		public function ajax_call_wwp_save_form() {
+		public function ajax_call_wvp_save_form() {
 			 
-			if (wwp_get_post_data('formData')) {
-				update_option( 'wwp_save_form', stripslashes(wwp_get_post_data('formData')) );
+			if (wvp_get_post_data('formData')) {
+				update_option( 'wvp_save_form', stripslashes(wvp_get_post_data('formData')) );
 				die('save');
 			}
 		}
 		
 		public function enqueue_front_scripts() { 
 		 
-			//wp_enqueue_script( 'wwp_jquery', plugin_dir_url( __DIR__ ) . 'assets/js/formbuilder/jquery.min.js', array(), '1.0.0'  );
-			wp_enqueue_script( 'wwp_jquery-ui', plugin_dir_url( __DIR__ ) . 'assets/js/formbuilder/jquery-ui.min.js', array(), '1.0.0'  );
-			wp_enqueue_script( 'wwp_formbuilder', plugin_dir_url( __DIR__ ) . 'assets/js/formbuilder/form-builder.min.js', array(), '1.0.0' );
-			wp_enqueue_script( 'wwp_formrender', plugin_dir_url( __DIR__ ) . 'assets/js/formbuilder/form-render.min.js', array(), '1.0.0' );
+			//wp_enqueue_script( 'wvp_jquery', plugin_dir_url( __DIR__ ) . 'assets/js/formbuilder/jquery.min.js', array(), '1.0.0'  );
+			wp_enqueue_script( 'wvp_jquery-ui', plugin_dir_url( __DIR__ ) . 'assets/js/formbuilder/jquery-ui.min.js', array(), '1.0.0'  );
+			wp_enqueue_script( 'wvp_formbuilder', plugin_dir_url( __DIR__ ) . 'assets/js/formbuilder/form-builder.min.js', array(), '1.0.0' );
+			wp_enqueue_script( 'wvp_formrender', plugin_dir_url( __DIR__ ) . 'assets/js/formbuilder/form-render.min.js', array(), '1.0.0' );
 			 
 		}
 		
-		public function wwp_tax_display_admin_order_meta( $order ) {
+		public function wvp_tax_display_admin_order_meta( $order ) {
 			
-			$registrations = get_option('wwp_wholesale_registration_options');
+			$registrations = get_option('wvp_vendor_registration_options');
 			if ( isset($registrations['tax_id_display']) && 'yes' == $registrations['tax_id_display'] ) {
-				$wholesaler_tax_id = esc_html__('Wholesaler Tax ID ', 'woocommerce-vendor-portal');
-				echo wp_kses('<p><strong> ' . $wholesaler_tax_id . ':</strong> <br/>' . get_user_meta( $order->get_user_id(), 'wwp_wholesaler_tax_id', true ) . '</p>', shapeSpace_allowed_html());
+				$contractor_tax_id = esc_html__('Contractor Tax ID ', 'woocommerce-vendor-portal');
+				echo wp_kses('<p><strong> ' . $contractor_tax_id . ':</strong> <br/>' . get_user_meta( $order->get_user_id(), 'wvp_contractor_tax_id', true ) . '</p>', shapeSpace_allowed_html());
 			}
 		}
 		
-		public function wwp_registration_page_setting() {
-			add_submenu_page('wwp_vendor', esc_html__('Registration Page', 'woocommerce-vendor-portal'), esc_html__('Registration Setting', 'woocommerce-vendor-portal'), 'manage_wholesale_registration_page', 'wwp-registration-setting', array($this,'wwp_wholesale_registration_page_callback'));
+		public function wvp_registration_page_setting() {
+			add_submenu_page('wvp_vendor', esc_html__('Registration Page', 'woocommerce-vendor-portal'), esc_html__('Registration Setting', 'woocommerce-vendor-portal'), 'manage_vendor_registration_page', 'wvp-registration-setting', array($this,'wvp_vendor_registration_page_callback'));
 		}
 		
-		public function wwp_wholesale_registration_page_callback() {
-			$registrations = get_option('wwp_wholesale_registration_options');
-			if ( isset($_POST['save_wwp_registration_setting']) ) {
-				if ( isset($_POST['wwp_wholesale_settings_nonce']) || wp_verify_nonce( wc_clean($_POST['wwp_wholesale_settings_nonce']), 'wwp_wholesale_settings_nonce') ) {
+		public function wvp_vendor_registration_page_callback() {
+			$registrations = get_option('wvp_vendor_registration_options');
+			if ( isset($_POST['save_wvp_registration_setting']) ) {
+				if ( isset($_POST['wvp_vendor_settings_nonce']) || wp_verify_nonce( wc_clean($_POST['wvp_vendor_settings_nonce']), 'wvp_vendor_settings_nonce') ) {
 					$registrations = isset($_POST['registrations']) ? wc_clean($_POST['registrations']) : '';
-					update_option('wwp_wholesale_registration_options', $registrations);
+					update_option('wvp_vendor_registration_options', $registrations);
 				}
 			} 
 			?><div id="screen_fix"></div>
 			<div id="registration_form_settings">
 			
 			<nav class="vendor-tab-link nav-tab-wrapper wp-clearfix">
-				<a href="<?php echo esc_html_e(wholesale_tab_link('')); ?>" class="nav-tab <?php echo esc_html_e(wholesale_tab_active('')); ?>" data-tab="vendor-general-settings">
+				<a href="<?php echo esc_html_e(vendor_tab_link('')); ?>" class="nav-tab <?php echo esc_html_e(vendor_tab_active('')); ?>" data-tab="vendor-general-settings">
 					<?php esc_html_e('General Settings', 'woocommerce-vendor-portal'); ?>
 				</a>
-				<a href="<?php echo esc_html_e(wholesale_tab_link('default-fields')); ?>" class="nav-tab <?php echo esc_html_e(wholesale_tab_active('default-fields')); ?>" data-tab="vendor-default-settings">
+				<a href="<?php echo esc_html_e(vendor_tab_link('default-fields')); ?>" class="nav-tab <?php echo esc_html_e(vendor_tab_active('default-fields')); ?>" data-tab="vendor-default-settings">
 					<?php esc_html_e('Default Fields', 'woocommerce-vendor-portal'); ?>
 				</a>
-				<a href="<?php echo esc_html_e(wholesale_tab_link('extra-fields')); ?>" class="nav-tab <?php echo esc_html_e(wholesale_tab_active('extra-fields')); ?>" data-tab="vendor-extra-settings">
+				<a href="<?php echo esc_html_e(vendor_tab_link('extra-fields')); ?>" class="nav-tab <?php echo esc_html_e(vendor_tab_active('extra-fields')); ?>" data-tab="vendor-extra-settings">
 					<?php esc_html_e('Extra Fields', 'woocommerce-vendor-portal'); ?>
 				</a>
 			</nav>
 			
-			<?php if (wholesale_load_form_builder()) { ?>
+			<?php if (vendor_load_form_builder()) { ?>
 				<form action="" method="post">
-					<?php wp_nonce_field('wwp_wholesale_settings_nonce', 'wwp_wholesale_settings_nonce'); ?>
+					<?php wp_nonce_field('wvp_vendor_settings_nonce', 'wvp_vendor_settings_nonce'); ?>
 					
 					
-					<table class="form-table" style="display: <?php echo esc_html_e(wholesale_content_tab_active('')); ?>">
+					<table class="form-table" style="display: <?php echo esc_html_e(vendor_content_tab_active('')); ?>">
 						<tbody>
 							<tr scope="row">
 								<th><h4><label for=""><?php esc_html_e('Enable Billing Address form Default Fields', 'woocommerce-vendor-portal'); ?></label></h4></th>
@@ -103,7 +103,7 @@ if ( !class_exists('Wwp_Wholesale_Registration_Page_Setting') ) {
 							</tr>
 						</tbody>
 					</table>
-					<table class="form-table"  style="display: <?php echo esc_html_e(wholesale_content_tab_active('')); ?>">
+					<table class="form-table"  style="display: <?php echo esc_html_e(vendor_content_tab_active('')); ?>">
 						<tbody>
 							<tr scope="row">
 								<th><h4><label><?php esc_html_e('Enable Shipping Address form Default Fields', 'woocommerce-vendor-portal'); ?></label></h4></th>
@@ -130,7 +130,7 @@ if ( !class_exists('Wwp_Wholesale_Registration_Page_Setting') ) {
 						</tbody>
 					</table>
 
-					<table class="form-table"  style="display: <?php echo esc_html_e(wholesale_content_tab_active('')); ?>">
+					<table class="form-table"  style="display: <?php echo esc_html_e(vendor_content_tab_active('')); ?>">
 						<tbody>
 							<tr scope="row">
 								<th><h4><label><?php esc_html_e('Display Extra Fields on Registration', 'woocommerce-vendor-portal'); ?></label></h4></th>
@@ -157,7 +157,7 @@ if ( !class_exists('Wwp_Wholesale_Registration_Page_Setting') ) {
 						</tbody>
 					</table>
 					
-					<table class="form-table"  style="display: <?php echo esc_html_e(wholesale_content_tab_active('')); ?>">
+					<table class="form-table"  style="display: <?php echo esc_html_e(vendor_content_tab_active('')); ?>">
 						<tbody>
 							<tr scope="row">
 								<th><h4><label><?php esc_html_e('Display Extra Fields on  My account', 'woocommerce-vendor-portal'); ?></label></h4></th>
@@ -184,7 +184,7 @@ if ( !class_exists('Wwp_Wholesale_Registration_Page_Setting') ) {
 						</tbody>
 					</table>
 					 
-					<table class="form-table"  style="display: <?php echo esc_html_e(wholesale_content_tab_active('')); ?>">
+					<table class="form-table"  style="display: <?php echo esc_html_e(vendor_content_tab_active('')); ?>">
 						<tbody>
 							<tr scope="row">
 								<th><h4><label><?php esc_html_e('Display Extra Fields on Checkout', 'woocommerce-vendor-portal'); ?></label></h4></th>
@@ -211,7 +211,7 @@ if ( !class_exists('Wwp_Wholesale_Registration_Page_Setting') ) {
 						</tbody>
 					</table> 
 					
-					<div id="billing_address_fields" style="display:<?php echo esc_html_e(wholesale_content_tab_active('default-fields')); ?>">
+					<div id="billing_address_fields" style="display:<?php echo esc_html_e(vendor_content_tab_active('default-fields')); ?>">
 					<h3><label for=""><?php esc_html_e('Billing Address form Fields', 'woocommerce-vendor-portal'); ?></label></h3>
 						<table class="form-table">
 							<tbody>
@@ -349,7 +349,7 @@ if ( !class_exists('Wwp_Wholesale_Registration_Page_Setting') ) {
 						</table>
 					</div>
 					
-					<div id="shipping_address_fields" style="display:<?php echo esc_html_e(wholesale_content_tab_active('default-fields')); ?>;">
+					<div id="shipping_address_fields" style="display:<?php echo esc_html_e(vendor_content_tab_active('default-fields')); ?>;">
 					<h3><label><?php esc_html_e('Shipping Address form Fields', 'woocommerce-vendor-portal'); ?></label></h3>
 						<table class="form-table">
 							<tbody>
@@ -477,7 +477,7 @@ if ( !class_exists('Wwp_Wholesale_Registration_Page_Setting') ) {
 						</table>
 					</div>
 
-					<div id="custom_other_fields" style="display:<?php echo esc_html_e(wholesale_content_tab_active('default-fields')); ?>;">
+					<div id="custom_other_fields" style="display:<?php echo esc_html_e(vendor_content_tab_active('default-fields')); ?>;">
 						<table class="form-table">
 							<tbody>
 								<tr scope="row">
@@ -531,24 +531,24 @@ if ( !class_exists('Wwp_Wholesale_Registration_Page_Setting') ) {
 						</table>
 					</div>
 					
-					<p><button name="save_wwp_registration_setting" class="button-primary" type="submit" value="Save changes"><?php esc_html_e('Save changes', 'woocommerce-vendor-portal'); ?></button></p>
+					<p><button name="save_wvp_registration_setting" class="button-primary" type="submit" value="Save changes"><?php esc_html_e('Save changes', 'woocommerce-vendor-portal'); ?></button></p>
 				</form>
 				<?php 
 			} else {
-				include_once WWP_PLUGIN_PATH . 'inc/class-wwp-vendor-form-builder.php'; 
+				include_once WVP_PLUGIN_PATH . 'inc/class-wvp-vendor-form-builder.php'; 
 			}
 			?>
 			
 			
 			</div>
 			<div class="map_shortcode_callback">
-				<p> <?php esc_html_e('Copy following shortcode, and paste in page where you would like to display wholesaler registration form.', 'woocommerce-vendor-portal'); ?></p>
+				<p> <?php esc_html_e('Copy following shortcode, and paste in page where you would like to display contractor registration form.', 'woocommerce-vendor-portal'); ?></p>
 				<div class="map_shortcode_copy"  onclick="copytoclipboard()"><span class="dashicons dashicons-admin-page"></span><label><?php esc_html_e('Copy', 'woocommerce-vendor-portal'); ?></label></div>
-				<p> <input type="text" onfocus="this.select();" value="[wwp_registration_form]" readonly="readonly" name="shortcode" class="large-text code"> </p>
+				<p> <input type="text" onfocus="this.select();" value="[wvp_vendor_registration_form]" readonly="readonly" name="shortcode" class="large-text code"> </p>
 			</div>
 			
 			<?php
 		}
 	}
-	new Wwp_Wholesale_Registration_Page_Setting();
+	new Wvp_Vendor_Registration_Page_Setting();
 }

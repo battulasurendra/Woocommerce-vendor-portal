@@ -5,17 +5,17 @@ if (! defined('ABSPATH') ) {
 /**
  * Class To handle Vendor Customer Requests
  */
-if ( !class_exists('WWP_Easy_Wholesale_Requests') ) {
+if ( !class_exists('WVP_Easy_Vendor_Requests') ) {
 
-	class WWP_Easy_Wholesale_Requests {
+	class WVP_Easy_Vendor_Requests {
 
 		public function __construct () {
 			add_action('init', array($this, 'register_requests_post_type'));
-			add_filter('manage_wwp_requests_posts_columns', array($this, 'register_wwp_requests_columns' ));
-			add_action('manage_wwp_requests_posts_custom_column', array($this, 'custom_columns_wwp_requests'), 15, 2);
+			add_filter('manage_wvp_requests_posts_columns', array($this, 'register_wvp_requests_columns' ));
+			add_action('manage_wvp_requests_posts_custom_column', array($this, 'custom_columns_wvp_requests'), 15, 2);
 			add_action('admin_menu', array($this, 'register_menu_for_requests'));
 			add_action('add_meta_boxes', array($this, 'register_add_meta_box_requests'));
-			add_action('save_post_wwp_requests', array($this, 'save_requests_meta'));
+			add_action('save_post_wvp_requests', array($this, 'save_requests_meta'));
 		}
 		public function register_requests_post_type() {
 			$labels = array(
@@ -47,12 +47,12 @@ if ( !class_exists('WWP_Easy_Wholesale_Requests') ) {
 				'menu_position'     => null,
 				'supports'          => array('thumbnail','title')
 			);
-			register_post_type('wwp_requests', $args);
+			register_post_type('wvp_requests', $args);
 		}
 		public function register_menu_for_requests () {
 			$args = array(
 				'posts_per_page'    => -1,
-				'post_type'         => 'wwp_requests',
+				'post_type'         => 'wvp_requests',
 				'post_status'       => 'publish',
 				'meta_key'          => '_user_status',
 				'meta_value'        => 'waiting'
@@ -64,14 +64,14 @@ if ( !class_exists('WWP_Easy_Wholesale_Requests') ) {
 			} else {
 				$the_count = '';
 			}
-			add_submenu_page('wwp_vendor', esc_html__('Vendor User Requests', 'woocommerce-vendor-portal'), __('Requests ' . $the_count, 'woocommerce-vendor-portal'), 'manage_wholesale_user_requests', 'edit.php?post_type=wwp_requests');
+			add_submenu_page('wvp_vendor', esc_html__('Vendor User Requests', 'woocommerce-vendor-portal'), __('Requests ' . $the_count, 'woocommerce-vendor-portal'), 'manage_vendor_user_requests', 'edit.php?post_type=wvp_requests');
 		}
-		public function register_wwp_requests_columns ( $columns ) {
+		public function register_wvp_requests_columns ( $columns ) {
 			unset($columns['author']);
 			$columns['user_status'] = esc_html__('User Status', 'woocommerce-vendor-portal');
 			return $columns;
 		}
-		public function custom_columns_wwp_requests ( $column, $post_id ) {
+		public function custom_columns_wvp_requests ( $column, $post_id ) {
 			switch ( $column ) {
 				case 'user_status':
 					$status=get_post_meta($post_id, '_user_status', true);
@@ -89,20 +89,20 @@ if ( !class_exists('WWP_Easy_Wholesale_Requests') ) {
 			add_meta_box( 
 				'vendor-portal-pro-user-status', 
 				esc_html__('Vendor User Request Confirmation', 'woocommerce-vendor-portal'), 
-				array($this, 'wholesale_user_confirmation'), 
-				'wwp_requests', 
+				array($this, 'vendor_user_confirmation'), 
+				'wvp_requests', 
 				'normal', 
 				'high' 
 			);
 		}
-		public function wholesale_user_confirmation () {
+		public function vendor_user_confirmation () {
 			global $post;
-			$settings=get_option('wwp_vendor_portal_options', true);
+			$settings=get_option('wvp_vendor_portal_options', true);
 			$status=get_post_meta($post->ID, '_user_status', true);
 			$user_id=get_post_meta($post->ID, '_user_id', true);
 			$rejected_note=get_user_meta($user_id, 'rejected_note', true);
 			wp_nonce_field('request_user_role_nonce', 'request_user_role_nonce'); ?>
-			<div class="wholesale_user_confirmation">
+			<div class="vendor_user_confirmation">
 			<?php 
 			if ( !empty( $user_id ) ) { 
 				$user_info = get_userdata($user_id);
@@ -123,9 +123,9 @@ if ( !class_exists('WWP_Easy_Wholesale_Requests') ) {
 								
 								echo '<tr><th></th><td><a href="' . esc_url(admin_url("user-edit.php?user_id=$user_id")) . '">' . esc_html__('More user details', 'woocommerce-vendor-portal') . '</a></td></tr>'; 
 							
-							if ( 'single' == $settings['wholesale_role'] ) {
+							if ( 'single' == $settings['vendor_role'] ) {
 							
-								echo '<tr class="user_role"><th>' . esc_html__('Vendor roles to be assign: ', 'woocommerce-vendor-portal') . '</th><td>' . esc_html('default_wholesaler') . '</td></tr>';
+								echo '<tr class="user_role"><th>' . esc_html__('Vendor roles to be assign: ', 'woocommerce-vendor-portal') . '</th><td>' . esc_html('default_contractor') . '</td></tr>';
 
 							} else {
 									
@@ -133,11 +133,11 @@ if ( !class_exists('WWP_Easy_Wholesale_Requests') ) {
 								
 						<tr scope="row" class="user_role">
 						
-						<th><label for="default_multipe_wholesale_roles"><?php esc_html_e('Vendor roles to be assign:', 'woocommerce-vendor-portal'); ?></label></th>
+						<th><label for="default_multipe_vendor_roles"><?php esc_html_e('Vendor roles to be assign:', 'woocommerce-vendor-portal'); ?></label></th>
 							<td>
 								<?php 
 								
-								$allterms = get_terms('wholesale_user_roles', array('hide_empty' => false)); 
+								$allterms = get_terms('vendor_user_roles', array('hide_empty' => false)); 
 								
 								$update_role='';
 									
@@ -149,7 +149,7 @@ if ( !class_exists('WWP_Easy_Wholesale_Requests') ) {
 									}									
 								}
 								?>
-								<select id="default_multipe_wholesale_roles" class="regular-text" name="user_role_set" >
+								<select id="default_multipe_vendor_roles" class="regular-text" name="user_role_set" >
 									<option value="" disabled><?php esc_html_e('Select Vendor Role', 'woocommerce-vendor-portal'); ?></option>
 									<?php  
 										
@@ -164,7 +164,7 @@ if ( !class_exists('WWP_Easy_Wholesale_Requests') ) {
 											}
 										} else {
 										
-											if ( isset($settings['default_multipe_wholesale_roles']) && $settings['default_multipe_wholesale_roles']== $allterm->slug ) {
+											if ( isset($settings['default_multipe_vendor_roles']) && $settings['default_multipe_vendor_roles']== $allterm->slug ) {
 												$selected='selected';
 												
 											}
@@ -216,7 +216,7 @@ if ( !class_exists('WWP_Easy_Wholesale_Requests') ) {
 			</div>
 			<input name="save" type="submit" class="button button-primary button-large" id="publish" value="<?php esc_html_e('Update', 'woocommerce-vendor-portal'); ?>">
 			<style type="">
-				.post-type-wwp_requests .page-title-action {
+				.post-type-wvp_requests .page-title-action {
 					display: none;
 				}
 			</style>
@@ -240,15 +240,15 @@ if ( !class_exists('WWP_Easy_Wholesale_Requests') ) {
 				if ( isset($_POST['user_role_set']) ) {
 					$user_role_set = wc_clean($_POST['user_role_set']);
 				} else {
-					$user_role_set = 'default_wholesaler';
+					$user_role_set = 'default_contractor';
 				}
 				if ( isset($_POST['rejected_note']) ) {
 					$rejected_note = wc_clean($_POST['rejected_note']);
 					update_post_meta($post_id, '_user_status', $status);
 				}
-				$term_list = wp_get_post_terms( $post_id, 'wholesale_user_roles', array( 'fields' => 'all') );
+				$term_list = wp_get_post_terms( $post_id, 'vendor_user_roles', array( 'fields' => 'all') );
 				
-				$allterms = get_terms('wholesale_user_roles', array('hide_empty' => false));
+				$allterms = get_terms('vendor_user_roles', array('hide_empty' => false));
 				
 				$user_id = get_post_meta($post_id, '_user_id', true);
 				update_user_meta($user_id, '_user_status', $status);
@@ -267,13 +267,13 @@ if ( !class_exists('WWP_Easy_Wholesale_Requests') ) {
 					
 					foreach ( $term_list as $term_remove ) {
 					 
-						wp_remove_object_terms($post_id, $term_remove->slug, 'wholesale_user_roles', true);
+						wp_remove_object_terms($post_id, $term_remove->slug, 'vendor_user_roles', true);
 					}
 					 
-					wp_set_object_terms($post_id, $user_role_set, 'wholesale_user_roles', true); 
+					wp_set_object_terms($post_id, $user_role_set, 'vendor_user_roles', true); 
 					
 					if ( 'sent' != get_post_meta($post_id, '_approval_notification', true) ) {
-						do_action('wwp_wholesale_user_request_approved', $user_id);
+						do_action('wvp_vendor_user_request_approved', $user_id);
 						update_post_meta($post_id, '_approval_notification', 'sent');
 					}
 						
@@ -283,11 +283,11 @@ if ( !class_exists('WWP_Easy_Wholesale_Requests') ) {
 							$u->remove_role( $value->slug );
 						}
 						$u->add_role( get_option('default_role') );
-						do_action('wwp_wholesale_user_rejection_notification', $user_id);
+						do_action('wvp_vendor_user_rejection_notification', $user_id);
 					}
 				}
 			}
 		}
 	}
-	new WWP_Easy_Wholesale_Requests();
+	new WVP_Easy_Vendor_Requests();
 }

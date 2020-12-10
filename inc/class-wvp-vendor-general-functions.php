@@ -78,31 +78,31 @@ if ( ! function_exists( 'shapeSpace_allowed_html' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'wwp_get_post_data' ) ) :
-	function wwp_get_post_data( $name ) { 
-		if ( isset($_POST['wwp_wholesale_registrattion_nonce']) || wp_verify_nonce( wc_clean($_POST['wwp_wholesale_registrattion_nonce']), 'wwp_wholesale_registrattion_nonce') ) {
+if ( ! function_exists( 'wvp_get_post_data' ) ) :
+	function wvp_get_post_data( $name ) { 
+		if ( isset($_POST['wvp_vendor_registrattion_nonce']) || wp_verify_nonce( wc_clean($_POST['wvp_vendor_registrattion_nonce']), 'wvp_vendor_registrattion_nonce') ) {
 			$post = $_POST;
 		}
 		$post = $_POST;
 		if ( isset( $post[$name] ) ) { 
-			return apply_filters( 'wwp_get_post_data', wp_kses_post( $post[$name] ) ); 
+			return apply_filters( 'wvp_get_post_data', wp_kses_post( $post[$name] ) ); 
 		}
 	}
 endif;
 
-if ( ! function_exists( 'wholesale_tab_link' ) ) :
-	function wholesale_tab_link( $tab = '' ) {
+if ( ! function_exists( 'vendor_tab_link' ) ) :
+	function vendor_tab_link( $tab = '' ) {
 		
 		if (!empty($tab)) {
-			return admin_url( 'admin.php?page=wwp-registration-setting&tab=' ) . $tab;
+			return admin_url( 'admin.php?page=wvp-registration-setting&tab=' ) . $tab;
 		} else {
-			return admin_url( 'admin.php?page=wwp-registration-setting' );
+			return admin_url( 'admin.php?page=wvp-registration-setting' );
 		}
 	}
 endif;
 
-if ( ! function_exists( 'wholesale_tab_active' ) ) :
-	function wholesale_tab_active( $active_tab = '' ) {
+if ( ! function_exists( 'vendor_tab_active' ) ) :
+	function vendor_tab_active( $active_tab = '' ) {
 		$getdata = '';
 		if (isset($_GET['tab'])) {
 			$getdata = sanitize_text_field($_GET['tab']);
@@ -114,8 +114,8 @@ if ( ! function_exists( 'wholesale_tab_active' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'wholesale_content_tab_active' ) ) :
-	function wholesale_content_tab_active( $active_tab = '' ) {
+if ( ! function_exists( 'vendor_content_tab_active' ) ) :
+	function vendor_content_tab_active( $active_tab = '' ) {
 		$getdata = '';		
 		if (isset($_GET['tab'])) {
 			$getdata = sanitize_text_field($_GET['tab']);
@@ -129,8 +129,8 @@ if ( ! function_exists( 'wholesale_content_tab_active' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'wholesale_load_form_builder' ) ) :
-	function wholesale_load_form_builder( $active_tab = '' ) {
+if ( ! function_exists( 'vendor_load_form_builder' ) ) :
+	function vendor_load_form_builder( $active_tab = '' ) {
 		$tab = '';
 		if (isset($_GET['tab'])) {
 			$tab = sanitize_text_field($_GET['tab']);
@@ -145,20 +145,20 @@ if ( ! function_exists( 'wholesale_load_form_builder' ) ) :
 endif;
 
 
-if ( ! function_exists( 'is_wholesaler_user' ) ) :
-	function is_wholesaler_user ( $user_id ) {
+if ( ! function_exists( 'is_contractor_user' ) ) :
+	function is_contractor_user ( $user_id ) {
 		if ( !empty($user_id) ) {
 			$user_info = get_userdata($user_id);
 			
 			$user_role = implode(', ', $user_info->roles);
-			$allterms = get_terms('wholesale_user_roles', array('hide_empty' => false));
+			$allterms = get_terms('vendor_user_roles', array('hide_empty' => false));
 	 
 			foreach ($allterms as $allterm_key => $allterm_value ) {
 				if ( $user_role == $allterm_value->slug ) {
 					return true;
 				}
 			}
-			if ( 'default_wholesaler' == $user_role ) {
+			if ( 'default_contractor' == $user_role ) {
 				return true;
 			}
 		}
@@ -168,8 +168,8 @@ endif;
 
 
 
-if ( ! function_exists( 'multi_wholesale_product_ids' ) ) :
-	function multi_wholesale_product_ids() {
+if ( ! function_exists( 'multi_vendor_product_ids' ) ) :
+	function multi_vendor_product_ids() {
 		$cate = array();
 		$total_ids = array();
 
@@ -179,12 +179,12 @@ if ( ! function_exists( 'multi_wholesale_product_ids' ) ) :
 		
 			foreach ( $categories as $category ) {
 				
-				$data = get_term_meta($category->term_id, 'wholesale_multi_user_pricing', true);
+				$data = get_term_meta($category->term_id, 'vendor_multi_user_pricing', true);
 					
 				if ( !empty($data) ) {	
 					foreach ( $data as $key => $value) {
 						
-						if ( isset ( $data[$key]['wholesale_price'] ) ) {
+						if ( isset ( $data[$key]['vendor_price'] ) ) {
 							$cate[] = $category->term_id;
 						} 
 					}	
@@ -223,7 +223,7 @@ if ( ! function_exists( 'multi_wholesale_product_ids' ) ) :
 		) );
 		foreach ( $all_ids as $id ) {
 			
-			$data = get_post_meta($id, 'wholesale_multi_user_pricing', true);
+			$data = get_post_meta($id, 'vendor_multi_user_pricing', true);
 			if ( !empty($data) ) {
 				foreach ( $data as $key => $value ) {
 					if ( isset($data[$key]) ) {	
@@ -243,8 +243,8 @@ if ( ! function_exists( 'multi_wholesale_product_ids' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'single_wholesale_product_ids' ) ) :
-	function single_wholesale_product_ids() {
+if ( ! function_exists( 'single_vendor_product_ids' ) ) :
+	function single_vendor_product_ids() {
 		$cate = array();
 		$total_ids = array();
 
@@ -254,7 +254,7 @@ if ( ! function_exists( 'single_wholesale_product_ids' ) ) :
 		
 			foreach ( $categories as $category ) {
 				 
-				if ( 'yes' == get_term_meta($category->term_id, '_wwp_enable_wholesale_item', true) ) {
+				if ( 'yes' == get_term_meta($category->term_id, '_wvp_enable_vendor_item', true) ) {
 					$cate[] = $category->term_id;
 				}
 		
@@ -291,7 +291,7 @@ if ( ! function_exists( 'single_wholesale_product_ids' ) ) :
 		) );
 		foreach ( $all_ids as $id ) {
 			
-			if ( 'yes' == get_post_meta($id, '_wwp_enable_wholesale_item', true)) {	
+			if ( 'yes' == get_post_meta($id, '_wvp_enable_vendor_item', true)) {	
 				$total_ids[] =	$id ;
 			}
 		}
@@ -327,11 +327,11 @@ if ( ! function_exists( 'refresh_structure_form' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'wwp_render_characters_remove' ) ) :
-	function wwp_render_characters_remove( $formData ) {
+if ( ! function_exists( 'wvp_render_characters_remove' ) ) :
+	function wvp_render_characters_remove( $formData ) {
 		$formData = refresh_structure_form( $formData );
 		$formData = str_replace( "'", '&#39;', $formData ); 
-		return apply_filters( 'wwp_render_characters_remove', $formData );
+		return apply_filters( 'wvp_render_characters_remove', $formData );
 	}
 endif;
 
@@ -340,31 +340,31 @@ if ( ! function_exists( 'render_form_builder' ) ) :
 		?>
 		<div id="container-wrap">
 			<div class="render-wrap"></div>
-			<input type="hidden" name="wwp_form_data_json" id="wwp_form_data_json"  value="">
+			<input type="hidden" name="wvp_form_data_json" id="wvp_form_data_json"  value="">
 		</div>
 		<script>
 			jQuery( document ).ready(function($) {
 				<?php if ( 'get_option' == $callbach_data_form ) { ?>
 			 
-					formData = <?php echo wp_kses_post(wwp_render_characters_remove(get_option('wwp_save_form'))); ?>;
+					formData = <?php echo wp_kses_post(wvp_render_characters_remove(get_option('wvp_save_form'))); ?>;
 				 
 					<?php } elseif ( 'get_post_meta' == $callbach_data_form ) { ?>
 					 
-					formData = <?php echo wp_kses_post(wwp_render_characters_remove(get_post_meta( $user_id , 'wwp_form_data_json', true ))); ?>;
+					formData = <?php echo wp_kses_post(wvp_render_characters_remove(get_post_meta( $user_id , 'wvp_form_data_json', true ))); ?>;
 
 					<?php } else { ?>
 				
-						<?php if ( !empty($user_id) &&  !empty(get_user_meta( $user_id , 'wwp_form_data_json', true )) ) { ?> 
+						<?php if ( !empty($user_id) &&  !empty(get_user_meta( $user_id , 'wvp_form_data_json', true )) ) { ?> 
 						
-						formData = <?php echo wp_kses_post(wwp_render_characters_remove(get_user_meta( $user_id , 'wwp_form_data_json', true ))); ?>;
+						formData = <?php echo wp_kses_post(wvp_render_characters_remove(get_user_meta( $user_id , 'wvp_form_data_json', true ))); ?>;
 							
 						<?php } else { ?>
-							formData = <?php echo wp_kses_post(wwp_render_characters_remove(get_option('wwp_save_form'))); ?>;
+							formData = <?php echo wp_kses_post(wvp_render_characters_remove(get_option('wvp_save_form'))); ?>;
 						<?php } ?>
 				
 					<?php } ?>
 					
-			wwp_filter_css = "<?php echo wp_kses_post( registration_form_class(' woocommerce-form-row woocommerce-form-row--wide form-row-wide wwp_form_css_row ') ); ?>";		
+			wvp_filter_css = "<?php echo wp_kses_post( registration_form_class(' woocommerce-form-row woocommerce-form-row--wide form-row-wide wvp_form_css_row ') ); ?>";		
 			// Remove all br tags	
 			//formData = formData.replace(/\//g,'');
 			//formData = formData.replace(/<br >/g,'');
@@ -377,34 +377,34 @@ if ( ! function_exists( 'render_form_builder' ) ) :
 						
 						if ( data.type == 'checkbox-group' || data.type == 'radio-group') {
 							//return $('<div/>').append(label, field, help);
-							  return $('<p/>').addClass(wwp_filter_css).append(label, field, help);
+							  return $('<p/>').addClass(wvp_filter_css).append(label, field, help);
 						 } else {
 							 
-							 return $('<p/>').addClass(wwp_filter_css +" form-row").append(label, field, help);
+							 return $('<p/>').addClass(wvp_filter_css +" form-row").append(label, field, help);
 						 }
 					}
 				},
 			});
 			jQuery("input,textarea").keyup(function() { 
-				wwp_set_json_to_hidden_field(); 
+				wvp_set_json_to_hidden_field(); 
 			});
 			jQuery("select,input,textarea").change(function() { 
-				wwp_set_json_to_hidden_field(); 
+				wvp_set_json_to_hidden_field(); 
 			});
 			jQuery("ul.formbuilder-autocomplete-list li").click(function(){ 
-				wwp_set_json_to_hidden_field();
+				wvp_set_json_to_hidden_field();
 			});
 			jQuery("input,textarea").on("input paste", function() { 
-				wwp_set_json_to_hidden_field();
+				wvp_set_json_to_hidden_field();
 			});
 			
-			function wwp_set_json_to_hidden_field() { 
-				jQuery('#wwp_form_data_json').val(window.JSON.stringify(jQuery(render_wrap).formRender("userData")));
+			function wvp_set_json_to_hidden_field() { 
+				jQuery('#wvp_form_data_json').val(window.JSON.stringify(jQuery(render_wrap).formRender("userData")));
 				 console.log(render_wrap.userData);
 				return true;
 			}
 			
-			wwp_set_json_to_hidden_field();
+			wvp_set_json_to_hidden_field();
 			
 			<?php if ( !is_admin() ) { ?>
 			jQuery('.formBuilder-injected-style').remove();
@@ -416,12 +416,12 @@ if ( ! function_exists( 'render_form_builder' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'wwp_wholesale_css' ) ) : 
-	function wwp_wholesale_css( $settings ) { 
-		if ( isset($settings['wholesale_css']) ) { 
+if ( ! function_exists( 'wvp_vendor_css' ) ) : 
+	function wvp_vendor_css( $settings ) { 
+		if ( isset($settings['vendor_css']) ) { 
 			?>
 			<style type="text/css">
-			<?php echo wp_kses_post(apply_filters( 'wwp_registration_form_css', $settings['wholesale_css'] )); ?>
+			<?php echo wp_kses_post(apply_filters( 'wvp_vendor_registration_form_css', $settings['vendor_css'] )); ?>
 			</style>
 			<?php 
 		} 
@@ -434,22 +434,22 @@ if ( ! function_exists( 'registration_form_class' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'wwp_elements' ) ) : 
-	function wwp_elements( $elements ) { 
-		echo wp_kses_post( apply_filters( 'wwp_registration_form_elements', $elements ) );
+if ( ! function_exists( 'wvp_elements' ) ) : 
+	function wvp_elements( $elements ) { 
+		echo wp_kses_post( apply_filters( 'wvp_vendor_registration_form_elements', $elements ) );
 	}
 endif;
 
 if ( ! function_exists( 'form_builder_update_user_meta' ) ) : 
 	function form_builder_update_user_meta ( $user_id ) { 
-		if ( isset($_POST['wwp_wholesale_registrattion_nonce']) || wp_verify_nonce( wc_clean($_POST['wwp_wholesale_registrattion_nonce']), 'wwp_wholesale_registrattion_nonce') ) {
+		if ( isset($_POST['wvp_vendor_registrattion_nonce']) || wp_verify_nonce( wc_clean($_POST['wvp_vendor_registrattion_nonce']), 'wvp_vendor_registrattion_nonce') ) {
 			return;
 		}
-		if (isset($_POST['wwp_form_data_json']) && !empty($_POST['wwp_form_data_json'])) {
+		if (isset($_POST['wvp_form_data_json']) && !empty($_POST['wvp_form_data_json'])) {
 			
-			$wwp_form_data_json = json_decode( stripslashes( wwp_get_post_data( 'wwp_form_data_json' ) ), true );
+			$wvp_form_data_json = json_decode( stripslashes( wvp_get_post_data( 'wvp_form_data_json' ) ), true );
 			
-			foreach ( $wwp_form_data_json as $formdata_key => $meta_value ) {
+			foreach ( $wvp_form_data_json as $formdata_key => $meta_value ) {
 				
 				$meta_key = 'form_builder_' . str_replace(' ', '_', $meta_value['label']);
 				update_user_meta( $user_id, $meta_key, $meta_value );
@@ -460,8 +460,8 @@ if ( ! function_exists( 'form_builder_update_user_meta' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'wwp_get_tax_price_display_suffix' ) ) : 
-	function wwp_get_tax_price_display_suffix( $product_id ) { 
+if ( ! function_exists( 'wvp_get_tax_price_display_suffix' ) ) : 
+	function wvp_get_tax_price_display_suffix( $product_id ) { 
 		global $woocommerce;
 		$product = wc_get_product( $product_id );
 		
@@ -478,12 +478,12 @@ if ( ! function_exists( 'wwp_get_tax_price_display_suffix' ) ) :
 			$tax_display_suffix = '';
 		}
 		
-		return apply_filters( 'wwp_get_tax_price_display_suffix', $tax_display_suffix );
+		return apply_filters( 'wvp_get_tax_price_display_suffix', $tax_display_suffix );
 	}
 endif;
 
-if ( ! function_exists( 'wwp_get_price_including_tax' ) ) : 
-	function wwp_get_price_including_tax( $product, $args = array() ) { 
+if ( ! function_exists( 'wvp_get_price_including_tax' ) ) : 
+	function wvp_get_price_including_tax( $product, $args = array() ) { 
 		global $woocommerce;
 
 		if ($woocommerce->customer->is_vat_exempt() == false && 'taxable' == get_post_meta($product->get_id(), '_tax_status', true)) {
@@ -496,7 +496,7 @@ if ( ! function_exists( 'wwp_get_price_including_tax' ) ) :
 			$price = $args['price'];
 		}
 		
-		return apply_filters( 'wwp_get_price_including_tax', $price , $product );
+		return apply_filters( 'wvp_get_price_including_tax', $price , $product );
 	}
 endif;
 

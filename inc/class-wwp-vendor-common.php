@@ -2,9 +2,9 @@
 if ( !defined('ABSPATH') ) {
 	exit; // Exit if accessed directly
 }
-if ( !class_exists('WWP_Wholesale_Pricing_Common') ) {
+if ( !class_exists('WWP_Vendor_Portal_Common') ) {
 
-	class WWP_Wholesale_Pricing_Common {
+	class WWP_Vendor_Portal_Common {
 
 		public function __construct() {
 			// admin notification
@@ -29,7 +29,7 @@ if ( !class_exists('WWP_Wholesale_Pricing_Common') ) {
 		public function wwp_wholesale_user_rejection_notification ( $user_id ) {
 			if ( 'yes' == get_option('wwp_wholesale_user_rejection_notification') ) {
 				$subject = get_option('wwp_wholesale_rejection_notification_subject');
-				$subject = !empty( $subject ) ? $subject : esc_html__('Request Rejected', 'woocommerce-wholesale-pricing');
+				$subject = !empty( $subject ) ? $subject : esc_html__('Request Rejected', 'woocommerce-vendor-portal');
 				$subject = stripslashes(html_entity_decode($subject, ENT_QUOTES, 'UTF-8' ));
 				$body = get_option('wwp_wholesale_rejection_notification_body');
 				$user = get_user_by('ID', $user_id );
@@ -54,7 +54,7 @@ if ( !class_exists('WWP_Wholesale_Pricing_Common') ) {
 			if ( 'yes' == get_option('wwp_wholesale_user_registration_notification') ) {
 				
 				$subject = get_option('wwp_wholesale_registration_notification_subject');
-				$subject = !empty( $subject ) ? $subject : esc_html__('New Request Received.', 'woocommerce-wholesale-pricing');
+				$subject = !empty( $subject ) ? $subject : esc_html__('New Request Received.', 'woocommerce-vendor-portal');
 				$subject = stripslashes(html_entity_decode($subject, ENT_QUOTES, 'UTF-8' ));
 				$body = get_option('wwp_wholesale_registration_notification_body');
 				$user = get_user_by( 'ID', $user_id );
@@ -80,7 +80,7 @@ if ( !class_exists('WWP_Wholesale_Pricing_Common') ) {
 		public function wwp_wholesale_admin_request_notification ( $user_id ) {
 			if ( 'yes' == get_option('wwp_wholesale_admin_request_notification') ) {
 				$subject = get_option('wwp_wholesale_admin_request_subject');
-				$subject = !empty( $subject ) ? $subject : esc_html__('New Requested Received.', 'woocommerce-wholesale-pricing');
+				$subject = !empty( $subject ) ? $subject : esc_html__('New Requested Received.', 'woocommerce-vendor-portal');
 				$subject = stripslashes(html_entity_decode($subject, ENT_QUOTES, 'UTF-8' ));
 				$body = get_option('wwp_wholesale_admin_request_body');
 				$user = get_user_by('ID', $user_id );
@@ -102,7 +102,7 @@ if ( !class_exists('WWP_Wholesale_Pricing_Common') ) {
 		public function wwp_wholesale_user_request_approved_notification ( $user_id ) {
 			if ( 'yes' == get_option('wwp_wholesale_request_approve_notification') ) {
 				$subject = get_option('wwp_wholesale_email_request_subject');
-				$subject = !empty( $subject ) ? esc_html($subject) : esc_html__('Your Requested Approved.', 'woocommerce-wholesale-pricing');
+				$subject = !empty( $subject ) ? esc_html($subject) : esc_html__('Your Requested Approved.', 'woocommerce-vendor-portal');
 				$subject = stripslashes(html_entity_decode($subject, ENT_QUOTES, 'UTF-8' ));
 				$body = get_option('wwp_wholesale_email_request_body');
 				$user = get_user_by('ID', $user_id);
@@ -125,7 +125,7 @@ if ( !class_exists('WWP_Wholesale_Pricing_Common') ) {
 		public function wwp_wholesale_subscription_role_upgraded( $user_id, $role ) {
 			if ( 'yes' == get_option('wwp_wholesale_subscription_role_notification') ) {
 				$subject = get_option('wwp_wholesale_subscription_role_subject');
-				$subject = !empty( $subject ) ? esc_html($subject) : esc_html__('Your Role Is Upgraded.', 'woocommerce-wholesale-pricing');
+				$subject = !empty( $subject ) ? esc_html($subject) : esc_html__('Your Role Is Upgraded.', 'woocommerce-vendor-portal');
 				$subject = stripslashes(html_entity_decode($subject, ENT_QUOTES, 'UTF-8' ));
 				$body = get_option('wwp_wholesale_subscription_role_body');
 				$user = get_user_by('ID', $user_id);
@@ -147,5 +147,5 @@ if ( !class_exists('WWP_Wholesale_Pricing_Common') ) {
 		}
 		// ends version 1.3.0
 	}
-	new WWP_Wholesale_Pricing_Common();
+	new WWP_Vendor_Portal_Common();
 }

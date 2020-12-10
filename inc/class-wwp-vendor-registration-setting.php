@@ -40,13 +40,13 @@ if ( !class_exists('Wwp_Wholesale_Registration_Page_Setting') ) {
 			
 			$registrations = get_option('wwp_wholesale_registration_options');
 			if ( isset($registrations['tax_id_display']) && 'yes' == $registrations['tax_id_display'] ) {
-				$wholesaler_tax_id = esc_html__('Wholesaler Tax ID ', 'woocommerce-wholesale-pricing');
+				$wholesaler_tax_id = esc_html__('Wholesaler Tax ID ', 'woocommerce-vendor-portal');
 				echo wp_kses('<p><strong> ' . $wholesaler_tax_id . ':</strong> <br/>' . get_user_meta( $order->get_user_id(), 'wwp_wholesaler_tax_id', true ) . '</p>', shapeSpace_allowed_html());
 			}
 		}
 		
 		public function wwp_registration_page_setting() {
-			add_submenu_page('wwp_vendor', esc_html__('Registration Page', 'woocommerce-wholesale-pricing'), esc_html__('Registration Setting', 'woocommerce-wholesale-pricing'), 'manage_wholesale_registration_page', 'wwp-registration-setting', array($this,'wwp_wholesale_registration_page_callback'));
+			add_submenu_page('wwp_vendor', esc_html__('Registration Page', 'woocommerce-vendor-portal'), esc_html__('Registration Setting', 'woocommerce-vendor-portal'), 'manage_wholesale_registration_page', 'wwp-registration-setting', array($this,'wwp_wholesale_registration_page_callback'));
 		}
 		
 		public function wwp_wholesale_registration_page_callback() {
@@ -60,15 +60,15 @@ if ( !class_exists('Wwp_Wholesale_Registration_Page_Setting') ) {
 			?><div id="screen_fix"></div>
 			<div id="registration_form_settings">
 			
-			<nav class="wholesale-tab-link nav-tab-wrapper wp-clearfix">
-				<a href="<?php echo esc_html_e(wholesale_tab_link('')); ?>" class="nav-tab <?php echo esc_html_e(wholesale_tab_active('')); ?>" data-tab="wholesale-general-settings">
-					<?php esc_html_e('General Settings', 'woocommerce-wholesale-pricing'); ?>
+			<nav class="vendor-tab-link nav-tab-wrapper wp-clearfix">
+				<a href="<?php echo esc_html_e(wholesale_tab_link('')); ?>" class="nav-tab <?php echo esc_html_e(wholesale_tab_active('')); ?>" data-tab="vendor-general-settings">
+					<?php esc_html_e('General Settings', 'woocommerce-vendor-portal'); ?>
 				</a>
-				<a href="<?php echo esc_html_e(wholesale_tab_link('default-fields')); ?>" class="nav-tab <?php echo esc_html_e(wholesale_tab_active('default-fields')); ?>" data-tab="wholesale-default-settings">
-					<?php esc_html_e('Default Fields', 'woocommerce-wholesale-pricing'); ?>
+				<a href="<?php echo esc_html_e(wholesale_tab_link('default-fields')); ?>" class="nav-tab <?php echo esc_html_e(wholesale_tab_active('default-fields')); ?>" data-tab="vendor-default-settings">
+					<?php esc_html_e('Default Fields', 'woocommerce-vendor-portal'); ?>
 				</a>
-				<a href="<?php echo esc_html_e(wholesale_tab_link('extra-fields')); ?>" class="nav-tab <?php echo esc_html_e(wholesale_tab_active('extra-fields')); ?>" data-tab="wholesale-extra-settings">
-					<?php esc_html_e('Extra Fields', 'woocommerce-wholesale-pricing'); ?>
+				<a href="<?php echo esc_html_e(wholesale_tab_link('extra-fields')); ?>" class="nav-tab <?php echo esc_html_e(wholesale_tab_active('extra-fields')); ?>" data-tab="vendor-extra-settings">
+					<?php esc_html_e('Extra Fields', 'woocommerce-vendor-portal'); ?>
 				</a>
 			</nav>
 			
@@ -80,7 +80,7 @@ if ( !class_exists('Wwp_Wholesale_Registration_Page_Setting') ) {
 					<table class="form-table" style="display: <?php echo esc_html_e(wholesale_content_tab_active('')); ?>">
 						<tbody>
 							<tr scope="row">
-								<th><h4><label for=""><?php esc_html_e('Enable Billing Address form Default Fields', 'woocommerce-wholesale-pricing'); ?></label></h4></th>
+								<th><h4><label for=""><?php esc_html_e('Enable Billing Address form Default Fields', 'woocommerce-vendor-portal'); ?></label></h4></th>
 								<td>
 									<p>
 										<label for="custommer_billing_address" class="switch">
@@ -106,7 +106,7 @@ if ( !class_exists('Wwp_Wholesale_Registration_Page_Setting') ) {
 					<table class="form-table"  style="display: <?php echo esc_html_e(wholesale_content_tab_active('')); ?>">
 						<tbody>
 							<tr scope="row">
-								<th><h4><label><?php esc_html_e('Enable Shipping Address form Default Fields', 'woocommerce-wholesale-pricing'); ?></label></h4></th>
+								<th><h4><label><?php esc_html_e('Enable Shipping Address form Default Fields', 'woocommerce-vendor-portal'); ?></label></h4></th>
 								<td>
 									<p>
 										<?php
@@ -133,7 +133,7 @@ if ( !class_exists('Wwp_Wholesale_Registration_Page_Setting') ) {
 					<table class="form-table"  style="display: <?php echo esc_html_e(wholesale_content_tab_active('')); ?>">
 						<tbody>
 							<tr scope="row">
-								<th><h4><label><?php esc_html_e('Display Extra Fields on Registration', 'woocommerce-wholesale-pricing'); ?></label></h4></th>
+								<th><h4><label><?php esc_html_e('Display Extra Fields on Registration', 'woocommerce-vendor-portal'); ?></label></h4></th>
 								<td>
 									<p>
 										<?php
@@ -160,7 +160,7 @@ if ( !class_exists('Wwp_Wholesale_Registration_Page_Setting') ) {
 					<table class="form-table"  style="display: <?php echo esc_html_e(wholesale_content_tab_active('')); ?>">
 						<tbody>
 							<tr scope="row">
-								<th><h4><label><?php esc_html_e('Display Extra Fields on  My account', 'woocommerce-wholesale-pricing'); ?></label></h4></th>
+								<th><h4><label><?php esc_html_e('Display Extra Fields on  My account', 'woocommerce-vendor-portal'); ?></label></h4></th>
 								<td>
 									<p>
 										<?php
@@ -187,7 +187,7 @@ if ( !class_exists('Wwp_Wholesale_Registration_Page_Setting') ) {
 					<table class="form-table"  style="display: <?php echo esc_html_e(wholesale_content_tab_active('')); ?>">
 						<tbody>
 							<tr scope="row">
-								<th><h4><label><?php esc_html_e('Display Extra Fields on Checkout', 'woocommerce-wholesale-pricing'); ?></label></h4></th>
+								<th><h4><label><?php esc_html_e('Display Extra Fields on Checkout', 'woocommerce-vendor-portal'); ?></label></h4></th>
 								<td>
 									<p>
 										<?php
@@ -212,135 +212,135 @@ if ( !class_exists('Wwp_Wholesale_Registration_Page_Setting') ) {
 					</table> 
 					
 					<div id="billing_address_fields" style="display:<?php echo esc_html_e(wholesale_content_tab_active('default-fields')); ?>">
-					<h3><label for=""><?php esc_html_e('Billing Address form Fields', 'woocommerce-wholesale-pricing'); ?></label></h3>
+					<h3><label for=""><?php esc_html_e('Billing Address form Fields', 'woocommerce-vendor-portal'); ?></label></h3>
 						<table class="form-table">
 							<tbody>
 								<tr scope="row">
-									<th><label for=""><?php esc_html_e('Billing First Name', 'woocommerce-wholesale-pricing'); ?></label></th>
+									<th><label for=""><?php esc_html_e('Billing First Name', 'woocommerce-vendor-portal'); ?></label></th>
 									<td>
 										<p>
 											<label for="billing_first_name">
 												<input type="checkbox" id="enable_billing_first_name" name="registrations[enable_billing_first_name]" value="yes" <?php echo ( isset($registrations['enable_billing_first_name']) && 'yes' == $registrations['enable_billing_first_name'] ) ? 'checked' : ''; ?>>
-												<?php esc_html_e('Enable', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('Enable', 'woocommerce-vendor-portal'); ?>
 												<input type="text" id="billing_first_name" placeholder="Custom label" name="registrations[billing_first_name]" value="<?php echo isset( $registrations['billing_first_name'] ) ? esc_attr($registrations['billing_first_name']) : ''; ?>" >
-												<?php esc_html_e(' [ default label : "First Name" ]', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e(' [ default label : "First Name" ]', 'woocommerce-vendor-portal'); ?>
 											</label>
 										</p>
 									</td>
 								</tr>
 								<tr scope="row">
-									<th><label for=""><?php esc_html_e('Billing Last Name', 'woocommerce-wholesale-pricing'); ?></label></th>
+									<th><label for=""><?php esc_html_e('Billing Last Name', 'woocommerce-vendor-portal'); ?></label></th>
 									<td>
 										<p>
 											<label for="billing_last_name">
 												<input type="checkbox" id="enable_billing_last_name" name="registrations[enable_billing_last_name]" value="yes" <?php echo ( isset($registrations['enable_billing_last_name']) && 'yes' == $registrations['enable_billing_last_name'] ) ? 'checked' : ''; ?>>
-												<?php esc_html_e('Enable', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('Enable', 'woocommerce-vendor-portal'); ?>
 												<input type="text" id="billing_last_name" placeholder="Custom label" name="registrations[billing_last_name]" value="<?php echo isset($registrations['billing_last_name']) ? esc_attr($registrations['billing_last_name']) : ''; ?>">
-												<?php esc_html_e(' [ default label : "Last Name" ] ', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e(' [ default label : "Last Name" ] ', 'woocommerce-vendor-portal'); ?>
 											</label>
 										</p>
 									</td>
 								</tr>
 								<tr scope="row" >
-									<th><label for=""><?php esc_html_e('Company', 'woocommerce-wholesale-pricing'); ?></label></th>
+									<th><label for=""><?php esc_html_e('Company', 'woocommerce-vendor-portal'); ?></label></th>
 									<td>
 										<p>
 											<label for="billing_company">
 												<input type="checkbox" id="enable_billing_company" name="registrations[enable_billing_company]" value="yes" <?php echo ( isset($registrations['enable_billing_company']) && 'yes' == $registrations['enable_billing_company'] ) ? 'checked' : ''; ?>>
-												<?php esc_html_e('Enable', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('Enable', 'woocommerce-vendor-portal'); ?>
 												<input type="text" id="billing_company" placeholder="Custom label" name="registrations[billing_company]" value="<?php echo isset( $registrations['billing_company'] ) ? esc_attr($registrations['billing_company']) : ''; ?>" >
-												<?php esc_html_e(' [ default label : "Company" ] ', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e(' [ default label : "Company" ] ', 'woocommerce-vendor-portal'); ?>
 											</label>
 										</p>
 									</td>
 								</tr>
 								<tr scope="row" >
-									<th><label for=""><?php esc_html_e('Address line 1 ', 'woocommerce-wholesale-pricing'); ?></label></th>
+									<th><label for=""><?php esc_html_e('Address line 1 ', 'woocommerce-vendor-portal'); ?></label></th>
 									<td>
 										<p>
 											<label for="billing_address_1">
 												<input type="checkbox" id="enable_billing_address_1" name="registrations[enable_billing_address_1]" value="yes"  <?php echo ( isset($registrations['enable_billing_address_1']) && 'yes' == $registrations['enable_billing_address_1'] ) ? 'checked' : ''; ?>>
-												<?php esc_html_e('Enable', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('Enable', 'woocommerce-vendor-portal'); ?>
 												<input type="text" id="billing_address_1" placeholder="Custom label" name="registrations[billing_address_1]" value="<?php echo isset($registrations['billing_address_1']) ? esc_attr($registrations['billing_address_1']) : ''; ?>">
-												<?php esc_html_e(' [ default label : "Address line 1" ] ', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e(' [ default label : "Address line 1" ] ', 'woocommerce-vendor-portal'); ?>
 											</label>
 										</p>
 									</td>
 								</tr>
 								<tr scope="row" >
-									<th><label for=""><?php esc_html_e('Address line 2 ', 'woocommerce-wholesale-pricing'); ?></label></th>
+									<th><label for=""><?php esc_html_e('Address line 2 ', 'woocommerce-vendor-portal'); ?></label></th>
 									<td>
 										<p>
 											<label for="billing_address_2">
 												<input type="checkbox" id="enable_billing_address_2" name="registrations[enable_billing_address_2]" value="yes" <?php echo ( isset($registrations['enable_billing_address_2']) && 'yes' == $registrations['enable_billing_address_2'] ) ? 'checked' : ''; ?>>
-												<?php esc_html_e('Enable', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('Enable', 'woocommerce-vendor-portal'); ?>
 												<input type="text" id="billing_address_2" placeholder="Custom label" name="registrations[billing_address_2]" value="<?php echo isset($registrations['billing_address_2']) ? esc_attr($registrations['billing_address_2']) : ''; ?>" >
-												<?php esc_html_e('  [ default label : "Address line 2" ]', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('  [ default label : "Address line 2" ]', 'woocommerce-vendor-portal'); ?>
 											</label>
 										</p>
 									</td>
 								</tr>
 								<tr scope="row" >
-									<th><label for=""><?php esc_html_e('City ', 'woocommerce-wholesale-pricing'); ?></label></th>
+									<th><label for=""><?php esc_html_e('City ', 'woocommerce-vendor-portal'); ?></label></th>
 									<td>
 										<p>
 											<label for="billing_city">
 												<input type="checkbox" id="enable_billing_city" name="registrations[enable_billing_city]" value="yes" <?php echo ( isset($registrations['enable_billing_city']) && 'yes' == $registrations['enable_billing_city'] ) ? 'checked' : ''; ?>>
-												<?php esc_html_e('Enable', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('Enable', 'woocommerce-vendor-portal'); ?>
 												<input type="text" id="billing_city" placeholder="Custom label" name="registrations[billing_city]" value="<?php echo isset($registrations['billing_city']) ? esc_attr($registrations['billing_city']) : ''; ?>"  >
-												<?php esc_html_e(' [ default label : "City" ] ', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e(' [ default label : "City" ] ', 'woocommerce-vendor-portal'); ?>
 											</label>
 										</p>
 									</td>
 								</tr>
 								<tr scope="row" >
-									<th><label for=""><?php esc_html_e('Postcode / ZIP ', 'woocommerce-wholesale-pricing'); ?></label></th>
+									<th><label for=""><?php esc_html_e('Postcode / ZIP ', 'woocommerce-vendor-portal'); ?></label></th>
 									<td>
 										<p>
 											<label for="billing_post_code">
 												<input type="checkbox" id="enable_billing_post_code" name="registrations[enable_billing_post_code]" value="yes" <?php echo ( isset($registrations['enable_billing_post_code']) && 'yes' == $registrations['enable_billing_post_code'] ) ? 'checked' : ''; ?>>
-												<?php esc_html_e('Enable', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('Enable', 'woocommerce-vendor-portal'); ?>
 												<input type="text" id="billing_post_code"  placeholder="Custom label" name="registrations[billing_post_code]" value="<?php echo isset($registrations['billing_post_code']) ? esc_attr($registrations['billing_post_code']) : ''; ?>"  >
-												<?php esc_html_e(' [ default label : "Postcode / ZIP" ]', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e(' [ default label : "Postcode / ZIP" ]', 'woocommerce-vendor-portal'); ?>
 											</label>
 										</p>
 									</td>
 								</tr>
 								<tr scope="row" >
-									<th><label for=""><?php esc_html_e('Countries ', 'woocommerce-wholesale-pricing'); ?></label></th>
+									<th><label for=""><?php esc_html_e('Countries ', 'woocommerce-vendor-portal'); ?></label></th>
 									<td>
 										<p>
 											<label for="billing_countries">
 												<input type="checkbox" id="enable_billing_country" name="registrations[enable_billing_country]" value="yes" <?php echo ( isset($registrations['enable_billing_country']) && 'yes' == $registrations['enable_billing_country'] ) ? 'checked' : ''; ?>>
-												<?php esc_html_e('Enable', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('Enable', 'woocommerce-vendor-portal'); ?>
 												<input type="text" id="billing_countries" placeholder="Custom label" name="registrations[billing_countries]" value="<?php echo isset($registrations['billing_countries']) ? esc_attr($registrations['billing_countries']) : ''; ?>" >
-												<?php esc_html_e(' [ default label : "Countries" ] ', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e(' [ default label : "Countries" ] ', 'woocommerce-vendor-portal'); ?>
 											</label>
 										</p>
 									</td>
 								</tr>
 								<tr scope="row" >
-									<th><label for=""><?php esc_html_e('States ', 'woocommerce-wholesale-pricing'); ?></label></th>
+									<th><label for=""><?php esc_html_e('States ', 'woocommerce-vendor-portal'); ?></label></th>
 									<td>
 										<p>
 											<label for="billing_countries">
 												<input type="checkbox" id="enable_billing_state" name="registrations[enable_billing_state]" value="yes" <?php echo ( isset($registrations['enable_billing_state']) && 'yes' == $registrations['enable_billing_state'] ) ? 'checked' : ''; ?>>
-												<?php esc_html_e('Enable', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('Enable', 'woocommerce-vendor-portal'); ?>
 												<input type="text" id="billing_state"  placeholder="Custom label" name="registrations[billing_state]" value="<?php echo isset($registrations['billing_state']) ? esc_attr($registrations['billing_state']) : ''; ?>" >
-												<?php esc_html_e(' [ default label : "States" ]', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e(' [ default label : "States" ]', 'woocommerce-vendor-portal'); ?>
 											</label>
 										</p>
 									</td>
 								</tr>
 								<tr scope="row" >
-									<th><label><?php esc_html_e('Phone ', 'woocommerce-wholesale-pricing'); ?></label></th>
+									<th><label><?php esc_html_e('Phone ', 'woocommerce-vendor-portal'); ?></label></th>
 									<td>
 										<p>
 											<label for="billing_phone">
 												<input type="checkbox" id="enable_billing_phone" name="registrations[enable_billing_phone]" value="yes" <?php echo ( isset($registrations['enable_billing_phone']) && 'yes' == $registrations['enable_billing_phone'] ) ? 'checked' : ''; ?>>
-												<?php esc_html_e('Enable', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('Enable', 'woocommerce-vendor-portal'); ?>
 												<input type="text" id="billing_phone" placeholder="Custom label" name="registrations[billing_phone]" value="<?php echo isset($registrations['billing_phone']) ? esc_attr($registrations['billing_phone']) : ''; ?>">
-												<?php esc_html_e(' [ default label : "Phone" ] ', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e(' [ default label : "Phone" ] ', 'woocommerce-vendor-portal'); ?>
 											</label>
 										</p>
 									</td>
@@ -350,125 +350,125 @@ if ( !class_exists('Wwp_Wholesale_Registration_Page_Setting') ) {
 					</div>
 					
 					<div id="shipping_address_fields" style="display:<?php echo esc_html_e(wholesale_content_tab_active('default-fields')); ?>;">
-					<h3><label><?php esc_html_e('Shipping Address form Fields', 'woocommerce-wholesale-pricing'); ?></label></h3>
+					<h3><label><?php esc_html_e('Shipping Address form Fields', 'woocommerce-vendor-portal'); ?></label></h3>
 						<table class="form-table">
 							<tbody>
 								<tr scope="row">
-									<th><label for=""><?php esc_html_e('Shipping First Name', 'woocommerce-wholesale-pricing'); ?></label></th>
+									<th><label for=""><?php esc_html_e('Shipping First Name', 'woocommerce-vendor-portal'); ?></label></th>
 									<td>
 										<p>
 											<label for="shipping_first_name">
 												<input type="checkbox" id="enable_shipping_first_name" name="registrations[enable_shipping_first_name]" value="yes" <?php echo ( isset($registrations['enable_shipping_first_name']) && 'yes' == $registrations['enable_shipping_first_name'] ) ? 'checked' : ''; ?>>
-												<?php esc_html_e('Enable', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('Enable', 'woocommerce-vendor-portal'); ?>
 												<input type="text" id="shipping_first_name" placeholder="Custom label" name="registrations[shipping_first_name]" value="<?php echo isset($registrations['shipping_first_name']) ? esc_attr($registrations['shipping_first_name']) : ''; ?>">
-												<?php esc_html_e('[ default label : "First Name" ]  ', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('[ default label : "First Name" ]  ', 'woocommerce-vendor-portal'); ?>
 
 											</label>
 										</p>
 									</td>
 								</tr>
 								<tr scope="row">
-									<th><label for=""><?php esc_html_e('Shipping Last Name', 'woocommerce-wholesale-pricing'); ?></label></th>
+									<th><label for=""><?php esc_html_e('Shipping Last Name', 'woocommerce-vendor-portal'); ?></label></th>
 									<td>
 										<p>
 											<label for="shipping_last_name">
 												<input type="checkbox" id="enable_shipping_last_name" name="registrations[enable_shipping_last_name]" value="yes" <?php echo ( isset($registrations['enable_shipping_last_name']) && 'yes' == $registrations['enable_shipping_last_name'] ) ? 'checked' : ''; ?>>
-												<?php esc_html_e('Enable', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('Enable', 'woocommerce-vendor-portal'); ?>
 												<input type="text" id="shipping_last_name" placeholder="Custom label" name="registrations[shipping_last_name]" value="<?php echo isset($registrations['shipping_last_name']) ? esc_attr($registrations['shipping_last_name']) : ''; ?>">
-												<?php esc_html_e(' [ default label : "Last Name" ] ', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e(' [ default label : "Last Name" ] ', 'woocommerce-vendor-portal'); ?>
 											</label>
 										</p>
 									</td>
 								</tr>
 								<tr scope="row" >
-									<th><label for=""><?php esc_html_e('Company', 'woocommerce-wholesale-pricing'); ?></label></th>
+									<th><label for=""><?php esc_html_e('Company', 'woocommerce-vendor-portal'); ?></label></th>
 									<td>
 										<p>
 											<label for="billing_company">
 												<input type="checkbox" id="enable_shipping_company" name="registrations[enable_shipping_company]" value="yes" <?php echo ( isset($registrations['enable_shipping_company']) && 'yes' == $registrations['enable_shipping_company'] ) ? 'checked' : ''; ?>>
-												<?php esc_html_e('Enable', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('Enable', 'woocommerce-vendor-portal'); ?>
 												<input type="text" id="shipping_company" placeholder="Custom label" name="registrations[shipping_company]" value="<?php echo isset($registrations['shipping_company']) ? esc_attr($registrations['shipping_company']) : ''; ?>">
-												<?php esc_html_e(' [ default label : "Company" ] ', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e(' [ default label : "Company" ] ', 'woocommerce-vendor-portal'); ?>
 
 											</label>
 										</p>
 									</td>
 								</tr>
 								<tr scope="row" >
-									<th><label for=""><?php esc_html_e('Address line 1 ', 'woocommerce-wholesale-pricing'); ?></label></th>
+									<th><label for=""><?php esc_html_e('Address line 1 ', 'woocommerce-vendor-portal'); ?></label></th>
 									<td>
 										<p>
 											<label for="shipping_address_1">
 												<input type="checkbox" id="enable_shipping_address_1" name="registrations[enable_shipping_address_1]" value="yes" value="yes" <?php echo ( isset($registrations['enable_shipping_address_1']) && 'yes' == $registrations['enable_shipping_address_1'] ) ? 'checked' : ''; ?>>
-												<?php esc_html_e('Enable', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('Enable', 'woocommerce-vendor-portal'); ?>
 												<input type="text" id="shipping_address_1" placeholder="Custom label" name="registrations[shipping_address_1]" value="<?php echo isset($registrations['shipping_address_1']) ? esc_attr($registrations['shipping_address_1']) : ''; ?>">
-												<?php esc_html_e('[ default label : "Address line 1" ]  ', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('[ default label : "Address line 1" ]  ', 'woocommerce-vendor-portal'); ?>
 
 											</label>
 										</p>
 									</td>
 								</tr>
 								<tr scope="row" >
-									<th><label for=""><?php esc_html_e('Address line 2 ', 'woocommerce-wholesale-pricing'); ?></label></th>
+									<th><label for=""><?php esc_html_e('Address line 2 ', 'woocommerce-vendor-portal'); ?></label></th>
 									<td>
 										<p>
 											<label for="shipping_address_2">
 												<input type="checkbox" id="enable_shipping_address_2" name="registrations[enable_shipping_address_2]" value="yes" <?php echo ( isset($registrations['enable_shipping_address_2']) && 'yes' == $registrations['enable_shipping_address_2'] ) ? 'checked' : ''; ?>>
-												<?php esc_html_e('Enable', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('Enable', 'woocommerce-vendor-portal'); ?>
 												<input type="text" id="shipping_address_2" placeholder="Custom label" name="registrations[shipping_address_2]" value="<?php echo isset($registrations['shipping_address_2']) ? esc_attr($registrations['shipping_address_2']) : ''; ?>">
-												<?php esc_html_e(' [ default label : "Address line 2" ]', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e(' [ default label : "Address line 2" ]', 'woocommerce-vendor-portal'); ?>
 											</label>
 										</p>
 									</td>
 								</tr>
 								<tr scope="row" >
-									<th><label for=""><?php esc_html_e('City ', 'woocommerce-wholesale-pricing'); ?></label></th>
+									<th><label for=""><?php esc_html_e('City ', 'woocommerce-vendor-portal'); ?></label></th>
 									<td>
 										<p>
 											<label for="shipping_city">
 												<input type="checkbox" id="enable_shipping_city" name="registrations[enable_shipping_city]" value="yes" <?php echo ( isset($registrations['enable_shipping_city']) && 'yes' == $registrations['enable_shipping_city'] ) ? 'checked' : ''; ?>>
-												<?php esc_html_e('Enable', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('Enable', 'woocommerce-vendor-portal'); ?>
 												<input type="text" id="shipping_city" placeholder="Custom label" name="registrations[shipping_city]" value="<?php echo isset($registrations['shipping_city']) ? esc_attr($registrations['shipping_city']) : ''; ?>">
-												<?php esc_html_e(' [ default label : "City" ]', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e(' [ default label : "City" ]', 'woocommerce-vendor-portal'); ?>
 											</label>
 										</p>
 									</td>
 								</tr>
 								<tr scope="row" >
-									<th><label for=""><?php esc_html_e('Postcode / ZIP ', 'woocommerce-wholesale-pricing'); ?></label></th>
+									<th><label for=""><?php esc_html_e('Postcode / ZIP ', 'woocommerce-vendor-portal'); ?></label></th>
 									<td>
 										<p>
 											<label for="shipping_post_code">
 												<input type="checkbox" id="enable_shipping_post_code" name="registrations[enable_shipping_post_code]" value="yes" <?php echo ( isset($registrations['enable_shipping_post_code']) && 'yes' == $registrations['enable_shipping_post_code'] ) ? 'checked' : ''; ?>>
-												<?php esc_html_e('Enable', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('Enable', 'woocommerce-vendor-portal'); ?>
 												<input type="text" id="shipping_post_code" placeholder="Custom label" name="registrations[shipping_post_code]" value="<?php echo isset($registrations['shipping_post_code']) ? esc_attr($registrations['shipping_post_code']) : ''; ?>">
-												<?php esc_html_e(' [ default label : "Postcode / ZIP" ]', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e(' [ default label : "Postcode / ZIP" ]', 'woocommerce-vendor-portal'); ?>
 											</label>
 										</p>
 									</td>
 								</tr>
 								<tr scope="row" >
-									<th><label for=""><?php esc_html_e('Countries ', 'woocommerce-wholesale-pricing'); ?></label></th>
+									<th><label for=""><?php esc_html_e('Countries ', 'woocommerce-vendor-portal'); ?></label></th>
 									<td>
 										<p>
 											<label for="shipping_countries">
 												<input type="checkbox" id="enable_shipping_country" name="registrations[enable_shipping_country]" value="yes" <?php echo ( isset($registrations['enable_shipping_country']) && 'yes' == $registrations['enable_shipping_country'] ) ? 'checked' : ''; ?>>
-												<?php esc_html_e('Enable', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('Enable', 'woocommerce-vendor-portal'); ?>
 												<input type="text" id="shipping_countries" placeholder="Custom label" name="registrations[shipping_countries]" value="<?php echo isset($registrations['shipping_countries']) ? esc_attr($registrations['shipping_countries']) : ''; ?>">
-												<?php esc_html_e('[ default label : "Countries" ] ', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('[ default label : "Countries" ] ', 'woocommerce-vendor-portal'); ?>
 											</label>
 										</p>
 									</td>
 								</tr>
 								<tr scope="row">
-									<th><label for=""><?php esc_html_e('States ', 'woocommerce-wholesale-pricing'); ?></label></th>
+									<th><label for=""><?php esc_html_e('States ', 'woocommerce-vendor-portal'); ?></label></th>
 									<td>
 										<p>
 											<label for="billing_countries">
 												<input type="checkbox" id="enable_shipping_state" name="registrations[enable_shipping_state]" value="yes" <?php echo ( isset($registrations['enable_shipping_state']) && 'yes' == $registrations['enable_shipping_state'] ) ? 'checked' : ''; ?>>
-												<?php esc_html_e('Enable', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('Enable', 'woocommerce-vendor-portal'); ?>
 												<input type="text" id="shipping_state" placeholder="Custom label" name="registrations[shipping_state]" value="<?php echo isset($registrations['shipping_state']) ? esc_attr($registrations['shipping_state']) : ''; ?>">
-												<?php esc_html_e(' [ default label : "States" ] ', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e(' [ default label : "States" ] ', 'woocommerce-vendor-portal'); ?>
 											</label>
 										</p>
 									</td>
@@ -481,48 +481,48 @@ if ( !class_exists('Wwp_Wholesale_Registration_Page_Setting') ) {
 						<table class="form-table">
 							<tbody>
 								<tr scope="row">
-									<th><label for=""><?php esc_html_e('Tax ID ', 'woocommerce-wholesale-pricing'); ?></label>
+									<th><label for=""><?php esc_html_e('Tax ID ', 'woocommerce-vendor-portal'); ?></label>
 									<span data-tip="Enable this option to create the 'Tax ID' label text." class="data-tip-right"><span class="woocommerce-help-tip"></span></span>
 									</th>
 									<td>
 										<p>
 											<label for="woo_tax_id">
 												<input type="checkbox" id="enable_tex_id" name="registrations[enable_tex_id]" value="yes" <?php echo ( isset($registrations['enable_tex_id']) && 'yes' == $registrations['enable_tex_id'] ) ? 'checked' : ''; ?>>
-												<?php esc_html_e('Enable', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('Enable', 'woocommerce-vendor-portal'); ?>
 												<input type="text" id="woo_tax_id"  placeholder="Custom label" name="registrations[woo_tax_id]" value="<?php echo isset($registrations['woo_tax_id']) ? esc_attr($registrations['woo_tax_id']) : ''; ?>">
-												<?php esc_html_e('[ default label : "Tax ID" ]', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('[ default label : "Tax ID" ]', 'woocommerce-vendor-portal'); ?>
 												<input type="checkbox" id="required_tex_id" name="registrations[required_tex_id]" value="yes" <?php echo ( isset($registrations['required_tex_id']) && 'yes' == $registrations['required_tex_id'] ) ? 'checked' : ''; ?>>
-												<?php esc_html_e('Required', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('Required', 'woocommerce-vendor-portal'); ?>
 											</label>
 										</p>
 									</td>
 								</tr>
 								<tr scope="row">
-									<th><label for=""><?php esc_html_e('File Upload ', 'woocommerce-wholesale-pricing'); ?></label>
+									<th><label for=""><?php esc_html_e('File Upload ', 'woocommerce-vendor-portal'); ?></label>
 									<span data-tip="Enable this option to create the 'File Upload' label text." class="data-tip-right"><span class="woocommerce-help-tip"></span></span>
 									</th>
 									<td>
 										<p>
 											<label for="woo_file_upload">
 												<input type="checkbox" id="enable_file_upload" name="registrations[enable_file_upload]" value="yes" <?php echo ( isset($registrations['enable_file_upload']) && 'yes' == $registrations['enable_file_upload'] ) ? 'checked' : ''; ?>>
-												<?php esc_html_e('Enable', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('Enable', 'woocommerce-vendor-portal'); ?>
 												<input type="text" id="woo_file_upload"  placeholder="Custom label" name="registrations[woo_file_upload]" value="<?php echo isset($registrations['woo_file_upload']) ? esc_attr($registrations['woo_file_upload']) : ''; ?>">
-												<?php esc_html_e('[ default label : "File Upload" ]', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('[ default label : "File Upload" ]', 'woocommerce-vendor-portal'); ?>
 												<input type="checkbox" id="required_file_upload" name="registrations[required_file_upload]" value="yes" <?php echo ( isset($registrations['required_file_upload']) && 'yes' == $registrations['required_file_upload'] ) ? 'checked' : ''; ?>>
-												<?php esc_html_e('Required', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('Required', 'woocommerce-vendor-portal'); ?>
 											</label>
 										</p>
 									</td>
 								</tr>
 								<tr scope="row">
-									<th><label for=""><?php esc_html_e('Tax ID Display', 'woocommerce-wholesale-pricing'); ?></label>
+									<th><label for=""><?php esc_html_e('Tax ID Display', 'woocommerce-vendor-portal'); ?></label>
 									<span data-tip="Enable this option to display the Tax ID in the billing address." class="data-tip-right"><span class="woocommerce-help-tip"></span></span>
 									</th>
 									<td>
 										<p>
 											<label for="tax_id_display">
 												<input type="checkbox" id="tax_id_display" name="registrations[tax_id_display]" value="yes" <?php echo ( isset($registrations['tax_id_display']) && 'yes' == $registrations['tax_id_display'] ) ? 'checked' : ''; ?>>
-												<?php esc_html_e('Enable to display tax id in billing address', 'woocommerce-wholesale-pricing'); ?>
+												<?php esc_html_e('Enable to display tax id in billing address', 'woocommerce-vendor-portal'); ?>
 											</label>
 										</p>
 									</td>
@@ -531,19 +531,19 @@ if ( !class_exists('Wwp_Wholesale_Registration_Page_Setting') ) {
 						</table>
 					</div>
 					
-					<p><button name="save_wwp_registration_setting" class="button-primary" type="submit" value="Save changes"><?php esc_html_e('Save changes', 'woocommerce-wholesale-pricing'); ?></button></p>
+					<p><button name="save_wwp_registration_setting" class="button-primary" type="submit" value="Save changes"><?php esc_html_e('Save changes', 'woocommerce-vendor-portal'); ?></button></p>
 				</form>
 				<?php 
 			} else {
-				include_once WWP_PLUGIN_PATH . 'inc/class-wwp-wholesale-form-builder.php'; 
+				include_once WWP_PLUGIN_PATH . 'inc/class-wwp-vendor-form-builder.php'; 
 			}
 			?>
 			
 			
 			</div>
 			<div class="map_shortcode_callback">
-				<p> <?php esc_html_e('Copy following shortcode, and paste in page where you would like to display wholesaler registration form.', 'woocommerce-wholesale-pricing'); ?></p>
-				<div class="map_shortcode_copy"  onclick="copytoclipboard()"><span class="dashicons dashicons-admin-page"></span><label><?php esc_html_e('Copy', 'woocommerce-wholesale-pricing'); ?></label></div>
+				<p> <?php esc_html_e('Copy following shortcode, and paste in page where you would like to display wholesaler registration form.', 'woocommerce-vendor-portal'); ?></p>
+				<div class="map_shortcode_copy"  onclick="copytoclipboard()"><span class="dashicons dashicons-admin-page"></span><label><?php esc_html_e('Copy', 'woocommerce-vendor-portal'); ?></label></div>
 				<p> <input type="text" onfocus="this.select();" value="[wwp_registration_form]" readonly="readonly" name="shortcode" class="large-text code"> </p>
 			</div>
 			

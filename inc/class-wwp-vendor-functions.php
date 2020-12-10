@@ -3,7 +3,7 @@ if ( !defined('ABSPATH') ) {
 	exit; // Exit if accessed directly
 }
 /**
- * Class To Add Wholesale Functionality with WooCommerce
+ * Class To Add Vendor Functionality with WooCommerce
  */
 if ( !class_exists('Wwp_Wholesale_Functions') ) {
 
@@ -21,7 +21,7 @@ if ( !class_exists('Wwp_Wholesale_Functions') ) {
 		
 			$registrations = get_option('wwp_wholesale_registration_options');
 			if ( isset($registrations['tax_id_display']) && 'yes' == $registrations['tax_id_display'] ) {
-				$wholesaler_tax_id = esc_html__('Wholesaler Tax ID ', 'woocommerce-wholesale-pricing');
+				$wholesaler_tax_id = esc_html__('Wholesaler Tax ID ', 'woocommerce-vendor-portal');
 				echo wp_kses('<p><strong> ' . $wholesaler_tax_id . ':</strong> <br/>' . get_user_meta( $order->get_user_id(), 'wwp_wholesaler_tax_id', true ) . '</p>', shapeSpace_allowed_html());	
 			}
 		

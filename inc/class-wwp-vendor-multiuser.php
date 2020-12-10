@@ -87,7 +87,7 @@ if ( !class_exists('WWP_Easy_Wholesale_Multiuser') ) {
 				
 				if ( $min_quantity && 1 != $min_quantity ) {
 					/* translators: %1$s is replaced with "string" */
-					$variation_data['availability_html'] .= apply_filters( 'wwp_product_minimum_quantity_text', '<p style="font-size: 10px;">' . sprintf(esc_html__('Wholesale price will only be applied to a minimum quantity of %1$s products', 'woocommerce-wholesale-pricing'), $min_quantity) . '</p>', $min_quantity );
+					$variation_data['availability_html'] .= apply_filters( 'wwp_product_minimum_quantity_text', '<p style="font-size: 10px;">' . sprintf(esc_html__('Vendor price will only be applied to a minimum quantity of %1$s products', 'woocommerce-vendor-portal'), $min_quantity) . '</p>', $min_quantity );
 					return $variation_data;  
 				}
 			
@@ -101,8 +101,8 @@ if ( !class_exists('WWP_Easy_Wholesale_Multiuser') ) {
 						
 						$min_quantity = (int) $data[$role]['min_quatity'];
 						if ( $min_quantity && 1 != $min_quantity ) {
-							/* translators: %s: wholesale price on minmum */
-							$variation_data['availability_html'] .= apply_filters( 'wwp_product_minimum_quantity_text', '<p style="font-size: 10px;">' . sprintf(esc_html__('Wholesale price will only be applied to a minimum quantity of %1$s products', 'woocommerce-wholesale-pricing'), $data[$role]['min_quatity']) . '</p>' , $data[$role]['min_quatity'] );
+							/* translators: %s: vendor price on minmum */
+							$variation_data['availability_html'] .= apply_filters( 'wwp_product_minimum_quantity_text', '<p style="font-size: 10px;">' . sprintf(esc_html__('Vendor price will only be applied to a minimum quantity of %1$s products', 'woocommerce-vendor-portal'), $data[$role]['min_quatity']) . '</p>' , $data[$role]['min_quatity'] );
 							return $variation_data;  	  
 						
 						}
@@ -115,8 +115,8 @@ if ( !class_exists('WWP_Easy_Wholesale_Multiuser') ) {
 				
 				$min_quantity = (int) $data[$role]['min_quatity'];
 				if ( $min_quantity && 1 != $min_quantity ) {
-					/* translators: %s: wholesale price on minmum */
-					$variation_data['availability_html'] .= apply_filters( 'wwp_product_minimum_quantity_text', '<p style="font-size: 10px;">' . sprintf(esc_html__('Wholesale price will only be applied to a minimum quantity of %1$s products', 'woocommerce-wholesale-pricing'), $data[$role]['min_quatity']) . '</p>' , $data[$role]['min_quatity'] );
+					/* translators: %s: vendor price on minmum */
+					$variation_data['availability_html'] .= apply_filters( 'wwp_product_minimum_quantity_text', '<p style="font-size: 10px;">' . sprintf(esc_html__('Vendor price will only be applied to a minimum quantity of %1$s products', 'woocommerce-vendor-portal'), $data[$role]['min_quatity']) . '</p>' , $data[$role]['min_quatity'] );
 					return $variation_data; 
 
 				}
@@ -144,8 +144,8 @@ if ( !class_exists('WWP_Easy_Wholesale_Multiuser') ) {
 							}
 							if ($min_quantity > $quantity ) {
 								 
-								/* translators: %s: wholesale price on minmum */
-								wc_add_notice( __( apply_filters( 'wwp_product_minimum_quantity_text', sprintf(esc_html__('Wholesale price will only be applied to a minimum quantity of %1$s products', 'woocommerce-wholesale-pricing'), $min_quantity) , $min_quantity ), 'woocommerce' ), 'error' );
+								/* translators: %s: vendor price on minmum */
+								wc_add_notice( __( apply_filters( 'wwp_product_minimum_quantity_text', sprintf(esc_html__('Vendor price will only be applied to a minimum quantity of %1$s products', 'woocommerce-vendor-portal'), $min_quantity) , $min_quantity ), 'woocommerce' ), 'error' );
 								return  false; 
 								 
 							} else { 
@@ -169,8 +169,8 @@ if ( !class_exists('WWP_Easy_Wholesale_Multiuser') ) {
 									
 									if ($min_quantity > $quantity ) {
 										
-										/* translators: %s: wholesale price on minmum */
-										wc_add_notice( __( apply_filters( 'wwp_product_minimum_quantity_text', sprintf(esc_html__('Wholesale price will only be applied to a minimum quantity of %1$s products', 'woocommerce-wholesale-pricing'), $min_quantity) , $min_quantity ), 'woocommerce' ), 'error' );
+										/* translators: %s: vendor price on minmum */
+										wc_add_notice( __( apply_filters( 'wwp_product_minimum_quantity_text', sprintf(esc_html__('Vendor price will only be applied to a minimum quantity of %1$s products', 'woocommerce-vendor-portal'), $min_quantity) , $min_quantity ), 'woocommerce' ), 'error' );
 										return  false; 
 									} else {
 										return true;  
@@ -186,8 +186,8 @@ if ( !class_exists('WWP_Easy_Wholesale_Multiuser') ) {
 								$min_quantity = 1;
 							}
 							if ($min_quantity > $quantity ) {
-								/* translators: %s: wholesale price on minmum */
-								wc_add_notice( __( apply_filters( 'wwp_product_minimum_quantity_text', sprintf(esc_html__('Wholesale price will only be applied to a minimum quantity of %1$s products', 'woocommerce-wholesale-pricing'), $min_quantity) , $min_quantity ), 'woocommerce' ), 'error' );
+								/* translators: %s: vendor price on minmum */
+								wc_add_notice( __( apply_filters( 'wwp_product_minimum_quantity_text', sprintf(esc_html__('Vendor price will only be applied to a minimum quantity of %1$s products', 'woocommerce-vendor-portal'), $min_quantity) , $min_quantity ), 'woocommerce' ), 'error' );
 								return  false; 
 								 
 							} else { 
@@ -205,8 +205,8 @@ if ( !class_exists('WWP_Easy_Wholesale_Multiuser') ) {
 							}
 							if ($min_quantity > $quantity ) {
 								
-								/* translators: %s: wholesale price on minmum */
-								wc_add_notice( __( apply_filters( 'wwp_product_minimum_quantity_text', sprintf(esc_html__('Wholesale price will only be applied to a minimum quantity of %1$s products', 'woocommerce-wholesale-pricing'), $min_quantity) , $min_quantity ), 'woocommerce' ), 'error' );
+								/* translators: %s: vendor price on minmum */
+								wc_add_notice( __( apply_filters( 'wwp_product_minimum_quantity_text', sprintf(esc_html__('Vendor price will only be applied to a minimum quantity of %1$s products', 'woocommerce-vendor-portal'), $min_quantity) , $min_quantity ), 'woocommerce' ), 'error' );
 								return  false; 
 								 
 							} else { 
@@ -228,8 +228,8 @@ if ( !class_exists('WWP_Easy_Wholesale_Multiuser') ) {
 									}
 									if ($min_quantity > $quantity ) {
 										
-										/* translators: %s: wholesale price on minmum */
-										wc_add_notice( __( apply_filters( 'wwp_product_minimum_quantity_text', sprintf(esc_html__('Wholesale price will only be applied to a minimum quantity of %1$s products', 'woocommerce-wholesale-pricing'), $min_quantity) , $min_quantity ), 'woocommerce' ), 'error' );
+										/* translators: %s: vendor price on minmum */
+										wc_add_notice( __( apply_filters( 'wwp_product_minimum_quantity_text', sprintf(esc_html__('Vendor price will only be applied to a minimum quantity of %1$s products', 'woocommerce-vendor-portal'), $min_quantity) , $min_quantity ), 'woocommerce' ), 'error' );
 										return  false; 
 										 
 									} else { 
@@ -249,8 +249,8 @@ if ( !class_exists('WWP_Easy_Wholesale_Multiuser') ) {
 							}
 							if ($min_quantity > $quantity ) {
 								
-								/* translators: %s: wholesale price on minmum */
-								wc_add_notice( __( apply_filters( 'wwp_product_minimum_quantity_text', sprintf(esc_html__('Wholesale price will only be applied to a minimum quantity of %1$s products', 'woocommerce-wholesale-pricing'), $min_quantity) , $min_quantity ), 'woocommerce' ), 'error' );
+								/* translators: %s: vendor price on minmum */
+								wc_add_notice( __( apply_filters( 'wwp_product_minimum_quantity_text', sprintf(esc_html__('Vendor price will only be applied to a minimum quantity of %1$s products', 'woocommerce-vendor-portal'), $min_quantity) , $min_quantity ), 'woocommerce' ), 'error' );
 								return  false; 
 								 
 							} else { 
@@ -530,24 +530,24 @@ if ( !class_exists('WWP_Easy_Wholesale_Multiuser') ) {
 			$saving_percent = ( $r_price - $Wprice ) / $r_price * 100;
 			$saving_percent = number_format( ( float ) $saving_percent, 2, '.', ''); 
 			$settings = get_option('wwp_vendor_portal_options', true);
-			$actual =( isset($settings['retailer_label']) && !empty($settings['retailer_label']) ) ? esc_html($settings['retailer_label']) : esc_html__('Actual', 'woocommerce-wholesale-pricing');
-			$save =( isset($settings['save_label']) && !empty($settings['save_label']) ) ? esc_html($settings['save_label']) : esc_html__('Save', 'woocommerce-wholesale-pricing');
-			$new =( isset($settings['wholesaler_label']) && !empty($settings['wholesaler_label']) ) ? esc_html($settings['wholesaler_label']) : esc_html__('New', 'woocommerce-wholesale-pricing');
+			$actual =( isset($settings['retailer_label']) && !empty($settings['retailer_label']) ) ? esc_html($settings['retailer_label']) : esc_html__('Actual', 'woocommerce-vendor-portal');
+			$save =( isset($settings['save_label']) && !empty($settings['save_label']) ) ? esc_html($settings['save_label']) : esc_html__('Save', 'woocommerce-vendor-portal');
+			$new =( isset($settings['wholesaler_label']) && !empty($settings['wholesaler_label']) ) ? esc_html($settings['wholesaler_label']) : esc_html__('New', 'woocommerce-vendor-portal');
 			$html='';
 			if ( !empty($Wprice) ) {
 				$html .= do_action('wwp_before_pricing', $product  );
-				$html .= '<div class="wwp-wholesale-pricing-details">';
+				$html .= '<div class="wwp-vendor-portal-details">';
 				if ( 'yes' != $settings['retailer_disabled'] ) {
-					$html .= '<p><span class="retailer-text">' . esc_html__($actual, 'woocommerce-wholesale-pricing') . '</span>: <s>' . wc_price($r_price) . ' ' . $tax_display_suffix . '</s></p>';
+					$html .= '<p><span class="retailer-text">' . esc_html__($actual, 'woocommerce-vendor-portal') . '</span>: <s>' . wc_price($r_price) . ' ' . $tax_display_suffix . '</s></p>';
 				}
-				$html .= '<p><span class="price-text">' . esc_html__($new, 'woocommerce-wholesale-pricing') . '</span>: ' . wc_price($Wprice) . ' ' . $tax_display_suffix . '</p>';
+				$html .= '<p><span class="price-text">' . esc_html__($new, 'woocommerce-vendor-portal') . '</span>: ' . wc_price($Wprice) . ' ' . $tax_display_suffix . '</p>';
 				if ( 'yes' != $settings['save_price_disabled'] ) {
-					$html .= '<p><b><span class="save-price-text">' . esc_html__($save, 'woocommerce-wholesale-pricing') . '</span>: ' . wc_price($saving_amount) . ' (' . round($saving_percent) . '%) </b></p>';
+					$html .= '<p><b><span class="save-price-text">' . esc_html__($save, 'woocommerce-vendor-portal') . '</span>: ' . wc_price($saving_amount) . ' (' . round($saving_percent) . '%) </b></p>';
 				}
 				if ( $min > 1 ) {
 					if ( $product->get_type() == 'simple') {
-						/* translators: %s: wholesale price on minmum */
-						$html .= apply_filters( 'wwp_product_minimum_quantity_text', '<p style="font-size: 10px;">' . sprintf(esc_html__('Wholesale price will only be applied to a minimum quantity of %1$s products', 'woocommerce-wholesale-pricing'), $min) . '</p>' , $min );
+						/* translators: %s: vendor price on minmum */
+						$html .= apply_filters( 'wwp_product_minimum_quantity_text', '<p style="font-size: 10px;">' . sprintf(esc_html__('Vendor price will only be applied to a minimum quantity of %1$s products', 'woocommerce-vendor-portal'), $min) . '</p>' , $min );
 					}
 				}
 				$html .= '</div>';
@@ -889,7 +889,7 @@ if ( !class_exists('WWP_Easy_Wholesale_Multiuser') ) {
 			// orignal price add tax
 			$original_variation_price[0] = wwp_get_price_including_tax( $product, array('price' => $original_variation_price[0] ) );
 			$original_variation_price[count($original_variation_price) - 1] = wwp_get_price_including_tax( $product, array('price' => $original_variation_price[count($original_variation_price) - 1] ) );
-			// wholesale price add tax
+			// vendor price add tax
 			$wholesale_product_variations[0] = wwp_get_price_including_tax( $product, array('price' => $wholesale_product_variations[0] ) );
 
 			$wholesale_product_variations[count($wholesale_product_variations) - 1] = wwp_get_price_including_tax( $product, array('price' => $wholesale_product_variations[count($wholesale_product_variations) - 1] ) );
@@ -907,10 +907,10 @@ if ( !class_exists('WWP_Easy_Wholesale_Multiuser') ) {
 			
 			$min_quantity = get_post_meta($prod_id, '_wwp_wholesale_min_quantity', true);
 			$settings= get_option('wwp_vendor_portal_options', true);
-			$actual = ( isset($settings['retailer_label']) && !empty($settings['retailer_label']) ) ? esc_html($settings['retailer_label']) : esc_html__('Actual', 'woocommerce-wholesale-pricing');
-			$save = ( isset($settings['save_label']) && !empty($settings['save_label']) ) ? esc_html($settings['save_label']) : esc_html__('Save', 'woocommerce-wholesale-pricing');
-			$new = ( isset($settings['wholesaler_label']) && !empty($settings['wholesaler_label']) ) ? esc_html($settings['wholesaler_label']) : esc_html__('New', 'woocommerce-wholesale-pricing');
-			$html = '<div class="wwp-wholesale-pricing-details">';
+			$actual = ( isset($settings['retailer_label']) && !empty($settings['retailer_label']) ) ? esc_html($settings['retailer_label']) : esc_html__('Actual', 'woocommerce-vendor-portal');
+			$save = ( isset($settings['save_label']) && !empty($settings['save_label']) ) ? esc_html($settings['save_label']) : esc_html__('Save', 'woocommerce-vendor-portal');
+			$new = ( isset($settings['wholesaler_label']) && !empty($settings['wholesaler_label']) ) ? esc_html($settings['wholesaler_label']) : esc_html__('New', 'woocommerce-vendor-portal');
+			$html = '<div class="wwp-vendor-portal-details">';
 			
 			// var_dump(get_option('woocommerce_tax_display_shop'));
 			
@@ -935,30 +935,30 @@ if ( !class_exists('WWP_Easy_Wholesale_Multiuser') ) {
 			
 			if ( 'yes' != $settings['retailer_disabled'] ) {
 				if ( $wcv_min_price == $wcv_max_price ) {
-					$html .= '<p><span class="retailer-text">' . esc_html__($actual, 'woocommerce-wholesale-pricing') . '</span>: <s>' . wc_price($wcv_min_price) . ' ' . $tax_display_suffix . '</s></p>';
+					$html .= '<p><span class="retailer-text">' . esc_html__($actual, 'woocommerce-vendor-portal') . '</span>: <s>' . wc_price($wcv_min_price) . ' ' . $tax_display_suffix . '</s></p>';
 				} else {
-					$html .= '<p><span class="retailer-text">' . esc_html__($actual, 'woocommerce-wholesale-pricing') . '</span>: <s>' . wc_price($wcv_min_price) . ' ' . $tax_display_suffix . ' - ' . wc_price($wcv_max_price) . ' ' . $tax_display_suffix . '</s></p>';
+					$html .= '<p><span class="retailer-text">' . esc_html__($actual, 'woocommerce-vendor-portal') . '</span>: <s>' . wc_price($wcv_min_price) . ' ' . $tax_display_suffix . ' - ' . wc_price($wcv_max_price) . ' ' . $tax_display_suffix . '</s></p>';
 				}
 			}
 			
 			if ( wc_price( $wholesale_product_variations[0] ) !== wc_price( $wholesale_product_variations[ count($wholesale_product_variations ) - 1 ] ) ) {
-				$html .= '<p><b><span class="price-text">' . esc_html__($new, 'woocommerce-wholesale-pricing') . '</span>: ' . wc_price($wholesale_product_variations[0]) . ' ' . $tax_display_suffix . ' - ' . wc_price($wholesale_product_variations[count($wholesale_product_variations) - 1]) . ' ' . $tax_display_suffix . '</b></p>';
+				$html .= '<p><b><span class="price-text">' . esc_html__($new, 'woocommerce-vendor-portal') . '</span>: ' . wc_price($wholesale_product_variations[0]) . ' ' . $tax_display_suffix . ' - ' . wc_price($wholesale_product_variations[count($wholesale_product_variations) - 1]) . ' ' . $tax_display_suffix . '</b></p>';
 			} else {
-				$html .= '<p><b><span class="price-text">' . esc_html__($new, 'woocommerce-wholesale-pricing') . '</span>: ' . wc_price($wholesale_product_variations[0]) . ' ' . $tax_display_suffix . '</b></p>';
+				$html .= '<p><b><span class="price-text">' . esc_html__($new, 'woocommerce-vendor-portal') . '</span>: ' . wc_price($wholesale_product_variations[0]) . ' ' . $tax_display_suffix . '</b></p>';
 			}
 			
 			if ( 'yes' != $settings['save_price_disabled'] ) {
 				if ( round( $min_saving_percent ) !== round( $max_saving_percent ) ) {
-					$html .= '<p><b><span class="save-price-text">' . esc_html__($save, 'woocommerce-wholesale-pricing') . '</span>:  (' . round($min_saving_percent) . '% - ' . round($max_saving_percent) . '%) </b></p>';
+					$html .= '<p><b><span class="save-price-text">' . esc_html__($save, 'woocommerce-vendor-portal') . '</span>:  (' . round($min_saving_percent) . '% - ' . round($max_saving_percent) . '%) </b></p>';
 				} else {
-					$html .= '<p><b><span class="save-price-text">' . esc_html__($save, 'woocommerce-wholesale-pricing') . '</span>:  (' . round($min_saving_percent) . '%) </b></p>';	
+					$html .= '<p><b><span class="save-price-text">' . esc_html__($save, 'woocommerce-vendor-portal') . '</span>:  (' . round($min_saving_percent) . '%) </b></p>';	
 				}
 			}
 			
 			if ($min_quantity > 1) {
 				if ( $product->get_type() == 'simple') {
-					/* translators: %s: wholesale price on minmum */
-					$html .= apply_filters( 'wwp_product_minimum_quantity_text', '<p style="font-size: 10px;">' . sprintf(esc_html__('Wholesale price will only be applied to a minimum quantity of %1$s products', 'woocommerce-wholesale-pricing'), $min_quantity) . '</p>' , $min_quantity );
+					/* translators: %s: vendor price on minmum */
+					$html .= apply_filters( 'wwp_product_minimum_quantity_text', '<p style="font-size: 10px;">' . sprintf(esc_html__('Vendor price will only be applied to a minimum quantity of %1$s products', 'woocommerce-vendor-portal'), $min_quantity) . '</p>' , $min_quantity );
 				}
 			}
 			$html .= '</div>';

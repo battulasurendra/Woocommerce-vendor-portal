@@ -18,14 +18,14 @@ if ( !class_exists('Wwp_Wholesale_Product_Metabox') ) {
 			}
 		}
 		public function add_multiuser_role_metabox() {
-			add_meta_box( 'wholesale-pricing-pro-multiuser', esc_html__('Wholesale Multi User Pricing', 'woocommerce-wholesale-pricing'), array($this, 'wholesale_multi_user_pricing_callback'), 'product', 'normal', 'high' 
+			add_meta_box( 'vendor-portal-pro-multiuser', esc_html__('Vendor Multi User Pricing', 'woocommerce-vendor-portal'), array($this, 'wholesale_multi_user_pricing_callback'), 'product', 'normal', 'high' 
 			);
 		}
 		public function wholesale_multi_user_pricing_callback() {
 			global $post, $product; 
 			wp_nonce_field('wwp_wholesale_multi_user', 'wwp_wholesale_multi_user');
 			?>
-			<div class="" id="wholesale-multiuser-pricing">
+			<div class="" id="vendor-multiuser-pricing">
 				<input type="hidden" value="<?php esc_attr_e($post->ID); ?>" name="product_id">
 				<div class="wholesale_loader"></div>
 				<div class="wholesale_container"></div>
@@ -34,7 +34,7 @@ if ( !class_exists('Wwp_Wholesale_Product_Metabox') ) {
 		}
 		public function retrieve_wholesale_multiuser_pricing() {
 			
-			check_ajax_referer( 'wwp_wholesale_pricing', 'security' );
+			check_ajax_referer( 'wwp_vendor_portal', 'security' );
 			
 			if ( !isset($_POST['product_id'] ) && !is_numeric( $_POST['product_id'] ) && !isset( $_POST['ptype'] ) && empty( $_POST['ptype'] ) ) {
 				die();
@@ -155,13 +155,13 @@ if ( !class_exists('Wwp_Wholesale_Product_Metabox') ) {
 			} else {
 				if ( !empty($roles) ) { 
 					?>
-					<table class="wholesale_pricing">
+					<table class="vendor_portal">
 						<tr>
-							<th><?php esc_html_e('Wholesale Role', 'woocommerce-wholesale-pricing'); ?></th>
-							<th><?php esc_html_e('Enable for Role', 'woocommerce-wholesale-pricing'); ?></th>
-							<th><?php esc_html_e('Discount Type', 'woocommerce-wholesale-pricing'); ?></th>
-							<th><?php esc_html_e('Wholesale Price', 'woocommerce-wholesale-pricing'); ?></th>
-							<th><?php esc_html_e('Min Quantity', 'woocommerce-wholesale-pricing'); ?></th>
+							<th><?php esc_html_e('Vendor Role', 'woocommerce-vendor-portal'); ?></th>
+							<th><?php esc_html_e('Enable for Role', 'woocommerce-vendor-portal'); ?></th>
+							<th><?php esc_html_e('Discount Type', 'woocommerce-vendor-portal'); ?></th>
+							<th><?php esc_html_e('Vendor Price', 'woocommerce-vendor-portal'); ?></th>
+							<th><?php esc_html_e('Min Quantity', 'woocommerce-vendor-portal'); ?></th>
 						</tr>
 						<?php 
 						foreach ( $roles as $key => $role ) {
@@ -183,8 +183,8 @@ if ( !class_exists('Wwp_Wholesale_Product_Metabox') ) {
 								</td>
 								<td>
 									<select class="widefat" name="discount_type_<?php esc_attr_e($role->term_id); ?>" value="<?php esc_attr_e($wholesale_type); ?>">
-										<option value="percent" <?php selected($discount, 'percent'); ?> > <?php esc_html_e('Percent', 'woocommerce-wholesale-pricing'); ?> </option>
-										<option value="fixed"  <?php selected($discount, 'fixed'); ?> > <?php esc_html_e('Fixed', 'woocommerce-wholesale-pricing'); ?> </option>
+										<option value="percent" <?php selected($discount, 'percent'); ?> > <?php esc_html_e('Percent', 'woocommerce-vendor-portal'); ?> </option>
+										<option value="fixed"  <?php selected($discount, 'fixed'); ?> > <?php esc_html_e('Fixed', 'woocommerce-vendor-portal'); ?> </option>
 									</select>
 								</td>
 								<td>
@@ -198,7 +198,7 @@ if ( !class_exists('Wwp_Wholesale_Product_Metabox') ) {
 					</table>
 					<?php
 				} else {
-					esc_html_e('Please add Wholesale user roles first', 'woocommerce-wholesale-pricing');
+					esc_html_e('Please add Vendor user roles first', 'woocommerce-vendor-portal');
 				}
 			}
 			die();
@@ -211,12 +211,12 @@ if ( !class_exists('Wwp_Wholesale_Product_Metabox') ) {
 				ob_start();
 				if ( !empty($variables) ) { 
 					?>
-					<table class="wholesale_pricing">
+					<table class="vendor_portal">
 						<tr>
-							<th><?php esc_html_e('Wholesale Role', 'woocommerce-wholesale-pricing'); ?></th> 
-							<th><?php esc_html_e('Enable for Role', 'woocommerce-wholesale-pricing'); ?></th>
-							<th><?php esc_html_e('Discount Type', 'woocommerce-wholesale-pricing'); ?></th> 
-							<th><?php esc_html_e('Wholesale Price & Min Quantity', 'woocommerce-wholesale-pricing'); ?></th> 
+							<th><?php esc_html_e('Vendor Role', 'woocommerce-vendor-portal'); ?></th> 
+							<th><?php esc_html_e('Enable for Role', 'woocommerce-vendor-portal'); ?></th>
+							<th><?php esc_html_e('Discount Type', 'woocommerce-vendor-portal'); ?></th> 
+							<th><?php esc_html_e('Vendor Price & Min Quantity', 'woocommerce-vendor-portal'); ?></th> 
 						</tr>
 							<?php 
 							foreach ( $roles as $key => $role ) { 
@@ -234,8 +234,8 @@ if ( !class_exists('Wwp_Wholesale_Product_Metabox') ) {
 								</td>
 								<td>
 									<select class="widefat" name="discount_type_<?php esc_attr_e($role->term_id); ?>" value="<?php esc_attr_e($wholesale_type); ?>" >
-										<option value="percent" <?php selected($discount, 'percent'); ?> ><?php esc_html_e('Percent', 'woocommerce-wholesale-pricing'); ?></option>
-										<option value="fixed" <?php selected($discount, 'fixed'); ?> ><?php esc_html_e('Fixed', 'woocommerce-wholesale-pricing'); ?></option>
+										<option value="percent" <?php selected($discount, 'percent'); ?> ><?php esc_html_e('Percent', 'woocommerce-vendor-portal'); ?></option>
+										<option value="fixed" <?php selected($discount, 'fixed'); ?> ><?php esc_html_e('Fixed', 'woocommerce-vendor-portal'); ?></option>
 									</select>
 								</td>
 								<td>     
@@ -253,15 +253,15 @@ if ( !class_exists('Wwp_Wholesale_Product_Metabox') ) {
 											$regular_price = get_post_meta($key['variation_id'], '_regular_price', true);
 											$wholesale_field_name = 'wholesaleprice_' . esc_attr($role->term_id) . '_' . esc_attr($key['variation_id']);
 											$qty_field_name = 'qty_' . esc_attr($role->term_id) . '_' . esc_attr($key['variation_id']);
-											$quanity_label = esc_html__('Qty: ', 'woocommerce-wholesale-pricing'); 
+											$quanity_label = esc_html__('Qty: ', 'woocommerce-vendor-portal'); 
 											?>
 											<div class="variable-item">
 												<span> # <?php esc_html_e($variation_id); ?></span>
 												<input type="text" readonly name="reg-price" value="<?php esc_attr_e($regular_price); ?>"/>
-												<label><?php esc_html_e('Wholesale Price', 'woocommerce-wholesale-pricing'); ?></label>
+												<label><?php esc_html_e('Vendor Price', 'woocommerce-vendor-portal'); ?></label>
 												<input type="text" name="<?php esc_attr_e($wholesale_field_name); ?>" value="<?php esc_attr_e($wholesale_price); ?>"/>
 												<label>
-													<?php esc_html_e($quanity_label, 'woocommerce-wholesale-pricing'); ?>
+													<?php esc_html_e($quanity_label, 'woocommerce-vendor-portal'); ?>
 													<input type="number" class="qty" name="<?php esc_attr_e($qty_field_name); ?>" value="<?php esc_attr_e($qty); ?>"/>
 												</label>
 												<input type="hidden" name="product_type_<?php esc_attr_e($product_id); ?>" value="variable">
@@ -276,10 +276,10 @@ if ( !class_exists('Wwp_Wholesale_Product_Metabox') ) {
 					<input type="hidden" name="wholesale_product_type" value="variable">
 					<?php 
 				} else { 
-					esc_html_e('No variations found. Add variations before.', 'woocommerce-wholesale-pricing');
+					esc_html_e('No variations found. Add variations before.', 'woocommerce-vendor-portal');
 				}
 			} else {
-				esc_html_e('Wholesale Roles not found', 'woocommerce-wholesale-pricing');
+				esc_html_e('Vendor Roles not found', 'woocommerce-vendor-portal');
 			}
 			return ob_get_clean();
 		}

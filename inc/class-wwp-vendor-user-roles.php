@@ -10,7 +10,7 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 	class WWP_Wholesale_User_Roles {
 
 		public function __construct () {
-			add_role('default_wholesaler', esc_html__('Wholesaler - Wholesaler Role', 'woocommerce-wholesale-pricing'), array( 'read' => true, 'level_0' => true ));
+			add_role('default_wholesaler', esc_html__('Wholesaler - Wholesaler Role', 'woocommerce-vendor-portal'), array( 'read' => true, 'level_0' => true ));
 			add_action('init', array($this, 'register_taxonomy_for_users'));
 			add_action('created_wholesale_user_roles', array($this, 'set_term_to_user_role'), 10, 2);
 			add_action('delete_wholesale_user_roles', array($this, 'remove_term_and_user_role'), 10, 3);
@@ -39,22 +39,22 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 			$capabilities = array();
 			//global $wp_roles;
 			$labels = array(
-				'label'                     => esc_html__('Wholesale Roles', 'woocommerce-wholesale-pricing'),
-				'name'                      => esc_html__('Wholesale User Roles', 'woocommerce-wholesale-pricing'),
-				'singular_name'             => esc_html__('Wholesale Role', 'woocommerce-wholesale-pricing'),
-				'search_items'              => esc_html__('Search User Roles', 'woocommerce-wholesale-pricing'),
-				'popular_items'             => esc_html__('Popular User Roles', 'woocommerce-wholesale-pricing'),
-				'all_items'                 => esc_html__('All User Roles', 'woocommerce-wholesale-pricing'),
+				'label'                     => esc_html__('Vendor Roles', 'woocommerce-vendor-portal'),
+				'name'                      => esc_html__('Vendor User Roles', 'woocommerce-vendor-portal'),
+				'singular_name'             => esc_html__('Vendor Role', 'woocommerce-vendor-portal'),
+				'search_items'              => esc_html__('Search User Roles', 'woocommerce-vendor-portal'),
+				'popular_items'             => esc_html__('Popular User Roles', 'woocommerce-vendor-portal'),
+				'all_items'                 => esc_html__('All User Roles', 'woocommerce-vendor-portal'),
 				'parent_item'               => null,
 				'parent_item_colon'         => null,
-				'edit_item'                 => esc_html__('Edit User Role', 'woocommerce-wholesale-pricing'), 
-				'update_item'               => esc_html__('Update User Role', 'woocommerce-wholesale-pricing'),
-				'add_new_item'              => esc_html__('Add New User Role', 'woocommerce-wholesale-pricing'),
-				'new_item_name'             => esc_html__('New User Role Name', 'woocommerce-wholesale-pricing'),
-				'separate_items_with_commas'=> esc_html__('Separate topics with commas', 'woocommerce-wholesale-pricing'),
-				'add_or_remove_items'       => esc_html__('Add or remove topics', 'woocommerce-wholesale-pricing'),
-				'choose_from_most_used'     => esc_html__('Choose from the most used topics', 'woocommerce-wholesale-pricing'),
-				'menu_name'                 => esc_html__('Wholesale Roles', 'woocommerce-wholesale-pricing'),
+				'edit_item'                 => esc_html__('Edit User Role', 'woocommerce-vendor-portal'), 
+				'update_item'               => esc_html__('Update User Role', 'woocommerce-vendor-portal'),
+				'add_new_item'              => esc_html__('Add New User Role', 'woocommerce-vendor-portal'),
+				'new_item_name'             => esc_html__('New User Role Name', 'woocommerce-vendor-portal'),
+				'separate_items_with_commas'=> esc_html__('Separate topics with commas', 'woocommerce-vendor-portal'),
+				'add_or_remove_items'       => esc_html__('Add or remove topics', 'woocommerce-vendor-portal'),
+				'choose_from_most_used'     => esc_html__('Choose from the most used topics', 'woocommerce-vendor-portal'),
+				'menu_name'                 => esc_html__('Vendor Roles', 'woocommerce-vendor-portal'),
 			); 
 			$args=array(
 				'hierarchical'          => false,
@@ -100,7 +100,7 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 		public function set_term_to_user_role ( $term_id, $tt_id ) {
 			$term=get_term($term_id, 'wholesale_user_roles');
 			if ( !wp_roles()->is_role($term->slug) ) {
-				add_role( $term->slug, $term->name . esc_html__(' - Wholesaler role', 'woocommerce-wholesale-pricing'), array( 'read' => true, 'level_0' => true ) );
+				add_role( $term->slug, $term->name . esc_html__(' - Wholesaler role', 'woocommerce-vendor-portal'), array( 'read' => true, 'level_0' => true ) );
 			}
 		}
 		public function remove_term_and_user_role ( $term, $tt_id, $deleted_term ) {
@@ -111,7 +111,7 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 		}
 		public function edit_term_and_user_role ( $term_id, $tt_id ) {
 			if ( isset($_POST['wwp_vendor_register_nonce']) || wp_verify_nonce( wc_clean($_POST['wwp_vendor_register_nonce']), 'wwp_vendor_register_nonce') ) {
-				echo esc_html__('Role updated', 'woocommerce-wholesale-pricing');
+				echo esc_html__('Role updated', 'woocommerce-vendor-portal');
 			}
 			$termObj = get_term( $term_id, 'wholesale_user_roles' );
 			$new_name = isset( $_POST['name'] ) ? wc_clean( $_POST['name'] ) : '';
@@ -124,7 +124,7 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 					remove_role($termObj->slug);
 				}
 				if ( !wp_roles()->is_role( $new_slug ) ) {
-					add_role( $new_slug, $new_name . esc_html__(' - Wholesaler role', 'woocommerce-wholesale-pricing'), array( 'read' => true, 'level_0' => true ) );
+					add_role( $new_slug, $new_name . esc_html__(' - Wholesaler role', 'woocommerce-vendor-portal'), array( 'read' => true, 'level_0' => true ) );
 				}
 				$args = array(
 					'role'    => $termObj->slug,
@@ -152,19 +152,19 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 			// ends version 1.3.0
 			?>
 			<div class="form-field term-tax-wrap">
-				<label for="wwp_tax_exmept_wholesaler"><?php esc_html_e('Tax Exempt', 'woocommerce-wholesale-pricing'); ?></label>
+				<label for="wwp_tax_exmept_wholesaler"><?php esc_html_e('Tax Exempt', 'woocommerce-vendor-portal'); ?></label>
 				<input type="checkbox" name="wwp_tax_exmept_wholesaler" id="wwp_tax_exmept_wholesaler" value="yes">
-				<span><?php esc_html_e('Tax exempt for wholesale user role.', 'woocommerce-wholesale-pricing'); ?></span>
+				<span><?php esc_html_e('Tax exempt for vendor user role.', 'woocommerce-vendor-portal'); ?></span>
 			</div>
 			<!-- // version 1.3.0 -->
 			<div class="form-field term-coupons-wrap">
-				<label for="wwp_wholesale_disable_coupons"><?php esc_html_e('Disable Coupons', 'woocommerce-wholesale-pricing'); ?></label>
+				<label for="wwp_wholesale_disable_coupons"><?php esc_html_e('Disable Coupons', 'woocommerce-vendor-portal'); ?></label>
 				<input type="checkbox" name="wwp_wholesale_disable_coupons" id="wwp_wholesale_disable_coupons" value="yes">
-				<span><?php esc_html_e('Disable Coupons for wholesale user role.', 'woocommerce-wholesale-pricing'); ?></span>
+				<span><?php esc_html_e('Disable Coupons for vendor user role.', 'woocommerce-vendor-portal'); ?></span>
 			</div>
 			<!-- // ends version 1.3.0 -->
 			<div class="form-field term-gateways-wrap">
-				<label for="wwp_restricted_pmethods_wholesaler"><?php esc_html_e('Disable Payment Methods', 'woocommerce-wholesale-pricing'); ?></label>
+				<label for="wwp_restricted_pmethods_wholesaler"><?php esc_html_e('Disable Payment Methods', 'woocommerce-vendor-portal'); ?></label>
 				<?php $available_gateways = WC()->payment_gateways->get_available_payment_gateways(); ?>
 					<select name="wwp_restricted_pmethods_wholesaler[]" id="wwp_restricted_pmethods_wholesaler" class="regular-text wc-enhanced-select" multiple>
 					<?php 
@@ -175,10 +175,10 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 					}
 					?>
 					</select>
-					<p><?php esc_html_e('Select payment methods to restrict for wholesale users.', 'woocommerce-wholesale-pricing'); ?></p>
+					<p><?php esc_html_e('Select payment methods to restrict for vendor users.', 'woocommerce-vendor-portal'); ?></p>
 			</div>
 			<div class="form-field term-shipping-wrap">
-				<label for="wwp_restricted_smethods_wholesaler"><?php esc_html_e('Disable Shipping Methods', 'woocommerce-wholesale-pricing'); ?></label>
+				<label for="wwp_restricted_smethods_wholesaler"><?php esc_html_e('Disable Shipping Methods', 'woocommerce-vendor-portal'); ?></label>
 				<?php $shipping_methods = WC()->shipping->get_shipping_methods(); ?>
 					<select name="wwp_restricted_smethods_wholesaler[]" id="wwp_restricted_smethods_wholesaler" class="regular-text wc-enhanced-select" multiple>
 					<?php 
@@ -189,7 +189,7 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 					}
 					?>
 					</select>
-					<p><?php esc_html_e('Select shipping methods to restrict for wholesale users.', 'woocommerce-wholesale-pricing'); ?></p>
+					<p><?php esc_html_e('Select shipping methods to restrict for vendor users.', 'woocommerce-vendor-portal'); ?></p>
 			</div>
 			<?php
 			// version 1.3.0
@@ -200,9 +200,9 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 				$variations = $this->wwp_exclude_variations($variations);
 				?>
 				<div class="form-field term-subscription-wrap">
-					<label for="wwp_wholesaler_subscription"><?php esc_html_e('Select Subscription Variation', 'woocommerce-wholesale-pricing'); ?></label>
+					<label for="wwp_wholesaler_subscription"><?php esc_html_e('Select Subscription Variation', 'woocommerce-vendor-portal'); ?></label>
 					<select name="wwp_wholesaler_subscription" id="wwp_wholesaler_subscription">
-						<option value=""><?php esc_html_e('Select Subscription Variation', 'woocommerce-wholesale-pricing'); ?></option>
+						<option value=""><?php esc_html_e('Select Subscription Variation', 'woocommerce-vendor-portal'); ?></option>
 							<?php foreach ( $variations as $key => $variation ) { ?> 
 								<option value="<?php echo esc_attr($variation['variation_id']); ?>"><?php echo esc_attr(implode(',', $variation['attributes'])); ?></option>
 							<?php }	?>						
@@ -212,7 +212,7 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 						// }
 						?>
 					</select>
-					<p><?php esc_html_e('On the purchase of the selected variation the users will be assigned the this role.', 'woocommerce-wholesale-pricing'); ?></p>
+					<p><?php esc_html_e('On the purchase of the selected variation the users will be assigned the this role.', 'woocommerce-vendor-portal'); ?></p>
 				</div>
 				<?php
 			}
@@ -265,30 +265,30 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 			<tr class="form-field term-tax-wrap">
 				<th>
 					<label for="wwp_tax_exmept_wholesaler">
-						<?php esc_html_e('Tax Exempt', 'woocommerce-wholesale-pricing'); ?>
+						<?php esc_html_e('Tax Exempt', 'woocommerce-vendor-portal'); ?>
 					</label>
 				</th>
 				<td scope="row">
 					<input type="checkbox" name="wwp_tax_exmept_wholesaler" value="yes" <?php checked('yes', $tax); ?>>
-					<span><?php esc_html_e('Tax exempt for wholesale user role.', 'woocommerce-wholesale-pricing'); ?></span>
+					<span><?php esc_html_e('Tax exempt for vendor user role.', 'woocommerce-vendor-portal'); ?></span>
 				</td>
 			</tr>
 			<!-- // version 1.3.0 -->
 			<tr class="form-field term-coupons-wrap">
 				<th>
 					<label for="wwp_wholesale_disable_coupons">
-						<?php esc_html_e('Disable Coupons', 'woocommerce-wholesale-pricing'); ?>
+						<?php esc_html_e('Disable Coupons', 'woocommerce-vendor-portal'); ?>
 					</label>
 				</th>
 				<td scope="row">
 					<input type="checkbox" name="wwp_wholesale_disable_coupons" value="yes" <?php checked('yes', $coupons); ?>>
-					<span><?php esc_html_e('Disable Coupons for wholesale user role.', 'woocommerce-wholesale-pricing'); ?></span>
+					<span><?php esc_html_e('Disable Coupons for vendor user role.', 'woocommerce-vendor-portal'); ?></span>
 				</td>
 			</tr>
 			<!-- // ends version 1.3.0 -->
 			<tr class="form-field term-gateways-wrap">
 				<th><label for="wwp_restricted_pmethods_wholesaler">
-					<?php esc_html_e('Disable Payment Methods', 'woocommerce-wholesale-pricing'); ?></label>
+					<?php esc_html_e('Disable Payment Methods', 'woocommerce-vendor-portal'); ?></label>
 				</th>
 				<td>
 					<?php 
@@ -308,12 +308,12 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 					}
 					?>
 					</select>
-					<p><?php esc_html_e('Select payment methods to restrict for wholesale users.', 'woocommerce-wholesale-pricing'); ?></p>
+					<p><?php esc_html_e('Select payment methods to restrict for vendor users.', 'woocommerce-vendor-portal'); ?></p>
 				</td>
 			</tr>
 			<tr class="form-field term-shipping-wrap">
 				<th><label for="wwp_restricted_smethods_wholesaler">
-					<?php esc_html_e('Disable Shipping Methods', 'woocommerce-wholesale-pricing'); ?></label>
+					<?php esc_html_e('Disable Shipping Methods', 'woocommerce-vendor-portal'); ?></label>
 				</th>
 				<td>
 					<?php 
@@ -333,7 +333,7 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 					}
 					?>
 					</select>
-					<p><?php esc_html_e('Select shipping methods to restrict for wholesale users.', 'woocommerce-wholesale-pricing'); ?></p>
+					<p><?php esc_html_e('Select shipping methods to restrict for vendor users.', 'woocommerce-vendor-portal'); ?></p>
 				</td>
 			</tr>
 
@@ -345,15 +345,15 @@ if (!class_exists('WWP_Wholesale_User_Roles')) {
 				$variations = $this->wwp_exclude_variations($variations, $selected_variation);
 				?>
 				<tr class="form-field term-subscription-wrap">
-					<th><label for="wwp_wholesaler_subscription"><?php esc_html_e('Select Subscription Variation', 'woocommerce-wholesale-pricing'); ?></label></th>
+					<th><label for="wwp_wholesaler_subscription"><?php esc_html_e('Select Subscription Variation', 'woocommerce-vendor-portal'); ?></label></th>
 					<td>
 						<select name="wwp_wholesaler_subscription" id="wwp_wholesaler_subscription">
-							<option value=""><?php esc_html_e('Select Subscription Variation', 'woocommerce-wholesale-pricing'); ?></option>
+							<option value=""><?php esc_html_e('Select Subscription Variation', 'woocommerce-vendor-portal'); ?></option>
 							<?php foreach ( $variations as $key => $variation ) { ?> 
 								<option value="<?php echo esc_attr($variation['variation_id']); ?>" <?php echo selected($selected_variation, $variation['variation_id'], false); ?>><?php echo esc_attr(implode(',', $variation['attributes'])); ?></option>
 							<?php }	?>
 						</select>
-						<p><?php esc_html_e('On the purchase of the selected variation the users will be assigned the this role.', 'woocommerce-wholesale-pricing'); ?></p>
+						<p><?php esc_html_e('On the purchase of the selected variation the users will be assigned the this role.', 'woocommerce-vendor-portal'); ?></p>
 					</td>
 				</tr>
 				<?php

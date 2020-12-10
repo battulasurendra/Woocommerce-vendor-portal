@@ -3,7 +3,7 @@ if ( !defined('ABSPATH') ) {
 	exit; // Exit if accessed directly
 }
 /**
- * Class To Add Wholesale Functionality with WooCommerce
+ * Class To Add Vendor Functionality with WooCommerce
  */
 if ( !class_exists('Wwp_Wholesale_Rulesets') ) {
 
@@ -28,7 +28,7 @@ if ( !class_exists('Wwp_Wholesale_Rulesets') ) {
 					?>
 				<!-- // version 1.3.0 -->
 				<div class="form-field term-visibility-wrap">
-					<label for="wholesale_product_visibility_multi"><?php esc_html_e('Hide Product for Wholesaler Roles', 'woocommerce-wholesale-pricing'); ?></label>
+					<label for="wholesale_product_visibility_multi"><?php esc_html_e('Hide Product for Wholesaler Roles', 'woocommerce-vendor-portal'); ?></label>
 					<select name="wholesale_product_visibility_multi[]" id="wholesale_product_visibility_multi" class="widefat wc-enhanced-select" multiple>
 					<?php
 					foreach ( $roles as $key => $role ) {
@@ -36,16 +36,16 @@ if ( !class_exists('Wwp_Wholesale_Rulesets') ) {
 					}
 					?>
 					</select>
-					<p><?php esc_html_e('Select specific user roles to hide the products of this category.', 'woocommerce-wholesale-pricing'); ?></p>
+					<p><?php esc_html_e('Select specific user roles to hide the products of this category.', 'woocommerce-vendor-portal'); ?></p>
 				</div>
 				<!-- // ends version 1.3.0 -->
-				<table class="wholesale_pricing">
+				<table class="vendor_portal">
 					<tr>
-						<th><?php esc_html_e('Wholesale Role', 'woocommerce-wholesale-pricing'); ?></th>
-						<th><?php esc_html_e('Enable for Role', 'woocommerce-wholesale-pricing'); ?></th>
-						<th><?php esc_html_e('Discount Type', 'woocommerce-wholesale-pricing'); ?></th>
-						<th><?php esc_html_e('Wholesale Price', 'woocommerce-wholesale-pricing'); ?></th>
-						<th><?php esc_html_e('Min Quantity', 'woocommerce-wholesale-pricing'); ?></th>
+						<th><?php esc_html_e('Vendor Role', 'woocommerce-vendor-portal'); ?></th>
+						<th><?php esc_html_e('Enable for Role', 'woocommerce-vendor-portal'); ?></th>
+						<th><?php esc_html_e('Discount Type', 'woocommerce-vendor-portal'); ?></th>
+						<th><?php esc_html_e('Vendor Price', 'woocommerce-vendor-portal'); ?></th>
+						<th><?php esc_html_e('Min Quantity', 'woocommerce-vendor-portal'); ?></th>
 					</tr>
 						<?php 
 						foreach ( $roles as $key => $role ) {
@@ -62,8 +62,8 @@ if ( !class_exists('Wwp_Wholesale_Rulesets') ) {
 								</td>
 								<td>
 									<select class="widefat" name="discount_type_<?php esc_attr_e($role->term_id); ?>" value="">
-										<option value="percent" <?php selected($discount, 'percent'); ?> > <?php esc_html_e('Percent', 'woocommerce-wholesale-pricing'); ?> </option>
-										<option value="fixed"  <?php selected($discount, 'fixed'); ?> > <?php esc_html_e('Fixed', 'woocommerce-wholesale-pricing'); ?> </option>
+										<option value="percent" <?php selected($discount, 'percent'); ?> > <?php esc_html_e('Percent', 'woocommerce-vendor-portal'); ?> </option>
+										<option value="fixed"  <?php selected($discount, 'fixed'); ?> > <?php esc_html_e('Fixed', 'woocommerce-vendor-portal'); ?> </option>
 									</select>
 								</td>
 								<td>
@@ -81,33 +81,33 @@ if ( !class_exists('Wwp_Wholesale_Rulesets') ) {
 				?>
 				<!-- // version 1.3.0 -->
 				<div class="form-field term-visibility-wrap">
-					<label for="_wwp_wholesale_product_visibility"><?php esc_html_e('Products Visibility', 'woocommerce-wholesale-pricing'); ?></label>
+					<label for="_wwp_wholesale_product_visibility"><?php esc_html_e('Products Visibility', 'woocommerce-vendor-portal'); ?></label>
 					<input type="checkbox" name="_wwp_wholesale_product_visibility" id="_wwp_wholesale_product_visibility" value="yes">
-					<span><?php esc_html_e('Hide products of this category for wholesale customers.', 'woocommerce-wholesale-pricing'); ?></span>
+					<span><?php esc_html_e('Hide products of this category for vendor customers.', 'woocommerce-vendor-portal'); ?></span>
 				</div>
 				<!-- // ends version 1.3.0 -->
 				<div class="form-field term-wwp-wrap">
-					<label for="_wwp_enable_wholesale_item"><?php esc_html_e('Enable Wholesale Prices', 'woocommerce-wholesale-pricing'); ?></label>
+					<label for="_wwp_enable_wholesale_item"><?php esc_html_e('Enable Vendor Prices', 'woocommerce-vendor-portal'); ?></label>
 					<input type="checkbox" name="_wwp_enable_wholesale_item" id="_wwp_enable_wholesale_item" value="yes">
-					<span><?php esc_html_e('Enable wholesale prices.', 'woocommerce-wholesale-pricing'); ?></span>
+					<span><?php esc_html_e('Enable vendor prices.', 'woocommerce-vendor-portal'); ?></span>
 				</div>
 				<div class="form-field term-discount-wrap">
-					<label for="_wwp_wholesale_type"><?php esc_html_e('Wholesale Discount Type', 'woocommerce-wholesale-pricing'); ?></label>
+					<label for="_wwp_wholesale_type"><?php esc_html_e('Vendor Discount Type', 'woocommerce-vendor-portal'); ?></label>
 					<select name="_wwp_wholesale_type" id="_wwp_wholesale_type"class="regular-text">
-						<option value="fixed"><?php esc_html_e('Fixed Amount', 'woocommerce-wholesale-pricing'); ?></option>
-						<option value="percent"><?php esc_html_e('Percentage', 'woocommerce-wholesale-pricing'); ?></option>
+						<option value="fixed"><?php esc_html_e('Fixed Amount', 'woocommerce-vendor-portal'); ?></option>
+						<option value="percent"><?php esc_html_e('Percentage', 'woocommerce-vendor-portal'); ?></option>
 					</select>
-					<p><?php esc_html_e('Price type for wholesale products.', 'woocommerce-wholesale-pricing'); ?></p>
+					<p><?php esc_html_e('Price type for vendor products.', 'woocommerce-vendor-portal'); ?></p>
 				</div>
 				<div class="form-field term-amount-wrap">
-					<label for="_wwp_wholesale_amount"><?php esc_html_e('Enter Wholesale Amount', 'woocommerce-wholesale-pricing'); ?></label>
+					<label for="_wwp_wholesale_amount"><?php esc_html_e('Enter Vendor Amount', 'woocommerce-vendor-portal'); ?></label>
 					<input type="text" name="_wwp_wholesale_amount" id="_wwp_wholesale_amount" value="" class="regular-text">
-					<p><?php esc_html_e('Tax exempt for wholesale user role.', 'woocommerce-wholesale-pricing'); ?></p>
+					<p><?php esc_html_e('Tax exempt for vendor user role.', 'woocommerce-vendor-portal'); ?></p>
 				</div>
 				<div class="form-field term-qty-wrap">
-					<label for="_wwp_wholesale_min_quantity"><?php esc_html_e('Minimum Quantity', 'woocommerce-wholesale-pricing'); ?></label>
+					<label for="_wwp_wholesale_min_quantity"><?php esc_html_e('Minimum Quantity', 'woocommerce-vendor-portal'); ?></label>
 					<input type="number" name="_wwp_wholesale_min_quantity" id="_wwp_wholesale_min_quantity" value="" class="regular-text">
-					<p><?php esc_html_e('Tax exempt for wholesale user role.', 'woocommerce-wholesale-pricing'); ?></p>
+					<p><?php esc_html_e('Tax exempt for vendor user role.', 'woocommerce-vendor-portal'); ?></p>
 				</div>
 				<?php
 			}
@@ -133,7 +133,7 @@ if ( !class_exists('Wwp_Wholesale_Rulesets') ) {
 				<tr class="form-field term-visibility-wrap">
 					<th>
 						<label for="wholesale_product_visibility_multi">
-							<?php esc_html_e('Hide Product for Wholesaler Roles', 'woocommerce-wholesale-pricing'); ?>
+							<?php esc_html_e('Hide Product for Wholesaler Roles', 'woocommerce-vendor-portal'); ?>
 						</label>
 					</th>
 					<td scope="row">
@@ -145,17 +145,17 @@ if ( !class_exists('Wwp_Wholesale_Rulesets') ) {
 						}
 						?>
 						</select>
-						<p><?php esc_html_e('Select specific user roles to hide the products of this category.', 'woocommerce-wholesale-pricing'); ?></p>
+						<p><?php esc_html_e('Select specific user roles to hide the products of this category.', 'woocommerce-vendor-portal'); ?></p>
 					</td>
 				</tr>
 				<!-- // ends version 1.3.0 -->
-				<table class="wholesale_pricing">
+				<table class="vendor_portal">
 					<tr>
-						<th><?php esc_html_e('Wholesale Role', 'woocommerce-wholesale-pricing'); ?></th>
-						<th><?php esc_html_e('Enable for Role', 'woocommerce-wholesale-pricing'); ?></th>
-						<th><?php esc_html_e('Discount Type', 'woocommerce-wholesale-pricing'); ?></th>
-						<th><?php esc_html_e('Wholesale Price', 'woocommerce-wholesale-pricing'); ?></th>
-						<th><?php esc_html_e('Min Quantity', 'woocommerce-wholesale-pricing'); ?></th>
+						<th><?php esc_html_e('Vendor Role', 'woocommerce-vendor-portal'); ?></th>
+						<th><?php esc_html_e('Enable for Role', 'woocommerce-vendor-portal'); ?></th>
+						<th><?php esc_html_e('Discount Type', 'woocommerce-vendor-portal'); ?></th>
+						<th><?php esc_html_e('Vendor Price', 'woocommerce-vendor-portal'); ?></th>
+						<th><?php esc_html_e('Min Quantity', 'woocommerce-vendor-portal'); ?></th>
 					</tr>
 						<?php 
 						foreach ( $roles as $key => $role ) {
@@ -177,8 +177,8 @@ if ( !class_exists('Wwp_Wholesale_Rulesets') ) {
 								</td>
 								<td>
 									<select class="widefat" name="discount_type_<?php esc_attr_e($role->term_id); ?>" value="">
-										<option value="percent" <?php selected($discount, 'percent'); ?> > <?php esc_html_e('Percent', 'woocommerce-wholesale-pricing'); ?> </option>
-										<option value="fixed"  <?php selected($discount, 'fixed'); ?> > <?php esc_html_e('Fixed', 'woocommerce-wholesale-pricing'); ?> </option>
+										<option value="percent" <?php selected($discount, 'percent'); ?> > <?php esc_html_e('Percent', 'woocommerce-vendor-portal'); ?> </option>
+										<option value="fixed"  <?php selected($discount, 'fixed'); ?> > <?php esc_html_e('Fixed', 'woocommerce-vendor-portal'); ?> </option>
 									</select>
 								</td>
 								<td>
@@ -205,60 +205,60 @@ if ( !class_exists('Wwp_Wholesale_Rulesets') ) {
 			<tr class="form-field term-visibility-wrap">
 				<th>
 					<label for="_wwp_wholesale_product_visibility">
-						<?php esc_html_e('Hide Product for Wholesaler Roles', 'woocommerce-wholesale-pricing'); ?>
+						<?php esc_html_e('Hide Product for Wholesaler Roles', 'woocommerce-vendor-portal'); ?>
 					</label>
 				</th>
 				<td scope="row">
 					<input type="checkbox" name="_wwp_wholesale_product_visibility" id="_wwp_wholesale_product_visibility" value="yes" <?php checked('yes', $visibility); ?>>
-					<span><?php esc_html_e('Hide products of this category for wholesale customers.', 'woocommerce-wholesale-pricing'); ?></span>
+					<span><?php esc_html_e('Hide products of this category for vendor customers.', 'woocommerce-vendor-portal'); ?></span>
 				</td>
 			</tr>
 			<!-- // ends version 1.3.0 -->
 			<tr class="form-field term-wwp-wrap">
 				<th>
 					<label for="_wwp_enable_wholesale_item">
-						<?php esc_html_e('Enable Wholesale Prices', 'woocommerce-wholesale-pricing'); ?>
+						<?php esc_html_e('Enable Vendor Prices', 'woocommerce-vendor-portal'); ?>
 					</label>
 				</th>
 				<td scope="row">
 					<input type="checkbox" name="_wwp_enable_wholesale_item" id="_wwp_enable_wholesale_item" value="yes" <?php checked('yes', $enable); ?>>
-					<span><?php esc_html_e('Enable wholesale prices.', 'woocommerce-wholesale-pricing'); ?></span>
+					<span><?php esc_html_e('Enable vendor prices.', 'woocommerce-vendor-portal'); ?></span>
 				</td>
 			</tr>
 			<tr class="form-field term-discount-wrap">
 				<th>
 					<label for="_wwp_wholesale_type">
-						<?php esc_html_e('Wholesale Discount Type', 'woocommerce-wholesale-pricing'); ?>
+						<?php esc_html_e('Vendor Discount Type', 'woocommerce-vendor-portal'); ?>
 					</label>
 				</th>
 				<td scope="row">
 					<select name="_wwp_wholesale_type" id="_wwp_wholesale_type" class="regular-text">
-						<option value="fixed" <?php selected('fixed', $type); ?>><?php esc_html_e('Fixed Amount', 'woocommerce-wholesale-pricing'); ?></option>
-						<option value="percent" <?php selected('percent', $type); ?>><?php esc_html_e('Percentage', 'woocommerce-wholesale-pricing'); ?></option>
+						<option value="fixed" <?php selected('fixed', $type); ?>><?php esc_html_e('Fixed Amount', 'woocommerce-vendor-portal'); ?></option>
+						<option value="percent" <?php selected('percent', $type); ?>><?php esc_html_e('Percentage', 'woocommerce-vendor-portal'); ?></option>
 					</select>
-					<p><?php esc_html_e('Price type for wholesale products.', 'woocommerce-wholesale-pricing'); ?></p>
+					<p><?php esc_html_e('Price type for vendor products.', 'woocommerce-vendor-portal'); ?></p>
 				</td>
 			</tr>
 			<tr class="form-field term-amount-wrap">
 				<th>
 					<label for="_wwp_wholesale_amount">
-						<?php esc_html_e('Enter Wholesale Amount', 'woocommerce-wholesale-pricing'); ?>
+						<?php esc_html_e('Enter Vendor Amount', 'woocommerce-vendor-portal'); ?>
 					</label>
 				</th>
 				<td scope="row">
 					<input type="text" name="_wwp_wholesale_amount" id="_wwp_wholesale_amount" value="<?php esc_attr_e($amount); ?>" class="regular-text">
-					<p><?php esc_html_e('Enter wholesale amount.', 'woocommerce-wholesale-pricing'); ?></p>
+					<p><?php esc_html_e('Enter vendor amount.', 'woocommerce-vendor-portal'); ?></p>
 				</td>
 			</tr>
 			<tr class="form-field term-qty-wrap">
 				<th>
 					<label for="_wwp_wholesale_min_quantity">
-						<?php esc_html_e('Minimum Quantity', 'woocommerce-wholesale-pricing'); ?>
+						<?php esc_html_e('Minimum Quantity', 'woocommerce-vendor-portal'); ?>
 					</label>
 				</th>
 				<td scope="row">
 					<input type="number" name="_wwp_wholesale_min_quantity" id="_wwp_wholesale_min_quantity" value="<?php esc_attr_e($qty); ?>" class="regular-text">
-					<p><?php esc_html_e('Enter wholesale minimum quantity to apply discount.', 'woocommerce-wholesale-pricing'); ?></p>
+					<p><?php esc_html_e('Enter vendor minimum quantity to apply discount.', 'woocommerce-vendor-portal'); ?></p>
 				</td>
 			</tr>
 				<?php

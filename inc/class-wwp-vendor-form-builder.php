@@ -12,7 +12,7 @@ if ( !class_exists('WWP_WHOLESALE_FORM_BUILDER') ) {
 		public function wwp_formbuilder() {
 			?>
 			<div id="wwp_wholesale_form_builder_container">
-				<div class="message"><span class="dashicons dashicons-yes-alt"></span><span class="message_text"> <?php echo esc_html__('Successfully Form Saved.', 'woocommerce-wholesale-pricing'); ?></span> <span class="dashicons dashicons-no-alt"></span></div>
+				<div class="message"><span class="dashicons dashicons-yes-alt"></span><span class="message_text"> <?php echo esc_html__('Successfully Form Saved.', 'woocommerce-vendor-portal'); ?></span> <span class="dashicons dashicons-no-alt"></span></div>
 				<div class="loader"></div>
 				<div id="build-wrap"></div>
 				<div class="render-wrap"></div>

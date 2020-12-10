@@ -3,7 +3,7 @@ if (! defined('ABSPATH') ) {
 	exit; // Exit if accessed directly
 }
 /**
- * Class To handle Wholesale Customer Requests
+ * Class To handle Vendor Customer Requests
  */
 if ( !class_exists('WWP_Easy_Wholesale_Requests') ) {
 
@@ -19,23 +19,23 @@ if ( !class_exists('WWP_Easy_Wholesale_Requests') ) {
 		}
 		public function register_requests_post_type() {
 			$labels = array(
-				'name'              => esc_html_x('Requests', 'Post Type Name', 'woocommerce-wholesale-pricing'),
-				'singular_name'     => esc_html_x('Request', 'Post Type Singular Name', 'woocommerce-wholesale-pricing'),
-				'menu_name'         => esc_html__('Request', 'woocommerce-wholesale-pricing'),
-				'name_admin_bar'    => esc_html__('Request', 'woocommerce-wholesale-pricing'),
-				'add_new'           => esc_html__('Add New Request', 'woocommerce-wholesale-pricing'),
-				'add_new_item'      => esc_html__('Add New Request', 'woocommerce-wholesale-pricing'),
-				'new_item'          => esc_html__('New Request', 'woocommerce-wholesale-pricing'),
-				'edit_item'         => esc_html__('Edit Request', 'woocommerce-wholesale-pricing'),
-				'view_item'         => esc_html__('View Request', 'woocommerce-wholesale-pricing'),
-				'all_items'         => esc_html__('Requests List', 'woocommerce-wholesale-pricing'),
-				'search_items'      => esc_html__('Search Request', 'woocommerce-wholesale-pricing'),
-				'not_found'         => esc_html__('No Request found.', 'woocommerce-wholesale-pricing'),
-				'not_found_in_trash'=> esc_html__('No Request found in Trash.', 'woocommerce-wholesale-pricing')
+				'name'              => esc_html_x('Requests', 'Post Type Name', 'woocommerce-vendor-portal'),
+				'singular_name'     => esc_html_x('Request', 'Post Type Singular Name', 'woocommerce-vendor-portal'),
+				'menu_name'         => esc_html__('Request', 'woocommerce-vendor-portal'),
+				'name_admin_bar'    => esc_html__('Request', 'woocommerce-vendor-portal'),
+				'add_new'           => esc_html__('Add New Request', 'woocommerce-vendor-portal'),
+				'add_new_item'      => esc_html__('Add New Request', 'woocommerce-vendor-portal'),
+				'new_item'          => esc_html__('New Request', 'woocommerce-vendor-portal'),
+				'edit_item'         => esc_html__('Edit Request', 'woocommerce-vendor-portal'),
+				'view_item'         => esc_html__('View Request', 'woocommerce-vendor-portal'),
+				'all_items'         => esc_html__('Requests List', 'woocommerce-vendor-portal'),
+				'search_items'      => esc_html__('Search Request', 'woocommerce-vendor-portal'),
+				'not_found'         => esc_html__('No Request found.', 'woocommerce-vendor-portal'),
+				'not_found_in_trash'=> esc_html__('No Request found in Trash.', 'woocommerce-vendor-portal')
 			);
 			$args = array(
 				'labels'            => $labels,
-				'description'       => esc_html__('Description.', 'woocommerce-wholesale-pricing'),
+				'description'       => esc_html__('Description.', 'woocommerce-vendor-portal'),
 				'public'            => false,
 				'show_ui'           => true,
 				'show_in_menu'      => false,
@@ -64,11 +64,11 @@ if ( !class_exists('WWP_Easy_Wholesale_Requests') ) {
 			} else {
 				$the_count = '';
 			}
-			add_submenu_page('wwp_vendor', esc_html__('Wholesale User Requests', 'woocommerce-wholesale-pricing'), __('Requests ' . $the_count, 'woocommerce-wholesale-pricing'), 'manage_wholesale_user_requests', 'edit.php?post_type=wwp_requests');
+			add_submenu_page('wwp_vendor', esc_html__('Vendor User Requests', 'woocommerce-vendor-portal'), __('Requests ' . $the_count, 'woocommerce-vendor-portal'), 'manage_wholesale_user_requests', 'edit.php?post_type=wwp_requests');
 		}
 		public function register_wwp_requests_columns ( $columns ) {
 			unset($columns['author']);
-			$columns['user_status'] = esc_html__('User Status', 'woocommerce-wholesale-pricing');
+			$columns['user_status'] = esc_html__('User Status', 'woocommerce-vendor-portal');
 			return $columns;
 		}
 		public function custom_columns_wwp_requests ( $column, $post_id ) {
@@ -76,19 +76,19 @@ if ( !class_exists('WWP_Easy_Wholesale_Requests') ) {
 				case 'user_status':
 					$status=get_post_meta($post_id, '_user_status', true);
 					if ( 'active' == $status ) {
-						echo '<p class="approved">' . esc_html__('Approved', 'woocommerce-wholesale-pricing') . '</p>';
+						echo '<p class="approved">' . esc_html__('Approved', 'woocommerce-vendor-portal') . '</p>';
 					} elseif ( 'waiting' == $status ) {
-						echo '<p class="waiting">' . esc_html__('Waiting', 'woocommerce-wholesale-pricing') . '</p>';
+						echo '<p class="waiting">' . esc_html__('Waiting', 'woocommerce-vendor-portal') . '</p>';
 					} elseif ( 'rejected' == $status ) {
-						echo '<p class="rejected">' . esc_html__('Rejected', 'woocommerce-wholesale-pricing') . '</p>';
+						echo '<p class="rejected">' . esc_html__('Rejected', 'woocommerce-vendor-portal') . '</p>';
 					}
 					break;
 			}
 		}
 		public function register_add_meta_box_requests () {
 			add_meta_box( 
-				'wholesale-pricing-pro-user-status', 
-				esc_html__('Wholesale User Request Confirmation', 'woocommerce-wholesale-pricing'), 
+				'vendor-portal-pro-user-status', 
+				esc_html__('Vendor User Request Confirmation', 'woocommerce-vendor-portal'), 
 				array($this, 'wholesale_user_confirmation'), 
 				'wwp_requests', 
 				'normal', 
@@ -116,16 +116,16 @@ if ( !class_exists('WWP_Easy_Wholesale_Requests') ) {
 							if (!empty($user_info->roles[0]) ) {
 								$wp_roles_user_info = $wp_roles->role_names[$user_info->roles[0]];
 							}
-								echo '<tr><th>' . esc_html__('User ID: ', 'woocommerce-wholesale-pricing') . '</th><td><a href="' . esc_url(admin_url("user-edit.php?user_id=$user_id")) . '">' . esc_html($user_info->ID) . '</a></td></tr>';
-								echo '<tr><th>' . esc_html__('Username: ', 'woocommerce-wholesale-pricing') . '</th><td><a href="' . esc_url(admin_url("user-edit.php?user_id=$user_id")) . '">' . esc_html($user_info->user_login) . '</a></td></tr>';
+								echo '<tr><th>' . esc_html__('User ID: ', 'woocommerce-vendor-portal') . '</th><td><a href="' . esc_url(admin_url("user-edit.php?user_id=$user_id")) . '">' . esc_html($user_info->ID) . '</a></td></tr>';
+								echo '<tr><th>' . esc_html__('Username: ', 'woocommerce-vendor-portal') . '</th><td><a href="' . esc_url(admin_url("user-edit.php?user_id=$user_id")) . '">' . esc_html($user_info->user_login) . '</a></td></tr>';
 								
-								echo '<tr><th>' . esc_html__('Current user role: ', 'woocommerce-wholesale-pricing') . '</th><td><a href="' . esc_url(admin_url("user-edit.php?user_id=$user_id")) . '">' . esc_html($wp_roles_user_info) . '</a></td></tr>';
+								echo '<tr><th>' . esc_html__('Current user role: ', 'woocommerce-vendor-portal') . '</th><td><a href="' . esc_url(admin_url("user-edit.php?user_id=$user_id")) . '">' . esc_html($wp_roles_user_info) . '</a></td></tr>';
 								
-								echo '<tr><th></th><td><a href="' . esc_url(admin_url("user-edit.php?user_id=$user_id")) . '">' . esc_html__('More user details', 'woocommerce-wholesale-pricing') . '</a></td></tr>'; 
+								echo '<tr><th></th><td><a href="' . esc_url(admin_url("user-edit.php?user_id=$user_id")) . '">' . esc_html__('More user details', 'woocommerce-vendor-portal') . '</a></td></tr>'; 
 							
 							if ( 'single' == $settings['wholesale_role'] ) {
 							
-								echo '<tr class="user_role"><th>' . esc_html__('Wholesale roles to be assign: ', 'woocommerce-wholesale-pricing') . '</th><td>' . esc_html('default_wholesaler') . '</td></tr>';
+								echo '<tr class="user_role"><th>' . esc_html__('Vendor roles to be assign: ', 'woocommerce-vendor-portal') . '</th><td>' . esc_html('default_wholesaler') . '</td></tr>';
 
 							} else {
 									
@@ -133,7 +133,7 @@ if ( !class_exists('WWP_Easy_Wholesale_Requests') ) {
 								
 						<tr scope="row" class="user_role">
 						
-						<th><label for="default_multipe_wholesale_roles"><?php esc_html_e('Wholesale roles to be assign:', 'woocommerce-wholesale-pricing'); ?></label></th>
+						<th><label for="default_multipe_wholesale_roles"><?php esc_html_e('Vendor roles to be assign:', 'woocommerce-vendor-portal'); ?></label></th>
 							<td>
 								<?php 
 								
@@ -150,7 +150,7 @@ if ( !class_exists('WWP_Easy_Wholesale_Requests') ) {
 								}
 								?>
 								<select id="default_multipe_wholesale_roles" class="regular-text" name="user_role_set" >
-									<option value="" disabled><?php esc_html_e('Select Wholesale Role', 'woocommerce-wholesale-pricing'); ?></option>
+									<option value="" disabled><?php esc_html_e('Select Vendor Role', 'woocommerce-vendor-portal'); ?></option>
 									<?php  
 										
 									foreach ( $allterms as $allterm ) {
@@ -185,26 +185,26 @@ if ( !class_exists('WWP_Easy_Wholesale_Requests') ) {
 					<hr> 
 					<?php   
 				} else {
-					echo esc_html__('User does not exist', 'woocommerce-wholesale-pricing');
+					echo esc_html__('User does not exist', 'woocommerce-vendor-portal');
 				}
 			} else {
-				echo esc_html__('User does not exist', 'woocommerce-wholesale-pricing');
+				echo esc_html__('User does not exist', 'woocommerce-vendor-portal');
 			} 
 			?>
 				<table>
 					<tbody>
 						<tr>
 							<th>
-								<?php esc_html_e('Request status', 'woocommerce-wholesale-pricing'); ?>
+								<?php esc_html_e('Request status', 'woocommerce-vendor-portal'); ?>
 							</th>
 							<td>
 								<label>
 									<input id="active" type="radio" name="user_status" value="active" <?php echo ( 'active' == $status ) ? 'checked' : ''; ?> >
-									<?php esc_html_e('Approve', 'woocommerce-wholesale-pricing'); ?>
+									<?php esc_html_e('Approve', 'woocommerce-vendor-portal'); ?>
 								</label>
 								<label>
 									<input id="rejected" type="radio" name="user_status" value="rejected" <?php echo ( 'rejected' == $status ) ? 'checked' : ''; ?> >
-									<?php esc_html_e('Reject', 'woocommerce-wholesale-pricing'); ?>
+									<?php esc_html_e('Reject', 'woocommerce-vendor-portal'); ?>
 								</label>
 							</td>
 						</tr>
@@ -212,9 +212,9 @@ if ( !class_exists('WWP_Easy_Wholesale_Requests') ) {
 				</table>
 			</div>
 			<div id="rejected_note" style="padding-bottom: 11px;padding-top: 11px;">
-			<textarea name="rejected_note" rows="4" cols="120"  placeholder="Reject Note"><?php echo esc_html_e( $rejected_note, 'woocommerce-wholesale-pricing' ); ?></textarea>
+			<textarea name="rejected_note" rows="4" cols="120"  placeholder="Reject Note"><?php echo esc_html_e( $rejected_note, 'woocommerce-vendor-portal' ); ?></textarea>
 			</div>
-			<input name="save" type="submit" class="button button-primary button-large" id="publish" value="<?php esc_html_e('Update', 'woocommerce-wholesale-pricing'); ?>">
+			<input name="save" type="submit" class="button button-primary button-large" id="publish" value="<?php esc_html_e('Update', 'woocommerce-vendor-portal'); ?>">
 			<style type="">
 				.post-type-wwp_requests .page-title-action {
 					display: none;

@@ -2,9 +2,9 @@
 if ( !defined('ABSPATH') ) {
 	exit; // Exit if accessed directly
 }
-if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
+if ( !class_exists('Wwp_Vendor_Portal_Frontend') ) {
 
-	class Wwp_Wholesale_Pricing_Frontend {
+	class Wwp_Vendor_Portal_Frontend {
 
 		public $exclude_ids = array();
 		
@@ -49,7 +49,7 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 					foreach ( $formData as $formData_key => $formData_value ) {
 						if ( isset( $formData_value->required ) && true == $formData_value->required ) {
 							if ( empty( $_POST[$formData_value->name] ) ) {
-								$form_error = __( '<strong> ' . $formData_value->label . ' </strong> is a required field.', 'woocommerce-wholesale-pricing' );
+								$form_error = __( '<strong> ' . $formData_value->label . ' </strong> is a required field.', 'woocommerce-vendor-portal' );
 								$errors->add( 'validation', $form_error  );
 							}
 						}
@@ -226,12 +226,12 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 									if ( empty ($settings['login_message_waiting_user']) ) {
 										$settings['login_message_waiting_user'] = 'You can not access this store, Your request status is in Pending';
 									}
-									return new WP_Error( 'authentication_failed', __($settings['login_message_waiting_user'], 'woocommerce-wholesale-pricing') );
+									return new WP_Error( 'authentication_failed', __($settings['login_message_waiting_user'], 'woocommerce-vendor-portal') );
 								} elseif ( 'rejected' == $user_status ) {
 									if ( empty ($settings['login_message_rejected_user']) ) {
 										$settings['login_message_rejected_user'] = 'You can not access this store, Your request is Rejected by admin';
 									}
-									return new WP_Error( 'authentication_failed', __($settings['login_message_rejected_user'], 'woocommerce-wholesale-pricing') );
+									return new WP_Error( 'authentication_failed', __($settings['login_message_rejected_user'], 'woocommerce-vendor-portal') );
 								}
 							}
 						}
@@ -342,10 +342,10 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 			if (isset( $settings['display_link_text']) && !empty($settings['display_link_text']) ) {
 				$link_text = $settings['display_link_text'];
 			} else {
-				$link_text = esc_html__('Login to see price', 'woocommerce-wholesale-pricing');
+				$link_text = esc_html__('Login to see price', 'woocommerce-vendor-portal');
 			}
 			
-			echo '<a class="login-to-upgrade" href="' . esc_url(get_permalink(wc_get_page_id('myaccount'))) . '">' . esc_html__($link_text, 'woocommerce-wholesale-pricing') . '</a>';
+			echo '<a class="login-to-upgrade" href="' . esc_url(get_permalink(wc_get_page_id('myaccount'))) . '">' . esc_html__($link_text, 'woocommerce-vendor-portal') . '</a>';
 		}
 		
 		public function wwp_woocommerce_get_price_html( $price, $product ) {
@@ -378,7 +378,7 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 			if (isset($settings['upgrade_tab_text']) && !empty($settings['upgrade_tab_text'])) {
 				$items['upgrade-account'] = $settings['upgrade_tab_text'];
 			} else {
-				$items['upgrade-account'] = esc_html__('Upgrade Account', 'woocommerce-wholesale-pricing');	
+				$items['upgrade-account'] = esc_html__('Upgrade Account', 'woocommerce-vendor-portal');	
 			}
 			
 			return $items;
@@ -407,8 +407,8 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 					
 				if ( 'waiting' == get_user_meta($user_id, '_user_status', true) ) {
 				
-					$notice = apply_filters('wwp_pending_msg', __('Your request for upgrade account is pending.', 'woocommerce-wholesale-pricing'));
-					wc_print_notice(esc_html__($notice, 'woocommerce-wholesale-pricing'), 'success');
+					$notice = apply_filters('wwp_pending_msg', __('Your request for upgrade account is pending.', 'woocommerce-vendor-portal'));
+					wc_print_notice(esc_html__($notice, 'woocommerce-vendor-portal'), 'success');
 					
 				} elseif ( 'rejected' == get_user_meta($user_id, '_user_status', true) ) {
 					
@@ -417,9 +417,9 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 					}
 					
 					if ( ! isset( $_POST['wwp_register_upgrade'] )  ) {
-						wc_print_notice( __( 'Your upgrade request is rejected.', 'woocommerce-wholesale-pricing'), 'error' );
+						wc_print_notice( __( 'Your upgrade request is rejected.', 'woocommerce-vendor-portal'), 'error' );
 						$rejected_note=get_user_meta( get_current_user_id(), 'rejected_note', true );
-						echo '<p class="rejected_note">' . esc_html__($rejected_note, 'woocommerce-wholesale-pricing') . '</p>';
+						echo '<p class="rejected_note">' . esc_html__($rejected_note, 'woocommerce-vendor-portal') . '</p>';
 					}
 					
 					if ( isset( $settings['request_again_submit'] ) && 'yes' == $settings['request_again_submit'] ) {
@@ -434,7 +434,7 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 					
 				} elseif ( 'active' == get_user_meta($user_id, '_user_status', true) ) {
 					
-					wc_print_notice( __('Your request is approved.', 'woocommerce-wholesale-pricing'), 'success');
+					wc_print_notice( __('Your request is approved.', 'woocommerce-vendor-portal'), 'success');
 					
 				} elseif ( !term_exists(get_user_meta($user_id, 'wholesale_role_status', true), 'wholesale_user_roles') ) {
 				
@@ -447,7 +447,7 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 				}
 				if ( empty( $check ) ) {
 					global $wp;
-					wc_print_notice( __('Apply here to upgrade your account.', 'woocommerce-wholesale-pricing'), 'notice' );
+					wc_print_notice( __('Apply here to upgrade your account.', 'woocommerce-vendor-portal'), 'notice' );
 					echo wp_kses_post($this->wwp_registration_form());
 				}
 			}
@@ -458,10 +458,10 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 			if ( isset($_POST['wwp_register_upgrade']) && !wp_verify_nonce( sanitize_text_field( $_POST['wwp_register_upgrade'] ), 'wwp_wholesale_registrattion_nonce' ) ) { 
 					
 				if (isset($_POST['g-recaptcha-response'])) {
-					$notice_recaptcha = apply_filters('wwp_recaptcha_error_msg', esc_html__('Robot verification failed, please try again.', 'woocommerce-wholesale-pricing'));
+					$notice_recaptcha = apply_filters('wwp_recaptcha_error_msg', esc_html__('Robot verification failed, please try again.', 'woocommerce-vendor-portal'));
 					
 					if (empty($_POST['g-recaptcha-response'])) {
-						wc_print_notice(esc_html__($notice_recaptcha, 'woocommerce-wholesale-pricing'), 'error');
+						wc_print_notice(esc_html__($notice_recaptcha, 'woocommerce-vendor-portal'), 'error');
 						return;
 					}
 					
@@ -469,7 +469,7 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 					$verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $secret . '&response=' . wc_clean($_POST['g-recaptcha-response']));
 					$responseData = json_decode($verifyResponse);
 					if (!$responseData->success) {
-						wc_print_notice(esc_html__($notice_recaptcha, 'woocommerce-wholesale-pricing'), 'error');
+						wc_print_notice(esc_html__($notice_recaptcha, 'woocommerce-vendor-portal'), 'error');
 						return;
 					}
 				}	
@@ -670,11 +670,11 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 					}
 					//On success
 					if ( !is_wp_error($user_id) ) {
-						$notice = apply_filters('wwp_success_msg', esc_html__('Your request for upgrade account is submitted.', 'woocommerce-wholesale-pricing'));
-						wc_print_notice(esc_html__($notice, 'woocommerce-wholesale-pricing'), 'success');
+						$notice = apply_filters('wwp_success_msg', esc_html__('Your request for upgrade account is submitted.', 'woocommerce-vendor-portal'));
+						wc_print_notice(esc_html__($notice, 'woocommerce-vendor-portal'), 'success');
 					} else {
-						$notice = apply_filters('wwp_error_msg', esc_html__($user_id->get_error_message(), 'woocommerce-wholesale-pricing'));
-						wc_print_notice(esc_html__($notice, 'woocommerce-wholesale-pricing'), 'error');
+						$notice = apply_filters('wwp_error_msg', esc_html__($user_id->get_error_message(), 'woocommerce-vendor-portal'));
+						wc_print_notice(esc_html__($notice, 'woocommerce-vendor-portal'), 'error');
 					}
 					wp_safe_redirect( wp_get_referer() );
 				}
@@ -713,12 +713,12 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 					<?php 
 					if ( empty($registrations) || ( isset($registrations['custommer_billing_address']) && 'yes' == $registrations['custommer_billing_address'] ) ) { 
 						?>
-						<h2><?php esc_html_e('Customer billing address', 'woocommerce-wholesale-pricing'); ?></h2>
+						<h2><?php esc_html_e('Customer billing address', 'woocommerce-vendor-portal'); ?></h2>
 						<?php 
 						if ( isset($registrations['enable_billing_first_name']) && 'yes' == $registrations['enable_billing_first_name'] ) { 
 							?>
 							<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-								<label for="wwp_wholesaler_fname"> <?php echo !empty($registrations['billing_first_name']) ? esc_html($registrations['billing_first_name']) : esc_html__('First Name', 'woocommerce-wholesale-pricing'); ?> <span class="required">*</span></label>
+								<label for="wwp_wholesaler_fname"> <?php echo !empty($registrations['billing_first_name']) ? esc_html($registrations['billing_first_name']) : esc_html__('First Name', 'woocommerce-vendor-portal'); ?> <span class="required">*</span></label>
 								<input type="text" name="wwp_wholesaler_fname" id="wwp_wholesaler_fname" value="<?php esc_attr_e($fname); ?>" required>
 							</p>
 							<?php
@@ -726,7 +726,7 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 						if ( isset($registrations['enable_billing_last_name']) && 'yes' == $registrations['enable_billing_last_name'] ) { 
 							?>
 							<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-								<label for="wwp_wholesaler_lname"><?php echo !empty($registrations['billing_last_name']) ? esc_html($registrations['billing_last_name']) : esc_html__('Last Name', 'woocommerce-wholesale-pricing'); ?> <span class="required">*</span></label>
+								<label for="wwp_wholesaler_lname"><?php echo !empty($registrations['billing_last_name']) ? esc_html($registrations['billing_last_name']) : esc_html__('Last Name', 'woocommerce-vendor-portal'); ?> <span class="required">*</span></label>
 								<input type="text" name="wwp_wholesaler_lname" id="wwp_wholesaler_lname" value="<?php esc_attr_e($lname); ?>" required>
 							</p>
 							<?php
@@ -734,7 +734,7 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 						if ( isset($registrations['enable_billing_company']) && 'yes' == $registrations['enable_billing_company'] ) { 
 							?>
 							<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-								<label for="wwp_wholesaler_fname"><?php echo !empty($registrations['billing_company']) ? esc_html($registrations['billing_company']) : esc_html__('Company', 'woocommerce-wholesale-pricing'); ?> <span class="required">*</span></label>
+								<label for="wwp_wholesaler_fname"><?php echo !empty($registrations['billing_company']) ? esc_html($registrations['billing_company']) : esc_html__('Company', 'woocommerce-vendor-portal'); ?> <span class="required">*</span></label>
 								<input type="text" name="wwp_wholesaler_company" id="wwp_wholesaler_company" value="<?php esc_attr_e($company); ?>"  required>
 							</p>
 							<?php
@@ -742,7 +742,7 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 						if ( isset($registrations['enable_billing_address_1']) && 'yes' == $registrations['enable_billing_address_1'] ) { 
 							?>
 							<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-								<label for="wwp_wholesaler_address_line_1"><?php echo !empty($registrations['billing_address_1']) ? esc_html($registrations['billing_address_1']) : esc_html__('Address line 1', 'woocommerce-wholesale-pricing'); ?> <span class="required">*</span></label>
+								<label for="wwp_wholesaler_address_line_1"><?php echo !empty($registrations['billing_address_1']) ? esc_html($registrations['billing_address_1']) : esc_html__('Address line 1', 'woocommerce-vendor-portal'); ?> <span class="required">*</span></label>
 								<input type="text" name="wwp_wholesaler_address_line_1" id="wwp_wholesaler_address_line_1" value="<?php esc_attr_e($addr1); ?>" required>
 							</p>
 							<?php
@@ -750,7 +750,7 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 						if ( isset($registrations['enable_billing_address_2']) && 'yes' == $registrations['enable_billing_address_2'] ) { 
 							?>
 							<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-								<label for="wwp_wholesaler_address_line_2"><?php echo !empty($registrations['billing_address_2']) ? esc_html($registrations['billing_address_2']) : esc_html__('Address line 2', 'woocommerce-wholesale-pricing'); ?> <span class="required">*</span></label>
+								<label for="wwp_wholesaler_address_line_2"><?php echo !empty($registrations['billing_address_2']) ? esc_html($registrations['billing_address_2']) : esc_html__('Address line 2', 'woocommerce-vendor-portal'); ?> <span class="required">*</span></label>
 								<input type="text" name="wwp_wholesaler_address_line_2" id="wwp_wholesaler_address_line_2">
 							</p>
 							<?php
@@ -758,7 +758,7 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 						if ( isset($registrations['enable_billing_city']) && 'yes' == $registrations['enable_billing_city'] ) { 
 							?>
 							<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-								<label for="wwp_wholesaler_city"><?php echo !empty($registrations['billing_city']) ? esc_html($registrations['billing_city']) : esc_html__('City', 'woocommerce-wholesale-pricing'); ?><span class="required">*</span></label>
+								<label for="wwp_wholesaler_city"><?php echo !empty($registrations['billing_city']) ? esc_html($registrations['billing_city']) : esc_html__('City', 'woocommerce-vendor-portal'); ?><span class="required">*</span></label>
 								<input type="text" name="wwp_wholesaler_city" id="wwp_wholesaler_city" required>
 							</p>
 							<?php
@@ -766,7 +766,7 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 						if ( isset($registrations['enable_billing_post_code']) && 'yes' == $registrations['enable_billing_post_code'] ) { 
 							?>
 							<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-								<label for="wwp_wholesaler_post_code"><?php echo !empty($registrations['billing_post_code']) ? esc_html($registrations['billing_post_code']) : esc_html__('Postcode / ZIP', 'woocommerce-wholesale-pricing'); ?> <span class="required">*</span></label>
+								<label for="wwp_wholesaler_post_code"><?php echo !empty($registrations['billing_post_code']) ? esc_html($registrations['billing_post_code']) : esc_html__('Postcode / ZIP', 'woocommerce-vendor-portal'); ?> <span class="required">*</span></label>
 								<input type="text" name="wwp_wholesaler_post_code" id="wwp_wholesaler_post_code" required>
 							</p>
 							<?php
@@ -779,8 +779,8 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 									'billing_country', array(
 									'type'       => 'select',
 									'class'      => array( 'chzn-drop' ),
-									'label'      => esc_html__('Select billing country', 'woocommerce-wholesale-pricing'),
-									'placeholder'=> esc_html__('Enter something', 'woocommerce-wholesale-pricing'),
+									'label'      => esc_html__('Select billing country', 'woocommerce-vendor-portal'),
+									'placeholder'=> esc_html__('Enter something', 'woocommerce-vendor-portal'),
 									'options'    => $countries
 									)
 								);
@@ -791,16 +791,16 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 						if ( isset($registrations['enable_billing_state']) && 'yes' == $registrations['enable_billing_state'] ) { 
 							?>
 							<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-								<label for="wwp_wholesaler_state"><?php echo !empty($registrations['billing_state']) ? esc_html($registrations['billing_state']) : esc_html__('State / County', 'woocommerce-wholesale-pricing'); ?> <span class="required">*</span></label>
+								<label for="wwp_wholesaler_state"><?php echo !empty($registrations['billing_state']) ? esc_html($registrations['billing_state']) : esc_html__('State / County', 'woocommerce-vendor-portal'); ?> <span class="required">*</span></label>
 								<input type="text" name="wwp_wholesaler_state" id="wwp_wholesaler_state" required>
-								<span for="wwp_wholesaler_state"><?php esc_html_e('State / County or state code', 'woocommerce-wholesale-pricing'); ?></span>
+								<span for="wwp_wholesaler_state"><?php esc_html_e('State / County or state code', 'woocommerce-vendor-portal'); ?></span>
 							</p>
 							<?php
 						}
 						if ( isset($registrations['enable_billing_phone']) && 'yes' == $registrations['enable_billing_phone'] ) { 
 							?>
 							<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-								<label for="wwp_wholesaler_phone"><?php echo !empty($registrations['billing_phone']) ? esc_html($registrations['billing_phone']) : esc_html__('Phone', 'woocommerce-wholesale-pricing'); ?> <span class="required">*</span></label>
+								<label for="wwp_wholesaler_phone"><?php echo !empty($registrations['billing_phone']) ? esc_html($registrations['billing_phone']) : esc_html__('Phone', 'woocommerce-vendor-portal'); ?> <span class="required">*</span></label>
 								<input type="text" name="wwp_wholesaler_phone" id="wwp_wholesaler_phone" required>
 							</p>
 							<?php
@@ -808,9 +808,9 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 					}
 					if ( empty($registrations) || ( isset($registrations['custommer_shipping_address']) && 'yes' == $registrations['custommer_shipping_address'] ) ) { 
 						?>
-						<h2><?php esc_html_e('Customer shipping address', 'woocommerce-wholesale-pricing'); ?></h2>
+						<h2><?php esc_html_e('Customer shipping address', 'woocommerce-vendor-portal'); ?></h2>
 						<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-							<label for="wwp_wholesaler_copy_billing_address"><?php esc_html_e('Copy from billing address', 'woocommerce-wholesale-pricing'); ?></label>
+							<label for="wwp_wholesaler_copy_billing_address"><?php esc_html_e('Copy from billing address', 'woocommerce-vendor-portal'); ?></label>
 							<input type="checkbox" name="wwp_wholesaler_copy_billing_address" id="wwp_wholesaler_copy_billing_address" value="yes" >
 						</p>
 						<div id="wholesaler_shipping_address"> 
@@ -818,7 +818,7 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 							if ( isset($registrations['enable_shipping_first_name']) && 'yes' == $registrations['enable_shipping_first_name'] ) { 
 								?>
 								<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-									<label for="wwp_wholesaler_shipping_lname"><?php echo !empty($registrations['shipping_first_name']) ? esc_html($registrations['shipping_first_name']) : esc_html__('First Name', 'woocommerce-wholesale-pricing'); ?> <span class="required">*</span></label>
+									<label for="wwp_wholesaler_shipping_lname"><?php echo !empty($registrations['shipping_first_name']) ? esc_html($registrations['shipping_first_name']) : esc_html__('First Name', 'woocommerce-vendor-portal'); ?> <span class="required">*</span></label>
 									<input type="text" name="wwp_wholesaler_shipping_fname" id="wwp_wholesaler_shipping_fname" >
 								</p>
 								<?php
@@ -826,7 +826,7 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 							if ( isset($registrations['enable_shipping_last_name']) && 'yes' == $registrations['enable_shipping_last_name'] ) { 
 								?>
 								<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-									<label for="wwp_wholesaler_shipping_fname"> <?php echo !empty($registrations['shipping_last_name']) ? esc_html($registrations['shipping_last_name']) : esc_html__('Last Name', 'woocommerce-wholesale-pricing'); ?> <span class="required">*</span> </label>
+									<label for="wwp_wholesaler_shipping_fname"> <?php echo !empty($registrations['shipping_last_name']) ? esc_html($registrations['shipping_last_name']) : esc_html__('Last Name', 'woocommerce-vendor-portal'); ?> <span class="required">*</span> </label>
 									<input type="text" name="wwp_wholesaler_shipping_lname" id="wwp_wholesaler_shipping_lname" >
 								</p>
 								<?php
@@ -834,7 +834,7 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 							if ( isset($registrations['enable_shipping_company']) && 'yes' == $registrations['enable_shipping_company'] ) { 
 								?>
 								<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-									<label for="wwp_wholesaler_shipping_company"><?php echo !empty($registrations['shipping_company']) ? esc_html($registrations['shipping_company']) : esc_html__('Company', 'woocommerce-wholesale-pricing'); ?> <span class="required">*</span></label>
+									<label for="wwp_wholesaler_shipping_company"><?php echo !empty($registrations['shipping_company']) ? esc_html($registrations['shipping_company']) : esc_html__('Company', 'woocommerce-vendor-portal'); ?> <span class="required">*</span></label>
 									<input type="text" name="wwp_wholesaler_shipping_company" id="wwp_wholesaler_shipping_company" >
 								</p>
 								<?php
@@ -842,7 +842,7 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 							if ( isset($registrations['enable_shipping_address_1']) && 'yes' == $registrations['enable_shipping_address_1'] ) { 
 								?>
 								<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-									<label for="wwp_wholesaler_shipping_address_line_1"><?php echo !empty($registrations['shipping_address_1']) ? esc_html($registrations['shipping_address_1']) : esc_html__('Address line 1', 'woocommerce-wholesale-pricing'); ?> <span class="required">*</span></label>
+									<label for="wwp_wholesaler_shipping_address_line_1"><?php echo !empty($registrations['shipping_address_1']) ? esc_html($registrations['shipping_address_1']) : esc_html__('Address line 1', 'woocommerce-vendor-portal'); ?> <span class="required">*</span></label>
 									<input type="text" name="wwp_wholesaler_shipping_address_line_1" id="wwp_wholesaler_shipping_address_line_1" >
 								</p>
 								<?php
@@ -850,7 +850,7 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 							if ( isset($registrations['enable_shipping_address_2']) && 'yes' == $registrations['enable_shipping_address_2'] ) { 
 								?>
 								<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-									<label for="wwp_wholesaler_shipping_address_line_2"><?php echo !empty($registrations['shipping_address_2']) ? esc_html($registrations['shipping_address_2']) : esc_html__('Address line 2', 'woocommerce-wholesale-pricing'); ?> <span class="required">*</span></label>
+									<label for="wwp_wholesaler_shipping_address_line_2"><?php echo !empty($registrations['shipping_address_2']) ? esc_html($registrations['shipping_address_2']) : esc_html__('Address line 2', 'woocommerce-vendor-portal'); ?> <span class="required">*</span></label>
 									<input type="text" name="wwp_wholesaler_shipping_address_line_2" id="wwp_wholesaler_shipping_address_line_2" >
 								</p>
 								<?php 
@@ -858,7 +858,7 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 							if ( isset($registrations['enable_shipping_city']) && 'yes' == $registrations['enable_shipping_city'] ) { 
 								?>
 								<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-									<label for="wwp_wholesaler_shipping_city"><?php echo !empty($registrations['shipping_city']) ? esc_html($registrations['shipping_city']) : esc_html__('City', 'woocommerce-wholesale-pricing'); ?> <span class="required">*</span></label>
+									<label for="wwp_wholesaler_shipping_city"><?php echo !empty($registrations['shipping_city']) ? esc_html($registrations['shipping_city']) : esc_html__('City', 'woocommerce-vendor-portal'); ?> <span class="required">*</span></label>
 									<input type="text" name="wwp_wholesaler_shipping_city" id="wwp_wholesaler_shipping_city" >
 								</p>
 								<?php
@@ -866,7 +866,7 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 							if ( isset($registrations['enable_shipping_post_code']) && 'yes' == $registrations['enable_shipping_post_code'] ) { 
 								?>
 								<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-									<label for="wwp_wholesaler_shipping_post_code"><?php echo !empty($registrations['shipping_post_code']) ? esc_html($registrations['shipping_post_code']) : esc_html__('Postcode / ZIP', 'woocommerce-wholesale-pricing'); ?> <span class="required">*</span></label>
+									<label for="wwp_wholesaler_shipping_post_code"><?php echo !empty($registrations['shipping_post_code']) ? esc_html($registrations['shipping_post_code']) : esc_html__('Postcode / ZIP', 'woocommerce-vendor-portal'); ?> <span class="required">*</span></label>
 									<input type="text" name="wwp_wholesaler_shipping_post_code" id="wwp_wholesaler_shipping_post_code">
 								</p>
 								<?php
@@ -879,8 +879,8 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 									array(
 										'type'       => 'select',
 										'class'      => array('chzn-drop'),
-										'label'      => esc_html__('Select shipping country', 'woocommerce-wholesale-pricing'),
-										'placeholder'=> esc_html__('Enter something', 'woocommerce-wholesale-pricing'),
+										'label'      => esc_html__('Select shipping country', 'woocommerce-vendor-portal'),
+										'placeholder'=> esc_html__('Enter something', 'woocommerce-vendor-portal'),
 										'options'    => $countries
 										)
 									);
@@ -891,7 +891,7 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 							if ( isset($registrations['enable_shipping_state']) && 'yes' == $registrations['enable_shipping_state'] ) { 
 								?>
 								<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-									<label for="wwp_wholesaler_shipping_state"><?php echo !empty($registrations['shipping_state']) ? esc_html($registrations['shipping_state']) : esc_html__('State / County', 'woocommerce-wholesale-pricing'); ?> <span class="required">*</span></label>
+									<label for="wwp_wholesaler_shipping_state"><?php echo !empty($registrations['shipping_state']) ? esc_html($registrations['shipping_state']) : esc_html__('State / County', 'woocommerce-vendor-portal'); ?> <span class="required">*</span></label>
 									<input type="text" name="wwp_wholesaler_shipping_state" id="wwp_wholesaler_shipping_state">
 								</p>
 								<?php
@@ -905,7 +905,7 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 						?>
 						<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
 							<label for="wwp_wholesaler_tax_id">
-								<?php echo !empty($registrations['woo_tax_id']) ? esc_html($registrations['woo_tax_id']) : esc_html__('Tax ID', 'woocommerce-wholesale-pricing'); ?>
+								<?php echo !empty($registrations['woo_tax_id']) ? esc_html($registrations['woo_tax_id']) : esc_html__('Tax ID', 'woocommerce-vendor-portal'); ?>
 								<?php
 								if ( 'required' == $required ) {
 									echo '<span class="required">*</span>';
@@ -920,7 +920,7 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 						$required = ( !empty($registrations['required_file_upload']) && 'yes' == $registrations['required_file_upload'] ) ? 'required' : '';
 						?>
 						<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-							<label for="wwp_wholesaler_file_upload"><?php echo !empty($registrations['woo_file_upload']) ? esc_html($registrations['woo_file_upload']) : esc_html__('File Upload', 'woocommerce-wholesale-pricing'); ?>
+							<label for="wwp_wholesaler_file_upload"><?php echo !empty($registrations['woo_file_upload']) ? esc_html($registrations['woo_file_upload']) : esc_html__('File Upload', 'woocommerce-vendor-portal'); ?>
 							<?php
 							if ( 'required' == $required ) { 
 								echo '<span class="required">*</span>';
@@ -946,7 +946,7 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 					?>
 					</p>
 					<p class="woocomerce-FormRow form-row">                   
-						<input type="submit" class="woocommerce-Button button" name="wwp_register_upgrade" value="<?php esc_html_e('Register', 'woocommerce-wholesale-pricing'); ?>">
+						<input type="submit" class="woocommerce-Button button" name="wwp_register_upgrade" value="<?php esc_html_e('Register', 'woocommerce-vendor-portal'); ?>">
 					</p>
 				</form>
 			</div>
@@ -957,8 +957,8 @@ if ( !class_exists('Wwp_Wholesale_Pricing_Frontend') ) {
 		 
 		public function wwp_script_style() {
 			wp_enqueue_script( 'wwp-script', WWP_PLUGIN_URL . 'assets/js/script.js', array(), '1.0.0', true );
-			wp_enqueue_style( 'wwp-wholesale', WWP_PLUGIN_URL . 'assets/css/wwp-css-script.css', array(), '1.1.0', false );
+			wp_enqueue_style( 'wwp-vendor', WWP_PLUGIN_URL . 'assets/css/wwp-css-script.css', array(), '1.1.0', false );
 		}
 	}
-	new Wwp_Wholesale_Pricing_Frontend();
+	new Wwp_Vendor_Portal_Frontend();
 }

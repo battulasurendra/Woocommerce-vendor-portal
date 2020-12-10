@@ -12,18 +12,18 @@ function wwp_get_content_in_wp_pointer() {
 	if ( isset($_GET['wwp_skip']) ) {
 		update_option('wwp_guide_skip', 1);
 	}
-	$user_role = '<h3>' . esc_html__('Select Pricing Mode', 'woocommerce-wholesale-pricing') . '</h3>';
-	$user_role .= '<p>' . esc_html__('System will work with Single Wholesaler Mode or Multi Wholesaler Mode.', 'woocommerce-wholesale-pricing') . '</p>';
-	$setting = '<h3>' . esc_html__('Make Your Settings.', 'woocommerce-wholesale-pricing') . '</h3>';
-	$setting .= '<p>' . esc_html__('Before using the plugin you must save your settings.', 'woocommerce-wholesale-pricing') . '</p>';
-	$select_mode  = '<h3>' . esc_html__('Select Mode.', 'woocommerce-wholesale-pricing') . '</h3>';
-	$select_mode .= '<p>' . esc_html__('Before using the plugin you must save your settings.', 'woocommerce-wholesale-pricing') . '</p>';
-	$pricing_labels  = esc_html__('Pricing Labels', 'woocommerce-wholesale-pricing');
-	$pricing_labels .= '<p>' . esc_html__('Set labels for Retail, Wholesale and Save Price.', 'woocommerce-wholesale-pricing') . '</p>';
-	$registration_page  = '<h3>' . esc_html__('Select Registration Page', 'woocommerce-wholesale-pricing') . '</h3>';
-	$registration_page .= '<p>' . esc_html__('Select the page where you would like to place the shortcode to display registration form.', 'woocommerce-wholesale-pricing') . '</p>';
-	$add_user_role  = '<h3>' . esc_html__('Add Wholesaler Role', 'woocommerce-wholesale-pricing') . '</h3>';
-	$add_user_role .= '<p>' . esc_html__('You can rename the default user role or add another role', 'woocommerce-wholesale-pricing') . '</p>';
+	$user_role = '<h3>' . esc_html__('Select Pricing Mode', 'woocommerce-vendor-portal') . '</h3>';
+	$user_role .= '<p>' . esc_html__('System will work with Single Wholesaler Mode or Multi Wholesaler Mode.', 'woocommerce-vendor-portal') . '</p>';
+	$setting = '<h3>' . esc_html__('Make Your Settings.', 'woocommerce-vendor-portal') . '</h3>';
+	$setting .= '<p>' . esc_html__('Before using the plugin you must save your settings.', 'woocommerce-vendor-portal') . '</p>';
+	$select_mode  = '<h3>' . esc_html__('Select Mode.', 'woocommerce-vendor-portal') . '</h3>';
+	$select_mode .= '<p>' . esc_html__('Before using the plugin you must save your settings.', 'woocommerce-vendor-portal') . '</p>';
+	$pricing_labels  = esc_html__('Pricing Labels', 'woocommerce-vendor-portal');
+	$pricing_labels .= '<p>' . esc_html__('Set labels for Retail, Vendor and Save Price.', 'woocommerce-vendor-portal') . '</p>';
+	$registration_page  = '<h3>' . esc_html__('Select Registration Page', 'woocommerce-vendor-portal') . '</h3>';
+	$registration_page .= '<p>' . esc_html__('Select the page where you would like to place the shortcode to display registration form.', 'woocommerce-vendor-portal') . '</p>';
+	$add_user_role  = '<h3>' . esc_html__('Add Wholesaler Role', 'woocommerce-vendor-portal') . '</h3>';
+	$add_user_role .= '<p>' . esc_html__('You can rename the default user role or add another role', 'woocommerce-vendor-portal') . '</p>';
 	?>
 	<style>
 		.wp-pointer-buttons span {

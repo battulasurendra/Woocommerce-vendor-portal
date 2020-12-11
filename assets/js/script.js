@@ -5,13 +5,13 @@ jQuery(document).ready(
                 console.log(variation['price_html']);
             }
         );
-        jQuery('#wwp_wholesaler_copy_billing_address').change(
+        jQuery('#wvp_contractor_copy_billing_address').change(
             function () {
                 if (!this.checked) {
                     //  ^
-                    jQuery('#wholesaler_shipping_address').fadeIn('slow');
+                    jQuery('#contractor_shipping_address').fadeIn('slow');
                 } else {
-                    jQuery('#wholesaler_shipping_address').fadeOut('slow');
+                    jQuery('#contractor_shipping_address').fadeOut('slow');
                 }
             }
         );

@@ -1,23 +1,23 @@
-/*  Wholesale For WooCommerce 1.4.0 */
-#wwp_switch_modal_container {
+/*  Vendor For WooCommerce 1.4.0 */
+#wvp_switch_modal_container {
 	padding: 15px;
 }
-form#wwp_switch_form {
+form#wvp_switch_form {
 	text-align: center;
 }
 #TB_ajaxContent {
 	display: table-cell;
 	vertical-align: middle;
 }
-#wwp_modal_btns {
+#wvp_modal_btns {
 	
 }
-#wwp_modal_footer {
+#wvp_modal_footer {
 	font-size: 12px;
 	width: 100%;
 	border-top: 1px solid #eeeeee;
 }
-.wwp_b2b_btn, .wwp_b2c_btn {
+.wvp_b2b_btn, .wvp_b2c_btn {
     margin: 15px;
     width: 150px;
     margin-bottom: 35px;

@@ -6,15 +6,15 @@ if (!defined('ABSPATH')) {
 /**
  * Class Woo_Vendor_Registration
  */
-if (!class_exists('Wvp_Vendor_Portal_Registration')) {
+if (!class_exists('Avp_Vendor_Portal_Registration')) {
 
-    class Wvp_Vendor_Portal_Registration
+    class Avp_Vendor_Portal_Registration
     {
 
         public function __construct()
         {
 
-            add_shortcode('vendor_registration_form', array($this, 'wvp_vendor_registration_form'));
+            add_shortcode('vendor_registration_form', array($this, 'avp_vendor_registration_form'));
             $this->errors = array();
             $this->registratio_process();
         }
@@ -22,34 +22,29 @@ if (!class_exists('Wvp_Vendor_Portal_Registration')) {
         public function registratio_process()
         {
 
-            if (isset($_POST['wvp_register'])) {
-                if (isset($_POST['wvp_vendor_registrattion_nonce']) || wp_verify_nonce(wc_clean($_POST['wvp_vendor_registrattion_nonce']), 'wvp_vendor_registrattion_nonce')) {
-                    $this->errors = $this->wvp_register_contractor();
+            if (isset($_POST['avp_register'])) {
+                if (isset($_POST['avp_vendor_registrattion_nonce']) || wp_verify_nonce(wc_clean($_POST['avp_vendor_registrattion_nonce']), 'avp_vendor_registrattion_nonce')) {
+                    $this->errors = $this->avp_register_contractor();
                 }
             }
         }
 
-        public function wvp_vendor_registration_form()
+        public function avp_vendor_registration_form()
         {
             if (!is_admin() && is_user_logged_in()) {
                 return esc_html__('You are already registered!', 'woocommerce-vendor-portal');
             }
+
             global $woocommerce;
             
             $errors = array();
             ob_start();
             
-            if (isset($_POST['wvp_register'])) {
-                if (isset($_POST['wvp_vendor_registrattion_nonce']) || wp_verify_nonce(wc_clean($_POST['wvp_vendor_registrattion_nonce']), 'wvp_vendor_registrattion_nonce')) {
+            if (isset($_POST['avp_register'])) {
+                if (isset($_POST['avp_vendor_registrattion_nonce']) || wp_verify_nonce(wc_clean($_POST['avp_vendor_registrattion_nonce']), 'avp_vendor_registrattion_nonce')) {
                     $errors = $this->errors;
                 }
             }
-
-            $email = '';
-            $fname = '';
-            $lname = '';
-            $company = '';
-            $addr1 = '';
 
             if (!empty($errors)) {
                 echo '<ul class="bg-danger border border-danger display-6 mt-2 notice-danger rounded text-white" role="alert">';
@@ -59,33 +54,33 @@ if (!class_exists('Wvp_Vendor_Portal_Registration')) {
                 echo '</ul>';
             }
             
-            $email      = isset($_POST['user_email']) ? wc_clean($_POST['user_email']) : '';
-            $fname      = isset($_POST['first_name']) ? wc_clean($_POST['first_name']) : '';
-            $lname      = isset($_POST['last_name']) ? wc_clean($_POST['last_name']) : '';
-            $company    = isset($_POST['billing_company']) ? wc_clean($_POST['billing_company']) : '';
-            $billing_phone   = isset($_POST['billing_phone']) ? wc_clean($_POST['billing_phone']) : '';
-            $addr1      = isset($_POST['billing_address_1']) ? wc_clean($_POST['billing_address_1']) : '';
-            $billing_address_2 = isset($_POST['billing_address_2']) ? wc_clean($_POST['billing_address_2']) : '';
-            $billing_city   = isset($_POST['billing_city']) ? wc_clean($_POST['billing_city']) : '';
-            $billing_country        = isset($_POST['billing_country']) ? wc_clean($_POST['billing_country']) : wc_get_post_data_by_key('billing_country');
-            $billing_state   = isset($_POST['billing_state']) ? wc_clean($_POST['billing_state']) : '';
+            $email              = isset($_POST['user_email']) ? wc_clean($_POST['user_email']) : '';
+            $fname              = isset($_POST['first_name']) ? wc_clean($_POST['first_name']) : '';
+            $lname              = isset($_POST['last_name']) ? wc_clean($_POST['last_name']) : '';
+            $company            = isset($_POST['billing_company']) ? wc_clean($_POST['billing_company']) : '';
+            $billing_phone      = isset($_POST['billing_phone']) ? wc_clean($_POST['billing_phone']) : '';
+            $addr1              = isset($_POST['billing_address_1']) ? wc_clean($_POST['billing_address_1']) : '';
+            $billing_address_2  = isset($_POST['billing_address_2']) ? wc_clean($_POST['billing_address_2']) : '';
+            $billing_city       = isset($_POST['billing_city']) ? wc_clean($_POST['billing_city']) : '';
+            $billing_country    = isset($_POST['billing_country']) ? wc_clean($_POST['billing_country']) : wc_get_post_data_by_key('billing_country');
+            $billing_state      = isset($_POST['billing_state']) ? wc_clean($_POST['billing_state']) : '';
             $billing_postcode   = isset($_POST['billing_postcode']) ? wc_clean($_POST['billing_postcode']) : '';
 
-            $employees_count        = isset($_POST['employees_count']) ? wc_clean($_POST['employees_count']) : '';
-            $business_years         = isset($_POST['business_years']) ? wc_clean($_POST['business_years']) : '';
-            $business_website         = isset($_POST['business_website']) ? wc_clean($_POST['business_website']) : '';
+            $employees_count    = isset($_POST['employees_count']) ? wc_clean($_POST['employees_count']) : '';
+            $business_years     = isset($_POST['business_years']) ? wc_clean($_POST['business_years']) : '';
+            $business_website   = isset($_POST['business_website']) ? wc_clean($_POST['business_website']) : '';
 
-            if ('yes' == get_option('wvp_notice_register')) {
-                $notice = apply_filters('wvp_success_msg', esc_html__('You are Registered Successfully', 'woocommerce-vendor-portal'));
+            if ('yes' == get_option('avp_notice_register')) {
+                $notice = apply_filters('avp_success_msg', esc_html__('You are Registered Successfully', 'woocommerce-vendor-portal'));
                 wc_print_notice(esc_html__($notice, 'woocommerce-vendor-portal'), 'success');
-                delete_option('wvp_notice_register');
+                delete_option('avp_notice_register');
             }
             ?>
 
-            <div class="wvp_contractor_registration">
+            <div class="avp_contractor_registration">
                 <form method="post" action="" enctype="multipart/form-data">
                     <?php
-                    wp_nonce_field('wvp_vendor_registrattion_nonce', 'wvp_vendor_registrattion_nonce');
+                    wp_nonce_field('avp_vendor_registrattion_nonce', 'avp_vendor_registrattion_nonce');
                     ?>
                     <div class="row">
                         <div class="col-12">
@@ -179,22 +174,21 @@ if (!class_exists('Wvp_Vendor_Portal_Registration')) {
                     </div>
 
                     <div class="woocomerce-FormRow form-row col-12 mt-2">
-                        <input class="btn w-10" type="submit" class="woocommerce-Button button" id="register" name="wvp_register" value="<?php esc_html_e('Apply', 'woocommerce-vendor-portal'); ?>">
+                        <input class="btn w-10" type="submit" class="woocommerce-Button button" id="register" name="avp_register" value="<?php esc_html_e('Apply', 'woocommerce-vendor-portal'); ?>">
                     </div>
                 </form>
             </div>
 <?php
             return ob_get_clean();
         }
-        public function wvp_register_contractor()
+        public function avp_register_contractor()
         {
 
-            if (!isset($_POST['wvp_vendor_registrattion_nonce']) || !wp_verify_nonce(wc_clean($_POST['wvp_vendor_registrattion_nonce']), 'wvp_vendor_registrattion_nonce')) {
+            if (!isset($_POST['avp_vendor_registrattion_nonce']) || !wp_verify_nonce(wc_clean($_POST['avp_vendor_registrattion_nonce']), 'avp_vendor_registrattion_nonce')) {
                 return;
             }
 
             $errors = array();
-            $settings = get_option('wvp_vendor_portal_options', true);
            
             $email = isset($_POST['user_email']) ? wc_clean($_POST['user_email']) : '';
             $first_name = isset($_POST['first_name']) ? wc_clean($_POST['first_name']) : '';
@@ -271,26 +265,25 @@ if (!class_exists('Wvp_Vendor_Portal_Registration')) {
 
                 $id = wp_insert_post(
                     array(
-                        'post_type'     => 'wvp_requests',
-                        'post_title'    => isset($_POST['user_login']) ? wc_clean($_POST['user_login']) . ' - ' . esc_attr($user_id) : '',
+                        'post_type'     => 'avp_requests',
+                        'post_title'    => !empty($username) ? wc_clean($username) . ' - ' . esc_attr($user_id) : $email,
                         'post_status'   => 'publish'
                     )
                 );
-                if (!is_wp_error($id)) {
 
+                if (!is_wp_error($id)) {
                     update_post_meta($id, '_user_id', $user_id);
                     update_post_meta($id, '_user_status', 'waiting');
                     update_user_meta($user_id, '_user_status', 'waiting');
-                    
                 }
 
                 //On success
                 if (!is_wp_error($user_id)) {
-                    $notice = apply_filters('wvp_success_msg', esc_html__('You are Registered Successfully', 'woocommerce-vendor-portal'));
+                    $notice = apply_filters('avp_success_msg', esc_html__('You are Registered Successfully', 'woocommerce-vendor-portal'));
                     wc_add_notice(esc_html__($notice, 'woocommerce-vendor-portal'), 'success');
                     $_POST = array();
                 } else {
-                    $notice = apply_filters('wvp_error_msg', esc_html__($user_id->get_error_message(), 'woocommerce-vendor-portal'));
+                    $notice = apply_filters('avp_error_msg', esc_html__($user_id->get_error_message(), 'woocommerce-vendor-portal'));
                     wc_add_notice(esc_html__($notice, 'woocommerce-vendor-portal'), 'error');
                 }
                 
@@ -303,5 +296,5 @@ if (!class_exists('Wvp_Vendor_Portal_Registration')) {
             return $errors;
         }
     }
-    new Wvp_Vendor_Portal_Registration();
+    new Avp_Vendor_Portal_Registration();
 }

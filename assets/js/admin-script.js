@@ -1,15 +1,15 @@
 jQuery(document).ready(
     function () {
-        jQuery("#wholesale_user_roleschecklist-pop input, #wholesale_user_roleschecklist input, .wholesale_user_roles-checklist input").each(
+        jQuery("#vendor_user_roleschecklist-pop input, #vendor_user_roleschecklist input, .vendor_user_roles-checklist input").each(
             function () {
                 this.type="radio"}
         );
        
-        jQuery('#wholesale_user_roles-add-submit').on(
+        jQuery('#vendor_user_roles-add-submit').on(
             'click',function () {
                 setTimeout(
                     function () {
-                        jQuery("#wholesale_user_roleschecklist-pop input, #wholesale_user_roleschecklist input, .wholesale_user_roles-checklist input").each(
+                        jQuery("#vendor_user_roleschecklist-pop input, #vendor_user_roleschecklist input, .vendor_user_roles-checklist input").each(
                             function () {
                                 this.type="radio"}
                         );
@@ -23,22 +23,22 @@ jQuery(document).ready(
                 var ptype = jQuery(this).val();
                 var product_id = jQuery(document).find('input[name="product_id"]').val();
                 var data = {
-                    action : 'retrieve_wholesale_multiuser_pricing',
+                    action : 'retrieve_vendor_multiuser_pricing',
                     product_id: product_id,
                     ptype : ptype,
-					security : wwpscript.ajax_nonce
+					security : wvpscript.ajax_nonce
                 };
-                jQuery(document).find('#wholesale-multiuser-pricing .wholesale_loader').show();
+                jQuery(document).find('#vendor-multiuser-pricing .vendor_loader').show();
                 jQuery.ajax(
                     {
                         type: 'POST',
-                        url: wwpscript.ajaxurl,
+                        url: wvpscript.ajaxurl,
                         dataType: 'html',
                         cache: false,
                         data: data,
                         success: function (response) {
-                            jQuery(document).find('#wholesale-multiuser-pricing .wholesale_loader').hide();
-                            jQuery(document).find('#wholesale-multiuser-pricing .wholesale_container').html(response);
+                            jQuery(document).find('#vendor-multiuser-pricing .vendor_loader').hide();
+                            jQuery(document).find('#vendor-multiuser-pricing .vendor_container').html(response);
                         }
                     }
                 );
@@ -46,33 +46,33 @@ jQuery(document).ready(
         );
 		jQuery('#woocommerce-product-data #product-type').trigger('change');
         jQuery(document).on(
-            'click','#wholesale-pricing-pro-multiuser-move',function (e) {
+            'click','#vendor-pricing-pro-multiuser-move',function (e) {
                 e.preventDefault();
-                jQuery('html').delay(100).animate({scrollTop: $('#wholesale-pricing-pro-multiuser').offset().top }, 1000);
+                jQuery('html').delay(100).animate({scrollTop: $('#vendor-pricing-pro-multiuser').offset().top }, 1000);
             }
         );
         jQuery(document).on(
-            'click','#wholesale_pricing_bulk_update', function (e) {
+            'click','#vendor_portal_bulk_update', function (e) {
                 e.preventDefault();
                 var me = jQuery(this);
                 var product_id = me.data('id');
                 var data = {
-                    action: 'save_single_wholesale_product',
+                    action: 'save_single_vendor_product',
                     product_id: product_id,
-					security : wwpscript.ajax_nonce,
+					security : wvpscript.ajax_nonce,
                     data : me.closest('#pannel-'+product_id).find(':input').serialize()
                 };
-                me.closest('#pannel-'+product_id).find('.wwp-loader').show();
+                me.closest('#pannel-'+product_id).find('.wvp-loader').show();
                 jQuery.ajax(
                     {
                         type: 'POST',
-                        url: wwpscript.ajaxurl,
+                        url: wvpscript.ajaxurl,
                         dataType: 'html',
                         cache: false,
                         data: data,
                         success: function (response) {
 							
-                            me.closest('#pannel-'+product_id).find('.wwp-loader').hide();
+                            me.closest('#pannel-'+product_id).find('.wvp-loader').hide();
                             console.log(response);
                         }
                     }
@@ -89,45 +89,45 @@ jQuery(document).ready(
             }
         );
 
-        jQuery('#wwp_all_products').click(
+        jQuery('#wvp_all_products').click(
             function () {
                 if(jQuery(this).is(':checked')) {
-                    jQuery('.wwp_selected_item').attr('checked',true);
+                    jQuery('.wvp_selected_item').attr('checked',true);
                 } else {
-                    jQuery('.wwp_selected_item').attr('checked',false);
+                    jQuery('.wvp_selected_item').attr('checked',false);
                 }
             }
         );
 
-        jQuery('.wwp_selected_item').click(
+        jQuery('.wvp_selected_item').click(
             function (e) {
                 e.stopImmediatePropagation(); // STOP ACCORDION
             }
         );
 
-        jQuery('.wwp_prod_cat').change(
+        jQuery('.wvp_prod_cat').change(
             function () {
-                //jQuery('#wwp_bulk_form').submit();
-                var cat =jQuery('.wwp_prod_cat').val();
-                var location = wwpscript.admin_url + 'admin.php?page=wwp-bulk-wholesale-pricing&category='+cat;
+                //jQuery('#wvp_bulk_form').submit();
+                var cat =jQuery('.wvp_prod_cat').val();
+                var location = wvpscript.admin_url + 'admin.php?page=wvp-bulk-vendor-pricing&category='+cat;
                 window.open(location,'_self');
             }
         );
 
-        jQuery('.view_only_wholesale').click(
+        jQuery('.view_only_vendor').click(
             function () {
-                if(jQuery(".view_only_wholesale").is(':checked')) {
-                    var location = window.location.href + '&view_wholesale_items=1'
+                if(jQuery(".view_only_vendor").is(':checked')) {
+                    var location = window.location.href + '&view_vendor_items=1'
                     window.open(location,'_self');
                 } else {
-                    var location = window.location.href + '&view_wholesale_items=0'
+                    var location = window.location.href + '&view_vendor_items=0'
                     window.open(location,'_self');
                 }
             }
         );
 
 		function check_multirole_enable(){
-			if(jQuery('#multiple_wholesaler_role').is(':checked')) 
+			if(jQuery('#multiple_contractor_role').is(':checked')) 
 			{ 
 				jQuery('#multiroledropdown').show();
 			}else{
@@ -135,7 +135,7 @@ jQuery(document).ready(
 			}
 		}
 		
-		jQuery("#multiple_wholesaler_role,#single_wholesaler_role").click(function(){
+		jQuery("#multiple_contractor_role,#single_contractor_role").click(function(){
 		check_multirole_enable();
 		});		
 

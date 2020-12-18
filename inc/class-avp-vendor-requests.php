@@ -69,7 +69,7 @@ if (!class_exists('AVP_Easy_Vendor_Requests')) {
             } else {
                 $the_count = '';
             }
-            add_submenu_page('avp_vendor', esc_html__('Vendor User Requests', 'woocommerce-vendor-portal'), __('Requests ' . $the_count, 'woocommerce-vendor-portal'), 'manage_vendor_user_requests', 'edit.php?post_type=avp_requests');
+            // add_submenu_page('avp_vendor', esc_html__('Vendor User Requests', 'woocommerce-vendor-portal'), __('Requests ' . $the_count, 'woocommerce-vendor-portal'), 'manage_vendor_user_requests', 'edit.php?post_type=avp_requests');
         }
 
         public function register_avp_requests_columns($columns)

@@ -273,8 +273,13 @@ if (!class_exists('Avp_Vendor_Portal_Registration')) {
 
                 if (!is_wp_error($id)) {
                     update_post_meta($id, '_user_id', $user_id);
-                    update_post_meta($id, '_user_status', 'waiting');
-                    update_user_meta($user_id, '_user_status', 'waiting');
+                    update_post_meta($id, '_user_status', 'active');
+                    update_user_meta($user_id, '_user_status', 'active');
+
+                    wp_set_object_terms($id, 'contractor', 'vendor_user_roles', true);
+                    do_action('avp_vendor_user_request_approved', $user_id);
+                    do_action('avp_vendor_new_request_submitted', $user_id);
+                    update_post_meta($id, '_approval_notification', 'sent');
                 }
 
                 //On success

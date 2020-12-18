@@ -13,8 +13,8 @@ if ( !class_exists('Avp_Vendor_Portal_Upgrade') ) {
             add_filter( 'query_vars', array($this, 'avp_upgrade_add_var'), 10 );
             add_filter( 'woocommerce_account_menu_items', array($this, 'avp_upgrade_add_menu_items' ));
             add_action( 'woocommerce_account_upgrade-account_endpoint', array($this, 'avp_upgrade_content' ));
-            add_action( 'wp_head', array($this, 'avp_li_icons' ));
-			
+            add_action( 'wp_head', array($this, 'wwp_li_icons' ));
+            add_filter( 'wp_kses_allowed_html', array($this, 'filter_wp_kses_allowed_html'), 10, 1 );
 		}
 		
 		public function avp_upgrade_add_rewrite() {
@@ -35,6 +35,87 @@ if ( !class_exists('Avp_Vendor_Portal_Upgrade') ) {
 		
 		public function avp_upgrade_content() {
 			$this->avp_account_content_callback();
+        }
+        
+        
+		
+		public function filter_wp_kses_allowed_html( $allowedposttags ) { 
+			if (is_account_page()) {
+				$allowed_atts = array(
+					'align'      => array(),
+					'class'      => array(),
+					'type'       => array(),
+					'id'         => array(),
+					'dir'        => array(),
+					'lang'       => array(),
+					'style'      => array(),
+					'xml:lang'   => array(),
+					'src'        => array(),
+					'alt'        => array(),
+					'href'       => array(),
+					'rel'        => array(),
+					'rev'        => array(),
+					'target'     => array(),
+					'novalidate' => array(),
+					'type'       => array(),
+					'value'      => array(),
+					'name'       => array(),
+					'tabindex'   => array(),
+					'action'     => array(),
+					'method'     => array(),
+					'for'        => array(),
+					'width'      => array(),
+					'height'     => array(),
+					'data'       => array(),
+					'title'      => array(),
+					'value'      => array(),
+					'selected'	=> array(),
+					'enctype'	=> array(),
+					'disable'	=> array(),
+					'disabled'	=> array(),
+				);
+				$allowedposttags['form']	= $allowed_atts;
+				$allowedposttags['label']	= $allowed_atts;
+				$allowedposttags['select']	= $allowed_atts;
+				$allowedposttags['option']	= $allowed_atts;
+				$allowedposttags['input']	= $allowed_atts;
+				$allowedposttags['textarea']	= $allowed_atts;
+				$allowedposttags['iframe']	= $allowed_atts;
+				$allowedposttags['script']	= $allowed_atts;
+				$allowedposttags['style']	= $allowed_atts;
+				$allowedposttags['strong']	= $allowed_atts;
+				$allowedposttags['small']	= $allowed_atts;
+				$allowedposttags['table']	= $allowed_atts;
+				$allowedposttags['span']	= $allowed_atts;
+				$allowedposttags['abbr']	= $allowed_atts;
+				$allowedposttags['code']	= $allowed_atts;
+				$allowedposttags['pre']	= $allowed_atts;
+				$allowedposttags['div']	= $allowed_atts;
+				$allowedposttags['img']	= $allowed_atts;
+				$allowedposttags['h1']	= $allowed_atts;
+				$allowedposttags['h2']	= $allowed_atts;
+				$allowedposttags['h3']	= $allowed_atts;
+				$allowedposttags['h4']	= $allowed_atts;
+				$allowedposttags['h5']	= $allowed_atts;
+				$allowedposttags['h6']	= $allowed_atts;
+				$allowedposttags['ol']	= $allowed_atts;
+				$allowedposttags['ul']	= $allowed_atts;
+				$allowedposttags['li']	= $allowed_atts;
+				$allowedposttags['em']	= $allowed_atts;
+				$allowedposttags['hr']	= $allowed_atts;
+				$allowedposttags['br']	= $allowed_atts;
+				$allowedposttags['tr']	= $allowed_atts;
+				$allowedposttags['td']	= $allowed_atts;
+				$allowedposttags['p']	= $allowed_atts;
+				$allowedposttags['a']	= $allowed_atts;
+				$allowedposttags['b']	= $allowed_atts;
+				$allowedposttags['i']	= $allowed_atts;
+			}
+			return $allowedposttags;
+		}
+		
+		public function wwp_li_icons() {
+			echo '<style>.woocommerce-MyAccount-navigation ul li.woocommerce-MyAccount-navigation-link--upgrade-account a::before {content: "\f1de";}</style>';	
 		}
 		
 		public function avp_account_content_callback () {
@@ -162,9 +243,14 @@ if ( !class_exists('Avp_Vendor_Portal_Upgrade') ) {
                     );
                     
 					if ( !is_wp_error($id) ) {
-						update_post_meta($id, '_user_id', $user_id);
-                        update_post_meta($id, '_user_status', 'waiting');
-                        update_user_meta($user_id, '_user_status', 'waiting');
+                        update_post_meta($id, '_user_id', $user_id);
+                        update_post_meta($id, '_user_status', 'active');
+                        update_user_meta($user_id, '_user_status', 'active');
+    
+                        wp_set_object_terms($id, 'contractor', 'vendor_user_roles', true);
+                        do_action('avp_vendor_user_request_approved', $user_id);
+                        do_action('avp_vendor_new_request_submitted', $user_id);
+                        update_post_meta($id, '_approval_notification', 'sent');
                     }
                     
 					//On success
@@ -189,22 +275,22 @@ if ( !class_exists('Avp_Vendor_Portal_Upgrade') ) {
             $user_id = get_current_user_id();
             $user_meta = get_user_meta($user_id);
 
-            $fname              = $user_meta['first_name'][0] ? wc_clean($user_meta['first_name'][0]) : '';
-            $lname              = $user_meta['last_name'][0] ? wc_clean($user_meta['last_name'][0]) : '';
-            $company            = $user_meta['billing_company'][0] ? wc_clean($user_meta['billing_company'][0]) : '';
-            $billing_phone      = $user_meta['billing_phone'][0] ? wc_clean($user_meta['billing_phone'][0]) : '';
-            $addr1              = $user_meta['billing_address_1'][0] ? wc_clean($user_meta['billing_address_1'][0]) : '';
-            $billing_address_2  = $user_meta['billing_address_2'][0] ? wc_clean($user_meta['billing_address_2'][0]) : '';
-            $billing_city       = $user_meta['billing_city'][0] ? wc_clean($user_meta['billing_city'][0]) : '';
-            $billing_country    = $user_meta['billing_country'][0] ? wc_clean($user_meta['billing_country'][0]) : wc_get_post_data_by_key('billing_country');
-            $billing_state      = $user_meta['billing_state'][0] ? wc_clean($user_meta['billing_state'][0]) : '';
-            $billing_postcode   = $user_meta['billing_postcode'][0] ? wc_clean($user_meta['billing_postcode'][0]) : '';
-            $employees_count    = $user_meta['employees_count'][0] ? wc_clean($user_meta['employees_count'][0]) : '';
-            $business_years     = $user_meta['business_years'][0] ? wc_clean($user_meta['business_years'][0]) : '';
-            $business_website   = $user_meta['business_website'][0] ? wc_clean($user_meta['business_website'][0]) : '';
-            $employees_count    = $user_meta['employees_count'][0] ? wc_clean($user_meta['employees_count'][0]) : '';
-            $business_years     = $user_meta['business_years'][0] ? wc_clean($user_meta['business_years'][0]) : '';
-            $business_website   = $user_meta['business_website'][0] ? wc_clean($user_meta['business_website'][0]) : '';
+            $fname              = isset($user_meta['first_name'][0]) ? wc_clean($user_meta['first_name'][0]) : '';
+            $lname              = isset($user_meta['last_name'][0]) ? wc_clean($user_meta['last_name'][0]) : '';
+            $company            = isset($user_meta['billing_company'][0]) ? wc_clean($user_meta['billing_company'][0]) : '';
+            $billing_phone      = isset($user_meta['billing_phone'][0]) ? wc_clean($user_meta['billing_phone'][0]) : '';
+            $addr1              = isset($user_meta['billing_address_1'][0]) ? wc_clean($user_meta['billing_address_1'][0]) : '';
+            $billing_address_2  = isset($user_meta['billing_address_2'][0]) ? wc_clean($user_meta['billing_address_2'][0]) : '';
+            $billing_city       = isset($user_meta['billing_city'][0]) ? wc_clean($user_meta['billing_city'][0]) : '';
+            $billing_country    = isset($user_meta['billing_country'][0]) ? wc_clean($user_meta['billing_country'][0]) : wc_get_post_data_by_key('billing_country');
+            $billing_state      = isset($user_meta['billing_state'][0]) ? wc_clean($user_meta['billing_state'][0]) : '';
+            $billing_postcode   = isset($user_meta['billing_postcode'][0]) ? wc_clean($user_meta['billing_postcode'][0]) : '';
+            $employees_count    = isset($user_meta['employees_count'][0]) ? wc_clean($user_meta['employees_count'][0]) : '';
+            $business_years     = isset($user_meta['business_years'][0]) ? wc_clean($user_meta['business_years'][0]) : '';
+            $business_website   = isset($user_meta['business_website'][0]) ? wc_clean($user_meta['business_website'][0]) : '';
+            $employees_count    = isset($user_meta['employees_count'][0]) ? wc_clean($user_meta['employees_count'][0]) : '';
+            $business_years     = isset($user_meta['business_years'][0]) ? wc_clean($user_meta['business_years'][0]) : '';
+            $business_website   = isset($user_meta['business_website'][0]) ? wc_clean($user_meta['business_website'][0]) : '';
              
             $fname              = isset($_POST['first_name']) ? wc_clean($_POST['first_name']) : $fname;
             $lname              = isset($_POST['last_name']) ? wc_clean($_POST['last_name']) : $lname;

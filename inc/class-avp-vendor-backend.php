@@ -18,9 +18,9 @@ if ( !class_exists('AVP_Vendor_Portal_Backend') ) {
 			add_menu_page(
 				esc_html__('Vendor Portal', 'woocommerce-vendor-portal'),
 				esc_html__('Vendor Portal', 'woocommerce-vendor-portal'),
-				'manage_vendor',
-				'avp_vendor',
-				array($this, 'avp_vendor_page_callback'),
+				'manage_vendor_user_requests',
+				'edit.php?post_type=avp_requests',
+				'',
 				'dashicons-groups',
 				59
 			);

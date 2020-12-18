@@ -29,7 +29,7 @@ if ( !class_exists('Avp_Vendor_Portal_Upgrade') ) {
 		}
 		
 		public function avp_upgrade_add_menu_items( $items ) {
-            $items['upgrade-account'] = esc_html__('Upgrade to Contractor', 'woocommerce-vendor-portal');			
+            $items['upgrade-account'] = esc_html__('Upgrade to vendor', 'woocommerce-vendor-portal');			
 			return $items;
 		}
 		
@@ -136,7 +136,7 @@ if ( !class_exists('Avp_Vendor_Portal_Upgrade') ) {
 					
 				if ( 'waiting' == get_user_meta($user_id, '_user_status', true) ) {
 				
-					$notice = apply_filters('avp_pending_msg', __('Your request for Contractor is pending.', 'woocommerce-vendor-portal'));
+					$notice = apply_filters('avp_pending_msg', __('Your request for vendor is pending.', 'woocommerce-vendor-portal'));
 					wc_print_notice(esc_html__($notice, 'woocommerce-vendor-portal'), 'success');
 					
 				} elseif ( 'rejected' == get_user_meta($user_id, '_user_status', true) ) {
@@ -155,7 +155,7 @@ if ( !class_exists('Avp_Vendor_Portal_Upgrade') ) {
 					
 				} elseif ( 'active' == get_user_meta($user_id, '_user_status', true) ) {
 					
-					wc_print_notice( __('Your account is upgraded to Contractor.', 'woocommerce-vendor-portal'), 'success');
+					wc_print_notice( __('Your account is upgraded to vendor.', 'woocommerce-vendor-portal'), 'success');
 					
 				} elseif ( !term_exists(get_user_meta($user_id, 'vendor_role_status', true), 'vendor_user_roles') ) {
 				
@@ -247,7 +247,7 @@ if ( !class_exists('Avp_Vendor_Portal_Upgrade') ) {
                         update_post_meta($id, '_user_status', 'active');
                         update_user_meta($user_id, '_user_status', 'active');
     
-                        wp_set_object_terms($id, 'contractor', 'vendor_user_roles', true);
+                        wp_set_object_terms($id, 'vendor', 'vendor_user_roles', true);
                         do_action('avp_vendor_user_request_approved', $user_id);
                         do_action('avp_vendor_new_request_submitted', $user_id);
                         update_post_meta($id, '_approval_notification', 'sent');
@@ -309,12 +309,12 @@ if ( !class_exists('Avp_Vendor_Portal_Upgrade') ) {
 			ob_start();
 			?>
 			
-            <div class="avp_contractor_registration">
+            <div class="avp_vendor_registration">
                 <form method="post" action="" enctype="multipart/form-data" class="m-0">
                     <?php wp_nonce_field('avp_vendor_registrattion_nonce', 'avp_vendor_registrattion_nonce'); ?>
                     <div class="row">
                         <div class="col-12">
-                            <h2 class="display-3 fw-5 my-2 pb-1 border-bottom"><?php esc_html_e('Contractor Information', 'woocommerce-vendor-portal'); ?></h2>
+                            <h2 class="display-3 fw-5 my-2 pb-1 border-bottom"><?php esc_html_e('vendor Information', 'woocommerce-vendor-portal'); ?></h2>
                         </div>
                         <div class="mb-3 col-md-6 col-12">
                             <label class="display-6 fw-5 text-gray-500 mb-1" for="first_name"><?php esc_html_e('First Name', 'woocommerce-vendor-portal'); ?><span class="required">*</span></label>

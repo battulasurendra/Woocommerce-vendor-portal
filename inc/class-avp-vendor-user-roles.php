@@ -10,7 +10,7 @@ if (!class_exists('AVP_Vendor_User_Roles')) {
 	class AVP_Vendor_User_Roles {
 
 		public function __construct () {
-			add_role('contractor', esc_html__('Contractor Role', 'woocommerce-vendor-portal'), array( 'read' => true, 'level_0' => true ));
+			add_role('vendor', esc_html__('vendor Role', 'woocommerce-vendor-portal'), array( 'read' => true, 'level_0' => true ));
 			// add_action('init', array($this, 'register_taxonomy_for_users'));
 			// add_action('created_vendor_user_roles', array($this, 'set_term_to_user_role'), 10, 2);
 			// add_action('delete_vendor_user_roles', array($this, 'remove_term_and_user_role'), 10, 3);
@@ -65,9 +65,9 @@ if (!class_exists('AVP_Vendor_User_Roles')) {
 				'query_var'             => true,
 			);
 			register_taxonomy( 'vendor_user_roles', array( 'avp_requests' ), $args );
-			$term = term_exists( 'contractor', 'vendor_user_roles' );
+			$term = term_exists( 'vendor', 'vendor_user_roles' );
 			if ( null === $term) {
-				wp_insert_term( 'Contractor', 'vendor_user_roles', array( 'slug' => 'contractor' ) );
+				wp_insert_term( 'vendor', 'vendor_user_roles', array( 'slug' => 'vendor' ) );
 			}
 			
 			// user capabilities add
@@ -95,7 +95,7 @@ if (!class_exists('AVP_Vendor_User_Roles')) {
 		// public function set_term_to_user_role ( $term_id, $tt_id ) {
 		// 	$term=get_term($term_id, 'vendor_user_roles');
 		// 	if ( !wp_roles()->is_role($term->slug) ) {
-		// 		add_role( $term->slug, $term->name . esc_html__(' - Contractor role', 'woocommerce-vendor-portal'), array( 'read' => true, 'level_0' => true ) );
+		// 		add_role( $term->slug, $term->name . esc_html__(' - vendor role', 'woocommerce-vendor-portal'), array( 'read' => true, 'level_0' => true ) );
 		// 	}
 		// }
 		// public function remove_term_and_user_role ( $term, $tt_id, $deleted_term ) {
@@ -119,7 +119,7 @@ if (!class_exists('AVP_Vendor_User_Roles')) {
 		// 			remove_role($termObj->slug);
 		// 		}
 		// 		if ( !wp_roles()->is_role( $new_slug ) ) {
-		// 			add_role( $new_slug, $new_name . esc_html__(' - Contractor role', 'woocommerce-vendor-portal'), array( 'read' => true, 'level_0' => true ) );
+		// 			add_role( $new_slug, $new_name . esc_html__(' - vendor role', 'woocommerce-vendor-portal'), array( 'read' => true, 'level_0' => true ) );
 		// 		}
 		// 		$args = array(
 		// 			'role'    => $termObj->slug,

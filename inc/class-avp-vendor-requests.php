@@ -140,7 +140,7 @@ if (!class_exists('AVP_Easy_Vendor_Requests')) {
 
                                     echo '<tr><th></th><td><a href="' . esc_url(admin_url("user-edit.php?user_id=$user_id")) . '">' . esc_html__('More user details', 'woocommerce-vendor-portal') . '</a></td></tr>';
 
-                                    echo '<tr class="user_role"><th>' . esc_html__('Vendor roles to be assign: ', 'woocommerce-vendor-portal') . '</th><td>' . esc_html('contractor') . '</td></tr>';
+                                    echo '<tr class="user_role"><th>' . esc_html__('Vendor roles to be assign: ', 'woocommerce-vendor-portal') . '</th><td>' . esc_html('vendor') . '</td></tr>';
                                     ?>
                                 </tbody>
                             </table>
@@ -204,7 +204,7 @@ if (!class_exists('AVP_Easy_Vendor_Requests')) {
                 if (isset($_POST['user_role_set'])) {
                     $user_role_set = wc_clean($_POST['user_role_set']);
                 } else {
-                    $user_role_set = 'contractor';
+                    $user_role_set = 'vendor';
                 }
                 if (isset($_POST['rejected_note'])) {
                     $rejected_note = wc_clean($_POST['rejected_note']);

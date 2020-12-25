@@ -29,7 +29,7 @@ if ( !class_exists('Avp_Vendor_Portal_Upgrade') ) {
 		}
 		
 		public function avp_upgrade_add_menu_items( $items ) {
-            $items['upgrade-account'] = esc_html__('Upgrade to vendor', 'woocommerce-vendor-portal');			
+            $items['upgrade-account'] = esc_html__('Apply as contractor', 'woocommerce-vendor-portal');			
 			return $items;
 		}
 		
@@ -169,7 +169,7 @@ if ( !class_exists('Avp_Vendor_Portal_Upgrade') ) {
                 
 				if ( empty( $check ) ) {
 					global $wp;
-					wc_print_notice( __('Apply here to upgrade your account.', 'woocommerce-vendor-portal'), 'notice' );
+					// wc_print_notice( __('Apply here to upgrade your account.', 'woocommerce-vendor-portal'), 'notice' );
 					echo wp_kses_post($this->avp_vendor_registration_form());
 				}
 			}
@@ -246,6 +246,9 @@ if ( !class_exists('Avp_Vendor_Portal_Upgrade') ) {
                         update_post_meta($id, '_user_id', $user_id);
                         update_post_meta($id, '_user_status', 'active');
                         update_user_meta($user_id, '_user_status', 'active');
+
+                        $u = new WP_User($user_id);
+                        $u->add_role('vendor');
     
                         wp_set_object_terms($id, 'vendor', 'vendor_user_roles', true);
                         do_action('avp_vendor_user_request_approved', $user_id);
@@ -255,7 +258,8 @@ if ( !class_exists('Avp_Vendor_Portal_Upgrade') ) {
                     
 					//On success
 					if ( !is_wp_error($user_id) ) {
-						$notice = apply_filters('avp_success_msg', esc_html__('Your request for upgrade account is submitted.', 'woocommerce-vendor-portal'));
+                        wp_redirect( wc_get_page_permalink('my-account') );
+                        $notice = apply_filters('avp_success_msg', esc_html__('Your account is upgraded as contractor.', 'woocommerce-vendor-portal'));
 						wc_print_notice(esc_html__($notice, 'woocommerce-vendor-portal'), 'success');
 					} else {
 						$notice = apply_filters('avp_error_msg', esc_html__($user_id->get_error_message(), 'woocommerce-vendor-portal'));
@@ -314,7 +318,7 @@ if ( !class_exists('Avp_Vendor_Portal_Upgrade') ) {
                     <?php wp_nonce_field('avp_vendor_registrattion_nonce', 'avp_vendor_registrattion_nonce'); ?>
                     <div class="row">
                         <div class="col-12">
-                            <h2 class="display-3 fw-5 my-2 pb-1 border-bottom"><?php esc_html_e('vendor Information', 'woocommerce-vendor-portal'); ?></h2>
+                            <h2 class="display-3 fw-5 my-2 pb-1 border-bottom"><?php esc_html_e('Business Information', 'woocommerce-vendor-portal'); ?></h2>
                         </div>
                         <div class="mb-3 col-md-6 col-12">
                             <label class="display-6 fw-5 text-gray-500 mb-1" for="first_name"><?php esc_html_e('First Name', 'woocommerce-vendor-portal'); ?><span class="required">*</span></label>

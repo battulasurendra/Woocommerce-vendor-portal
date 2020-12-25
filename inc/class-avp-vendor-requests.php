@@ -75,7 +75,7 @@ if (!class_exists('AVP_Easy_Vendor_Requests')) {
         public function register_avp_requests_columns($columns)
         {
             unset($columns['author']);
-            $columns['user_role'] = esc_html__('Current Role', 'woocommerce-vendor-portal');
+            $columns['user_role'] = esc_html__('Current Roles', 'woocommerce-vendor-portal');
             $columns['user_status'] = esc_html__('Upgrade Status', 'woocommerce-vendor-portal');
             return $columns;
         }
@@ -222,11 +222,11 @@ if (!class_exists('AVP_Easy_Vendor_Requests')) {
                 if ('active' == $status) {
 
                     $wp_roles = new WP_Roles();
-                    $names = $wp_roles->get_names();
+                    // $names = $wp_roles->get_names();
 
-                    foreach ($names as $key => $value) {
-                        $u->remove_role($key);
-                    }
+                    // foreach ($names as $key => $value) {
+                    //     $u->remove_role($key);
+                    // }
                     $u->add_role($user_role_set);
 
                     foreach ($term_list as $term_remove) {

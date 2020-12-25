@@ -106,7 +106,7 @@ if (!class_exists('Avp_Vendor_Portal_Registration')) {
 
                     <div class="row">
                         <div class="col-12">
-                            <h2 class="display-3 fw-5 mt-4 mb-2 pb-1 border-bottom"><?php esc_html_e('vendor Information', 'woocommerce-vendor-portal'); ?></h2>
+                            <h2 class="display-3 fw-5 mt-4 mb-2 pb-1 border-bottom"><?php esc_html_e('Business Information', 'woocommerce-vendor-portal'); ?></h2>
                         </div>
                         <div class="mb-3 col-md-6 col-12">
                             <label class="display-6 fw-5 text-gray-500 mb-1" for="billing_company"><?php esc_html_e('Business Name', 'woocommerce-vendor-portal'); ?> <span class="required">*</span></label>
@@ -275,6 +275,14 @@ if (!class_exists('Avp_Vendor_Portal_Registration')) {
                     update_post_meta($id, '_user_id', $user_id);
                     update_post_meta($id, '_user_status', 'active');
                     update_user_meta($user_id, '_user_status', 'active');
+
+                    $u = new WP_User($user_id);
+                    $wp_roles = new WP_Roles();
+                    $names = $wp_roles->get_names();
+                    foreach ($names as $key => $value) {
+                        $u->remove_role($key);
+                    }
+                    $u->add_role('vendor');
 
                     wp_set_object_terms($id, 'vendor', 'vendor_user_roles', true);
                     do_action('avp_vendor_user_request_approved', $user_id);

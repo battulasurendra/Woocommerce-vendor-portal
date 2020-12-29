@@ -277,11 +277,6 @@ if (!class_exists('Avp_Vendor_Portal_Registration')) {
                     update_user_meta($user_id, '_user_status', 'active');
 
                     $u = new WP_User($user_id);
-                    $wp_roles = new WP_Roles();
-                    $names = $wp_roles->get_names();
-                    foreach ($names as $key => $value) {
-                        $u->remove_role($key);
-                    }
                     $u->add_role('vendor');
 
                     wp_set_object_terms($id, 'vendor', 'vendor_user_roles', true);

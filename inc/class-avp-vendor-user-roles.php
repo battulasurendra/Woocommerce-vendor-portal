@@ -54,7 +54,7 @@ if (!class_exists('AVP_Vendor_User_Roles')) {
 				'separate_items_with_commas'=> esc_html__('Separate topics with commas', 'woocommerce-vendor-portal'),
 				'add_or_remove_items'       => esc_html__('Add or remove topics', 'woocommerce-vendor-portal'),
 				'choose_from_most_used'     => esc_html__('Choose from the most used topics', 'woocommerce-vendor-portal'),
-				'menu_name'                 => esc_html__('Contractors', 'woocommerce-vendor-portal'),
+				'menu_name'                 => esc_html__('Vendor Roles', 'woocommerce-vendor-portal'),
 			); 
 			$args=array(
 				'hierarchical'          => false,

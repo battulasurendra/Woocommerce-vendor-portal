@@ -204,7 +204,7 @@ if (!class_exists('AVP_Easy_Vendor_Requests')) {
                 if (isset($_POST['user_role_set'])) {
                     $user_role_set = wc_clean($_POST['user_role_set']);
                 } else {
-                    $user_role_set = 'vendor';
+                    $user_role_set = 'contractor';
                 }
                 if (isset($_POST['rejected_note'])) {
                     $rejected_note = wc_clean($_POST['rejected_note']);

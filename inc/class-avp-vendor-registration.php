@@ -157,8 +157,6 @@ if (!class_exists('Avp_Vendor_Portal_Registration')) {
                             <label class="display-6 fw-5 text-gray-500 mb-1" for="billing_postcode"><?php esc_html_e('ZIP', 'woocommerce-vendor-portal'); ?> <span class="required">*</span></label>
                             <input class="form-control" type="text" name="billing_postcode" id="billing_postcode" value="<?php esc_attr_e($billing_postcode); ?>" required>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="mb-3 col-md-4 col-12">
                             <label class="display-6 fw-5 text-gray-500 mb-1" for="employees_count"><?php esc_html_e('No. of employees', 'woocommerce-vendor-portal'); ?><span class="required">*</span></label>
                             <input class="form-control" type="number" name="employees_count" id="employees_count" value="<?php esc_attr_e($employees_count); ?>" required>

@@ -65,9 +65,9 @@ if (!class_exists('AVP_Vendor_User_Roles')) {
 				'query_var'             => true,
 			);
 			register_taxonomy( 'vendor_user_roles', array( 'avp_requests' ), $args );
-			$term = term_exists( 'vendor', 'vendor_user_roles' );
+			$term = term_exists( 'contractor', 'vendor_user_roles' );
 			if ( null === $term) {
-				wp_insert_term( 'vendor', 'vendor_user_roles', array( 'slug' => 'vendor' ) );
+				wp_insert_term( 'contractor', 'vendor_user_roles', array( 'slug' => 'contractor' ) );
 			}
 			
 			// user capabilities add

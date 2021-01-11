@@ -389,10 +389,9 @@ if ( !class_exists('Avp_Vendor_Portal_Upgrade') ) {
                             <label class="display-6 fw-5 text-gray-500 mb-1" for="business_website"><?php esc_html_e('Business Website (optional)', 'woocommerce-vendor-portal'); ?></label>
                             <input class="form-control" type="text" name="business_website" id="business_website" value="<?php esc_attr_e($business_website); ?>">
                         </div>
-                    </div>
-
-                    <div class="woocomerce-FormRow form-row col-12 mt-2">
-                        <input class="btn w-10" type="submit" class="woocommerce-Button button" id="avp_register_upgrade" name="avp_register_upgrade" value="<?php esc_html_e('Apply', 'woocommerce-vendor-portal'); ?>">
+                        <div class="woocomerce-FormRow form-row col-12 mt-2">
+                            <input class="btn w-10" type="submit" class="woocommerce-Button button" id="avp_register_upgrade" name="avp_register_upgrade" value="<?php esc_html_e('Apply', 'woocommerce-vendor-portal'); ?>">
+                        </div>
                     </div>
                 </form>
             </div>

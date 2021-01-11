@@ -159,15 +159,15 @@ if (!class_exists('Avp_Vendor_Portal_Registration')) {
                         </div>
                     </div>
                     <div class="row">
-                        <div class="mb-3 col-md-6 col-12">
+                        <div class="mb-3 col-md-4 col-12">
                             <label class="display-6 fw-5 text-gray-500 mb-1" for="employees_count"><?php esc_html_e('No. of employees', 'woocommerce-vendor-portal'); ?><span class="required">*</span></label>
                             <input class="form-control" type="number" name="employees_count" id="employees_count" value="<?php esc_attr_e($employees_count); ?>" required>
                         </div>
-                        <div class="mb-3 col-md-6 col-12">
+                        <div class="mb-3 col-md-4 col-12">
                             <label class="display-6 fw-5 text-gray-500 mb-1" for="business_years"><?php esc_html_e('Years in business', 'woocommerce-vendor-portal'); ?><span class="required">*</span></label>
                             <input class="form-control" type="number" name="business_years" id="business_years" value="<?php esc_attr_e($business_years); ?>" required>
                         </div>
-                        <div class="mb-3 col-md-6 col-12">
+                        <div class="mb-3 col-md-4 col-12">
                             <label class="display-6 fw-5 text-gray-500 mb-1" for="business_website"><?php esc_html_e('Business Website (optional)', 'woocommerce-vendor-portal'); ?></label>
                             <input class="form-control" type="text" name="business_website" id="business_website" value="<?php esc_attr_e($business_website); ?>">
                         </div>

@@ -10,7 +10,7 @@ if (!class_exists('AVP_Vendor_User_Roles')) {
 	class AVP_Vendor_User_Roles {
 
 		public function __construct () {
-			add_role('vendor', esc_html__('vendor Role', 'woocommerce-vendor-portal'), array( 'read' => true, 'level_0' => true ));
+			add_role('contractor', esc_html__('Contractor', 'woocommerce-vendor-portal'), array( 'read' => true, 'level_0' => true ));
 			// add_action('init', array($this, 'register_taxonomy_for_users'));
 			// add_action('created_vendor_user_roles', array($this, 'set_term_to_user_role'), 10, 2);
 			// add_action('delete_vendor_user_roles', array($this, 'remove_term_and_user_role'), 10, 3);
@@ -39,9 +39,9 @@ if (!class_exists('AVP_Vendor_User_Roles')) {
 			$capabilities = array();
 			//global $wp_roles;
 			$labels = array(
-				'label'                     => esc_html__('Vendor Roles', 'woocommerce-vendor-portal'),
+				'label'                     => esc_html__('Contractors', 'woocommerce-vendor-portal'),
 				'name'                      => esc_html__('Vendor User Roles', 'woocommerce-vendor-portal'),
-				'singular_name'             => esc_html__('Vendor Role', 'woocommerce-vendor-portal'),
+				'singular_name'             => esc_html__('Contractor', 'woocommerce-vendor-portal'),
 				'search_items'              => esc_html__('Search User Roles', 'woocommerce-vendor-portal'),
 				'popular_items'             => esc_html__('Popular User Roles', 'woocommerce-vendor-portal'),
 				'all_items'                 => esc_html__('All User Roles', 'woocommerce-vendor-portal'),
@@ -54,7 +54,7 @@ if (!class_exists('AVP_Vendor_User_Roles')) {
 				'separate_items_with_commas'=> esc_html__('Separate topics with commas', 'woocommerce-vendor-portal'),
 				'add_or_remove_items'       => esc_html__('Add or remove topics', 'woocommerce-vendor-portal'),
 				'choose_from_most_used'     => esc_html__('Choose from the most used topics', 'woocommerce-vendor-portal'),
-				'menu_name'                 => esc_html__('Vendor Roles', 'woocommerce-vendor-portal'),
+				'menu_name'                 => esc_html__('Contractors', 'woocommerce-vendor-portal'),
 			); 
 			$args=array(
 				'hierarchical'          => false,
@@ -95,7 +95,7 @@ if (!class_exists('AVP_Vendor_User_Roles')) {
 		// public function set_term_to_user_role ( $term_id, $tt_id ) {
 		// 	$term=get_term($term_id, 'vendor_user_roles');
 		// 	if ( !wp_roles()->is_role($term->slug) ) {
-		// 		add_role( $term->slug, $term->name . esc_html__(' - vendor role', 'woocommerce-vendor-portal'), array( 'read' => true, 'level_0' => true ) );
+		// 		add_role( $term->slug, $term->name . esc_html__(' - Contractor', 'woocommerce-vendor-portal'), array( 'read' => true, 'level_0' => true ) );
 		// 	}
 		// }
 		// public function remove_term_and_user_role ( $term, $tt_id, $deleted_term ) {
@@ -119,7 +119,7 @@ if (!class_exists('AVP_Vendor_User_Roles')) {
 		// 			remove_role($termObj->slug);
 		// 		}
 		// 		if ( !wp_roles()->is_role( $new_slug ) ) {
-		// 			add_role( $new_slug, $new_name . esc_html__(' - vendor role', 'woocommerce-vendor-portal'), array( 'read' => true, 'level_0' => true ) );
+		// 			add_role( $new_slug, $new_name . esc_html__(' - Contractor', 'woocommerce-vendor-portal'), array( 'read' => true, 'level_0' => true ) );
 		// 		}
 		// 		$args = array(
 		// 			'role'    => $termObj->slug,

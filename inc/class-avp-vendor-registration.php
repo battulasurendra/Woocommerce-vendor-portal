@@ -277,9 +277,9 @@ if (!class_exists('Avp_Vendor_Portal_Registration')) {
                     update_user_meta($user_id, '_user_status', 'active');
 
                     $u = new WP_User($user_id);
-                    $u->add_role('vendor');
+                    $u->add_role('contractor');
 
-                    wp_set_object_terms($id, 'vendor', 'vendor_user_roles', true);
+                    wp_set_object_terms($id, 'contractor', 'vendor_user_roles', true);
                     do_action('avp_vendor_user_request_approved', $user_id);
                     do_action('avp_vendor_new_request_submitted', $user_id);
                     update_post_meta($id, '_approval_notification', 'sent');

@@ -284,6 +284,7 @@ if (!class_exists('Avp_Vendor_Portal_Registration')) {
 
                 //On success
                 if (!is_wp_error($user_id)) {
+                    wp_redirect(wc_get_account_endpoint_url('dashboard'));
                     $notice = apply_filters('avp_success_msg', esc_html__('You are Registered Successfully', 'woocommerce-vendor-portal'));
                     wc_add_notice(esc_html__($notice, 'woocommerce-vendor-portal'), 'success');
                     $_POST = array();
@@ -291,9 +292,6 @@ if (!class_exists('Avp_Vendor_Portal_Registration')) {
                     $notice = apply_filters('avp_error_msg', esc_html__($user_id->get_error_message(), 'woocommerce-vendor-portal'));
                     wc_add_notice(esc_html__($notice, 'woocommerce-vendor-portal'), 'error');
                 }
-                
-                $location = wc_get_page_permalink( 'myaccount' );
-                header("Location: $location", true);
                 exit;
             } else {
                 $errors[] = $user_id->get_error_message();

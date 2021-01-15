@@ -258,7 +258,7 @@ if ( !class_exists('Avp_Vendor_Portal_Upgrade') ) {
                     
 					//On success
 					if ( !is_wp_error($user_id) ) {
-                        wp_redirect( wc_get_page_permalink('my-account') );
+                        wp_redirect(wc_get_account_endpoint_url('dashboard'));
                         $notice = apply_filters('avp_success_msg', esc_html__('Your account is upgraded as contractor.', 'woocommerce-vendor-portal'));
 						wc_print_notice(esc_html__($notice, 'woocommerce-vendor-portal'), 'success');
 					} else {

@@ -34,8 +34,6 @@ if (!class_exists('Avp_Vendor_Portal_Registration')) {
             if (!is_admin() && is_user_logged_in()) {
                 return esc_html__('You are already registered!', 'woocommerce-vendor-portal');
             }
-
-            global $woocommerce;
             
             $errors = array();
             ob_start();
@@ -282,9 +280,9 @@ if (!class_exists('Avp_Vendor_Portal_Registration')) {
                     update_post_meta($id, '_approval_notification', 'sent');
                 }
 
+                wp_redirect(wc_get_account_endpoint_url('dashboard'));
                 //On success
                 if (!is_wp_error($user_id)) {
-                    wp_redirect(wc_get_account_endpoint_url('dashboard'));
                     $notice = apply_filters('avp_success_msg', esc_html__('You are Registered Successfully', 'woocommerce-vendor-portal'));
                     wc_add_notice(esc_html__($notice, 'woocommerce-vendor-portal'), 'success');
                     $_POST = array();

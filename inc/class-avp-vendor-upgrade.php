@@ -256,17 +256,18 @@ if ( !class_exists('Avp_Vendor_Portal_Upgrade') ) {
                         update_post_meta($id, '_approval_notification', 'sent');
                     }
                     
+                    wp_redirect(wc_get_account_endpoint_url('dashboard'));
+                    exit;
 					//On success
-					if ( !is_wp_error($user_id) ) {
-                        wp_redirect(wc_get_account_endpoint_url('dashboard'));
-                        $notice = apply_filters('avp_success_msg', esc_html__('Your account is upgraded as contractor.', 'woocommerce-vendor-portal'));
-						wc_print_notice(esc_html__($notice, 'woocommerce-vendor-portal'), 'success');
-					} else {
-						$notice = apply_filters('avp_error_msg', esc_html__($user_id->get_error_message(), 'woocommerce-vendor-portal'));
-						wc_print_notice(esc_html__($notice, 'woocommerce-vendor-portal'), 'error');
-                    }
+					// if ( !is_wp_error($user_id) ) {
+                    //     $notice = apply_filters('avp_success_msg', esc_html__('Your account is upgraded as contractor.', 'woocommerce-vendor-portal'));
+					// 	wc_print_notice(esc_html__($notice, 'woocommerce-vendor-portal'), 'success');
+					// } else {
+					// 	$notice = apply_filters('avp_error_msg', esc_html__($user_id->get_error_message(), 'woocommerce-vendor-portal'));
+					// 	wc_print_notice(esc_html__($notice, 'woocommerce-vendor-portal'), 'error');
+                    // }
                     
-					wp_safe_redirect( wp_get_referer() );
+					// wp_safe_redirect( wp_get_referer() );
 				}
 			}
 		}
@@ -389,7 +390,7 @@ if ( !class_exists('Avp_Vendor_Portal_Upgrade') ) {
                             <label class="display-6 fw-5 text-gray-500 mb-1" for="business_website"><?php esc_html_e('Business Website (optional)', 'woocommerce-vendor-portal'); ?></label>
                             <input class="form-control" type="text" name="business_website" id="business_website" value="<?php esc_attr_e($business_website); ?>">
                         </div>
-                        <div class="woocomerce-FormRow form-row col-12 mt-2">
+                        <div class="col-12">
                             <input class="btn w-10" type="submit" class="woocommerce-Button button" id="avp_register_upgrade" name="avp_register_upgrade" value="<?php esc_html_e('Apply', 'woocommerce-vendor-portal'); ?>">
                         </div>
                     </div>
